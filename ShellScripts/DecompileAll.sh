@@ -5,6 +5,30 @@ INPUT_DIR="ARCHIVE"
 # Directory where the decompiled files will be stored
 OUTPUT_DIR="DECOMPILED"
 
+# Path to desired decompiler
+DECOMPILER=$HOME/Games/Bully/Programs/LUA/decompiler/unluac.jar
+
+
+
+# Ensure OUTPUT_DIR exists
+mkdir -p "$OUTPUT_DIR"
+
+# Change to INPUT_DIR and collect directory structure
+cd "$INPUT_DIR" || { echo "Failed to enter directory: $INPUT_DIR"; exit 1; }
+find . -type d > ../dirs.tmp
+
+# Change to OUTPUT_DIR and replicate folder structure
+cd "../$OUTPUT_DIR" || { echo "Failed to enter directory: $OUTPUT_DIR"; exit 1; }
+xargs mkdir -p < ../dirs.tmp
+
+# Clean up temporary file
+cd ..
+rm -f dirs.tmp
+
+
+
+# START DECOMPILATION PROCESS!
+
 
 # *** LUC FILES *** #
 
@@ -20,7 +44,7 @@ find "$INPUT_DIR" -type f -name "*.luc" | while read -r file; do
     # Execute decompiler for every file, check for errors
     echo "Processing file $file..."
 
-    if ! java -jar unluac.jar "$file" --output "$output_file"; then
+    if ! java -jar "$DECOMPILER" "$file" --output "$output_file"; then
 
         echo "error processing file: $file"
 
@@ -43,7 +67,7 @@ find "$INPUT_DIR" -type f -name "*.lur" | while read -r file; do
     # Execute decompiler for every file, check for errors
     echo "Processing file $file..."
 
-    if ! java -jar unluac.jar "$file" --output "$output_file"; then
+    if ! java -jar "$DECOMPILER" "$file" --output "$output_file"; then
 
         echo "error processing file: $file"
 
