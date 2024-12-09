@@ -1118,7 +1118,7 @@ function F_SetupReaper()
     nJocksCurrentNode = 0
     PedSetPosPoint(gTablePeds[gCurrentJock].id, gCurrentPoint, 1)
 	do
-    local x, y, z = -752.092, -537.977, 26.178759
+      local x, y, z = -752.092, -537.977, 26.178759
       local x2, y2, z2 = -746.4159, -537.977, 26.178759
       while true do
         Wait(0)
@@ -1139,6 +1139,7 @@ function F_SetupReaper()
       PedSetActionNode(gTablePeds[gCurrentJock].id, "/Global/404Conv/Threaten", "Act/Conv/4_04.act")
       PedFollowPath(gTablePeds[gCurrentJock].id, gCurrentPath, 0, 1, CB_JockReaper)
       SoundPlayScriptedSpeechEvent(gTablePeds[gCurrentJock].id, "FIGHT_INITIATE", 0, "supersize", true)
+	end
     while true do
       Wait(0)
       if not bUsedScythe and IsButtonPressed(7, 0) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) then
@@ -1219,9 +1220,8 @@ function F_SetupReaper()
         CameraFade(500, 0)
         Wait(501)
       end
-      else
-      end
     end
+  end
   if table.getn(gTablePeds) == 0 then
     bAllJocksKilled = true
   end
