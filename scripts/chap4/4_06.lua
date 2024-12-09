@@ -1590,13 +1590,12 @@ function F_OperationA()
     while AreaGetVisible() ~= 0 do
       if gPlayerFlagrant and not PlayerIsInAreaXYZ(x1, y1, z1, 3, 0) then
           gPlayerFlagrant = false
-        elseif not gPlayerFlagrant and PlayerIsInAreaXYZ(x1, y1, z1, 3, 0) then
-          gPlayerFlagrant = true
-        end
-        if bOutOfBoundsFail then
-          break
-        end
-	  end
+      elseif not gPlayerFlagrant and PlayerIsInAreaXYZ(x1, y1, z1, 3, 0) then
+        gPlayerFlagrant = true
+      end
+      if bOutOfBoundsFail then
+        break
+      end
       Wait(0)
     end
     MissionObjectiveComplete(gObjsTable.opA_03)
@@ -1875,7 +1874,7 @@ function F_PlantRiggedBall()
     if bOutOfBoundsFail then
       break
     end
-    if not gPlayerNearDog and PlayerIsInAreaXYZ(x1, y1, z1 18, 0) then
+    if not gPlayerNearDog and PlayerIsInAreaXYZ(x1, y1, z1, 18, 0) then
       if gRunnerId and PedIsValid(gRunnerId) then
         PedFollowPath(gRunnerId, PATH._4_06_DUFFELGUY, 0, 1)
         PedSetActionNode(gRunnerId, "/Global/4_06/GuardDog/Planting", "Act/Conv/4_06.act")
