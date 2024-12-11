@@ -251,7 +251,7 @@ function F_ShopLoop() -- ! Modified
 					clothingHeading = gPlayerHeading
 					]]                                    -- Removed this
 					startingHeading = startingHeading - 1 -- Added this
-					if startingHeading == 0 then -- Added this if chunk
+					if startingHeading == 0 then -- Added this
 						clothingHeading = gPlayerHeading
 						startingHeading = 1
 					end
