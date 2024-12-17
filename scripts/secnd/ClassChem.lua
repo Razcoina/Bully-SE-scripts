@@ -14,7 +14,7 @@
 	* Removed function F_TurnONOBJ, not present in original script
 ]]
 
---[[ Original variables (ALL THE WAY TO LINE 1859)
+--[[ Original variables (ALL THE WAY TO LINE 1871)
 local missionSuccess = false
 local gGetReadyText = "C4_GETREADY"
 local gbFailed = false
