@@ -1893,22 +1893,22 @@ local gAmmoModel = -1
 local gAmmoAmount = 3
 local gUnlockText = ""
 local gClassPassede = false
-local L23_1 = {
+local tab1 = {
 	7,
 	8,
 	3,
 	1
 }
-local L24_1 = {
+local tab2 = {
 	4,
 	5,
 	2,
 	0
 }
-local L25_1 = { 28, 29 }
-local L26_1 = { 22, 23 }
-local L27_1 = { 3, 0 }
-local L28_1 = { 6, 9 }
+local tab3 = { 28, 29 }
+local tab4 = { 22, 23 }
+local tab5 = { 3, 0 }
+local tab6 = { 6, 9 }
 animsroot = "/Global/C4/Animations/"
 local AnimSeq
 local gActions = {
