@@ -2,7 +2,7 @@
 ## This is a work in progress, not all scripts are included and most that are have not been tested!
 
 This project aims to fully decompile all Lua scripts from Bully: Scholarship Edition for PC. The goal is to provide clean, readable, and editable Lua scripts for modding, troubleshooting, and understanding the game's inner workings.
-> This was made by analysing and comparing the scripts from this version with a leaked pre-released debug version of the game for the Nintendo Wii.
+> This was made by analysing and comparing the scripts from this version with a leaked pre-release debug version of the game for the Nintendo Wii.
 
 ## Decompilation process
 1) Decompiled every script using [unluac](https://sourceforge.net/projects/unluac/).
