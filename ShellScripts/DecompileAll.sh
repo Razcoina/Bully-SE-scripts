@@ -1,17 +1,20 @@
 #!/bin/bash
 
+#? Decompile all scripts from both PC and Wii versions and preserve directory structure
+
 # Directory containing the original files
 INPUT_DIR="ARCHIVE"
 # Directory where the decompiled files will be stored
 OUTPUT_DIR="DECOMPILED"
 
 # Path to desired decompiler
-DECOMPILER=$HOME/Games/Bully/Programs/LUA/decompiler/unluac.jar
-
-
+UNLUAC=$HOME/Games/Bully/Programs/LUA/decompiler/unluac.jar
 
 # Ensure OUTPUT_DIR exists
 mkdir -p "$OUTPUT_DIR"
+
+# Empty directories to start dumping new files
+rm -rf "$OUTPUT_DIR"/*
 
 # Change to INPUT_DIR and collect directory structure
 cd "$INPUT_DIR" || { echo "Failed to enter directory: $INPUT_DIR"; exit 1; }
@@ -44,7 +47,7 @@ find "$INPUT_DIR" -type f -name "*.luc" | while read -r file; do
     # Execute decompiler for every file, check for errors
     echo "Processing file $file..."
 
-    if ! java -jar "$DECOMPILER" "$file" --output "$output_file"; then
+    if ! java -jar "$UNLUAC" "$file" --output "$output_file"; then
 
         echo "error processing file: $file"
 
@@ -67,7 +70,7 @@ find "$INPUT_DIR" -type f -name "*.lur" | while read -r file; do
     # Execute decompiler for every file, check for errors
     echo "Processing file $file..."
 
-    if ! java -jar "$DECOMPILER" "$file" --output "$output_file"; then
+    if ! java -jar "$UNLUAC" "$file" --output "$output_file"; then
 
         echo "error processing file: $file"
 
