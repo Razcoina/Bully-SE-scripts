@@ -1,11 +1,11 @@
 function MissionSetup()
-	MissionDontFadeIn()
-	MissionDontFadeInAfterCompetion()
+    MissionDontFadeIn()
+    MissionDontFadeInAfterCompetion()
 end
 
 function MissionCleanup()
 end
 
 function main()
-	MissionSucceed(false, false, false)
+    MissionSucceed(false, false, false)
 end
