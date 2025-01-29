@@ -1,5 +1,5 @@
 ImportScript("Test/Missions/RunMissionLib.lua")
 
 function main()
-	RunMission("1_11_Dummy")
+    RunMission("1_11_Dummy")
 end
