@@ -1,10 +1,10 @@
 function MissionSetup()
-	AreaTransitionPoint(0, POINTLIST._PNSH_DOWNTOWNGARBAGEPICKUP)
+    AreaTransitionPoint(0, POINTLIST._PNSH_DOWNTOWNGARBAGEPICKUP)
 end
 
 function MissionCleanup()
 end
 
 function main()
-	MissionSucceed()
+    MissionSucceed()
 end
