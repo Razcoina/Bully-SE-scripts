@@ -1,5 +1,6 @@
 --[[ Changes to this file:
     * Removed function TestJohnny, not present in original script
+    * Modified function T_MagnetVibrate, may require testing
 ]]
 
 local bMissionRunning = true
@@ -1518,17 +1519,17 @@ function T_MagnetVibrate() -- ! Modified
             if bMagnetOn then
                 --[[
                 StartVibration(1, 500, 128)
-                ]]-- Modified to:
-                StartVibration(1, 1000, 255)
+                ]] -- Modified to:
+                StartVibration(0, 1000, 255)
             else
                 --[[
                 StartVibration(1, 250, 64)
-                ]]-- Modified to:
-                StartVibration(1, 1000, 128)
+                ]] -- Modified to:
+                StartVibration(0, 1000, 128)
             end
             --[[
             Wait(2000)
-            ]]-- Modified to:
+            ]] -- Modified to:
             Wait(1000)
         else
             Wait(100)
