@@ -562,7 +562,7 @@ end
 
 function OnLookersCleanup()
     --print(">>>[RUI]", "--OnLookersCleanup")
-    for _, guy in GreaseTable, nil do
+    for _, guy in GreaseTable do
         PedCleanup(guy.id)
     end
 end

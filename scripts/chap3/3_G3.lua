@@ -215,7 +215,7 @@ function F_TableInit() -- ! Modified
             treePed = tblTreePed[3]
         }
     }
-    for i, tree in tblTree, nil do
+    for i, tree in tblTree do
         tree.x, tree.y, tree.z = GetAnchorPosition(tree.id)
     end
     tblCar = {}
