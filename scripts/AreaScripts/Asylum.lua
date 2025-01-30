@@ -1,3 +1,7 @@
+--[[ Changes to this file:
+    * Added 2 local variables, even if unused
+]]
+
 local gOrderlyABlock = -1
 local gOrderlyBBlock = -1
 local gOrderlyShower = -1
@@ -95,6 +99,9 @@ function F_AsylumLockDoors()
     AreaSetDoorLockedToPeds(TRIGGER._ASYDOORS14, false)
     AreaSetDoorLockedToPeds(TRIGGER._ASYDOORS15, false)
 end
+
+local L6_1 = false -- Added this
+local L7_1 = false -- Added this
 
 function F_AsylumSwitch()
 end
