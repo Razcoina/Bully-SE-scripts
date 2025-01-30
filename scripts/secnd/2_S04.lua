@@ -1,6 +1,8 @@
 --[[ Changes to this file:
+    * Modified function MissionInit, may require testing
     * Modified function main, may require testing
     * Modified function InterruptSheet4Wait, may require testing
+    * Modified function T_SheetMonitor, may require testing
     * Modified function DropCharacterSheet, may require testing
 ]]
 
@@ -69,7 +71,7 @@ function MissionSetup()
     LoadAnimationGroups(true)
 end
 
-function MissionInit()
+function MissionInit() -- ! Modified
     fleeTaunts = { 18 }
     arriveTaunts = {
         8,
@@ -78,7 +80,9 @@ function MissionInit()
         14
     }
     marbleTaunts = { 6, 7 }
+    --[[
     PlayerSetPosPoint(POINTLIST._2_S04_START)
+    ]] -- Removed this
     savedState = PedGetUniqueModelStatus(6)
     PedSetUniqueModelStatus(6, -1)
     DisablePOI()
@@ -1256,9 +1260,12 @@ function F_MelvinReceivedSheets()
     bMelvinReceivedSheets = true
 end
 
-function T_SheetMonitor()
+function T_SheetMonitor() -- ! Modified
     Wait(100)
+    --[[
     sheet1, sheet2, sheet3, sheet4 = nil, nil, nil, nil
+    ]] -- Changed to:
+    sheet1, sheet2, sheet3, sheet4 = nil, nil, nil, nil, nil
     while not (not missionRunning or sheets_collected) do
         if bCheckSheet1 and not sheet1_dropped and F_PedIsDead(sheet1Guard) then
             sheet1, sheet1Blip = DropCharacterSheet(sheet1Guard)

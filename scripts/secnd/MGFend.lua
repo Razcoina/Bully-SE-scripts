@@ -2636,7 +2636,7 @@ function cbEchoUpdate(dt, lid, sid) -- ! Modified
             echo.sizeY = echo.sizeY * 1.025
             ]] -- Changed to:
             echo.sizeX = echo.sizeX + 0.6
-            echo.sizeY = echo.sizeY + 0.6
+            echo.sizeY = echo.sizeY + 1.2
             MGArcade_Sprite_SetSize(gLayer, echo.id, echo.sizeX, echo.sizeY)
             break
         end
