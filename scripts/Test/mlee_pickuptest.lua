@@ -30,7 +30,7 @@ function main()
         }
     }
     for i, pickup in pickuptable do
-        print(pickup.ModelName)
+        --print(pickup.ModelName)
         pickup.ID = PickupCreatePoint(pickup.ModelName, POINTLIST._PICKUP_LIST, pickup.Point)
         pickup.State = false
     end
