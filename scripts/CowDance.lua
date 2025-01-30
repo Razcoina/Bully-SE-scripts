@@ -135,7 +135,7 @@ function F_DanceCowDance()
                     --print("ENDING COW DANCE DUE TO GRAPPLING")
                     shared.forceCowDanceEnd = true
                     MinigameDestroy(false)
-                    --break
+                    break
                 end
                 if CowButtonScrewedAttempts == 3 then
                     MinigameEnd()
