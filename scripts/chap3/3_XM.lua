@@ -1,6 +1,7 @@
 --[[ Changes to this file:
     * Modified function MissionSetup, may require testing
     * Modified function MissionCleanup, may require testing
+    * Modified function F_AnimateSanta, may require testing
     * Modified function F_UpdateSanta, may require testing
 ]]
 
@@ -1137,12 +1138,15 @@ end
 
 local bSantaDoingMadAnim = false
 
-function F_AnimateSanta()
+function F_AnimateSanta() -- ! Modified
     if PedIsValid(santa) then
         bSantaDoingMadAnim = true
         PedFaceObject(santa, gPlayer, 3, 1)
         Wait(1000)
+        --[[
         PedSetActionNode(santa, "/Global/3_XM/Anims/SantaMad", "Act/Conv/3_XM.act")
+        ]] -- Changed to:
+        PedSetActionNode(santa, "/Global/3_XM/Anims/ShakeFist", "Act/Conv/3_XM.act")
         Wait(2000)
         bSantaDoingMadAnim = false
     end
@@ -1172,7 +1176,7 @@ function F_UpdateSanta() -- ! Modified
                 if PedIsPlaying(santa, "/Global/3_XM/Anims/SantaIdle", true) == false then
                     PedSetActionNode(santa, "/Global/3_XM/Anims/SantaIdle", "Act/Conv/3_XM.act")
                 end
-                ]]-- Not present in original script
+                ]] -- Not present in original script
             end
         end
     end
