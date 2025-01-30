@@ -102,7 +102,7 @@ end
 
 function PlayCutsceneWithLoad(cutsceneName, avoidFadeIn, avoidFadeOut, dontTransitionBack, dontTransitionTo)
     bFoundCutscene = false
-    for i, cutscene in cutsceneTable, nil do
+    for i, cutscene in cutsceneTable do
         if cutscene.name == cutsceneName then
             F_PlayCutScene(i, true, avoidFadeIn, avoidFadeOut, dontTransitionBack, dontTransitionTo)
             bFoundCutscene = true
