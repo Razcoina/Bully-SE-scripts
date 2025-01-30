@@ -750,7 +750,7 @@ function F_PlayDialogueWait(speaker, nEvent)
     SoundPlayScriptedSpeechEvent(speaker, "M_3_05", nEvent, "jumbo")
     while SoundSpeechPlaying() do
         Wait(0)
-        print(SoundSpeechPlaying())
+        --print(SoundSpeechPlaying())
     end
 end
 

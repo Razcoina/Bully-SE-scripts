@@ -1,5 +1,6 @@
 --[[ Changes to this file:
     * Modified function MissionSetup, may require testing
+    * Modified function F_StartNIS, may require testing
 ]]
 
 ImportScript("Library/LibTable.lua")
@@ -83,7 +84,7 @@ function F_FireSecretaryNIS()
     end
 end
 
-function F_StartNIS()
+function F_StartNIS() -- ! Modified
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
     PlayerSetControl(0)
@@ -124,7 +125,9 @@ function F_StartNIS()
     SoundEnableSpeech_ActionTree()
     ClothingPlayerOwns("SP_XmsSweater", 1)
     ClothingGivePlayer("SP_XmsSweater", 1)
+    --[[
     ClothingSetPlayerOutfit("Uniform")
+    ]] -- Removed this
     ClothingSetPlayer(1, "SP_XmsSweater")
     ClothingBuildPlayer()
     F_MakePlayerSafeForNIS(false)
