@@ -35,7 +35,7 @@ function L_PropOverrideDefault(propDefaultParam)
 end
 
 function L_PropOnBrokenNew(hash_id, trigger_id)
-    print("firing on broken event for trigger", trigger_id)
+    --print("firing on broken event for trigger", trigger_id)
     local propGroup = propLookup[trigger_id]
     if propGroup then
         for i, prop in propGroup do
@@ -48,15 +48,15 @@ function L_PropOnBrokenNew(hash_id, trigger_id)
 end
 
 function L_PropOnUsedNew(hash_id, trigger_id)
-    print("firing on used event for trigger", trigger_id)
+    --print("firing on used event for trigger", trigger_id)
     local propGroup = propLookup[trigger_id]
-    print("looking up event returned ", propGroup)
+    --print("looking up event returned ", propGroup)
     if propGroup then
-        print("prop group has", table.getn(propGroup), "entries")
+        --print("prop group has", table.getn(propGroup), "entries")
         for i, prop in propGroup do
-            print("prop", i, "in group has OnUsed?", tostring(prop.OnUsed))
+            --print("prop", i, "in group has OnUsed?", tostring(prop.OnUsed))
             if prop.OnUsed then
-                print("executing OnUsed")
+                --print("executing OnUsed")
                 prop.OnUsed(prop)
             end
             prop.used = true
@@ -67,7 +67,7 @@ end
 function L_PropLoad(group, propsList)
     group = ValidateGroup(group, propDefaultGroupName, propType)
     for i, prop in propsList do
-        assert(prop.id ~= nil, "ASSERT: id is nil for prop " .. i)
+        --assert(prop.id ~= nil, "ASSERT: id is nil for prop " .. i)
         prop.bGeo = F_DefaultForNil(prop.bGeo, propDefault.bGeo)
         if prop.bGeo == nil or prop.bGeo == false then
             if prop.lockID ~= nil and prop.lockID then
