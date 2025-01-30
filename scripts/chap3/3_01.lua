@@ -1,5 +1,5 @@
 --[[ Changes to this file:
-    * Function main contais a 'pseudo-goto', might cause problems
+    * Modified function main, may require testing
     * Modified function T_Photography, may require testing
 ]]
 
@@ -69,7 +69,7 @@ function MissionSetup()
     PedSetUniqueModelStatus(25, -1)
 end
 
-function main()
+function main() -- ! Modified
     local gotoBlip
     local missionStarted = true
     bCounterRunning = true
@@ -807,8 +807,8 @@ function T_Photography() -- ! Modified
                 joshLazyHack = target.valid or target.wasValid -- Added this
                 --[[
                 if target.valid == true and not target.taken then
-                ]]                                        -- This is the original if
-                if joshLazyHack and not target.taken then -- Added this
+                ]] -- Changed to:
+                if joshLazyHack and not target.taken then
                     target.taken = true
                     F_ToggleBool(i)
                     GiveItemToPlayer(giftModel)
