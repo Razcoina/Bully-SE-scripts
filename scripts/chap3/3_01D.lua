@@ -1,6 +1,6 @@
----@diagnostic disable: param-type-mismatch
 --[[ Changes to this file:
     * Modified function MissionCleanup, may require testing
+    * Modified function main, may require testing
     * Modified function F_SetupCameraWork, may require testing
 ]]
 
@@ -80,7 +80,7 @@ function F_YearBookDummy()
     --print("F_YearBookDummy")
 end
 
-function MissionCleanup()  -- ! Modified
+function MissionCleanup()     -- ! Modified
     --print("3.10D MissionCleanup")
     PhotoShowExitString(true) -- Added this
     CameraSetActive(1)
@@ -111,7 +111,7 @@ function MissionCleanup()  -- ! Modified
     PedRestoreWeaponInventorySnapshot(gPlayer)
 end
 
-function main()
+function main() -- ! Modified
     --print("3.10D Main()")
     Rudy = PedCreatePoint(252, POINTLIST._3_01D_RUDYSTART)
     PedSetFlag(Rudy, 19, true)
@@ -131,7 +131,10 @@ function main()
     F_SetupCollectables()
     table.insert(tObjectives, MissionObjectiveAdd("3_01D_OBJ1_01"))
     TextPrint("3_01D_OBJ1_01", 5, 1)
+    --[[
     MissionTimerStart(180)
+    ]] -- Changed to:
+    MissionTimerStart(185)
     while not (bObjectsCollected or bMissionOver) do
         Wait(0)
         if MissionTimerHasFinished() then

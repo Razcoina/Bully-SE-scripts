@@ -109,6 +109,7 @@ end
 function MissionSetup() -- ! Modified
     MissionDontFadeIn()
     DATLoad("3_01C.DAT", 2)
+    DATLoad("ClassMusic.DAT", 2) -- Added this
     DATInit()
     PlayerSetControl(0)
     SoundStopPA()
@@ -128,7 +129,7 @@ function MissionSetup() -- ! Modified
     SoundLoadBank("MINIGAME\\XYLO_01b.bnk")
     SoundLoadBank("MINIGAME\\XYLO_01c.bnk")
     SoundLoadBank("WII\\Claps.bnk")
-    ]] -- Not present in original script
+    ]] -- Removed this
     PedRequestModel(249)
     PedRequestModel(257)
     PedRequestModel(256)
@@ -223,7 +224,7 @@ function MissionCleanup() -- ! Modified
     SoundUnLoadBank("MINIGAME\\COWBELL_01.bnk") -- Added this
     SoundUnLoadBank("MINIGAME\\MARACAS_01.bnk") -- Added this
     SoundUnLoadBank("MINIGAME\\TIMPANI_01.bnk") -- Added this
-    SoundUnLoadBank("MINIGAME\\SNARE_01.bnk") -- Added this
+    SoundUnLoadBank("MINIGAME\\SNARE_01.bnk")   -- Added this
     SoundUnLoadBank("MINIGAME\\XYLO_01a.bnk")
     SoundUnLoadBank("MINIGAME\\XYLO_01b.bnk")
     SoundUnLoadBank("MINIGAME\\XYLO_01c.bnk")
@@ -278,7 +279,10 @@ function main() -- ! Modified
     PedSetActionNode(Players[0].Player, Players[0].Animsroot .. "CustomIdle", ActionAnimFile)
     PedSetActionNode(Players[1].Player, Players[1].Animsroot .. "CustomIdle", ActionAnimFile)
     Wait(100)
+    --[[
     CameraSetXYZ(-761.227, 305.409, 78.6611, -761.92865, 305.54236, 78.544655)
+    ]] -- Changed to:
+    CameraSetXYZ(-761.265, 304.796, 78.6007, -761.92865, 305.54236, 78.544655)
     for i = 0, 1 do
         PedStop(Players[i].Player)
         PedClearObjectives(Players[i].Player)
@@ -296,8 +300,8 @@ function main() -- ! Modified
     ClassMusicFeedbackCallback(F_ActionsCallback)
     ClassMusicStartSeq(3)
     CameraSetPath(PATH._3_01C_CAMPATH02, false) -- Added this
-    gCurrentCam = 2                          -- Changed this value from 3 to 2
-    CameraSetSpeed(0.2, 0.2, 0.2)            -- Added this
+    gCurrentCam = 2                             -- Changed this value from 3 to 2
+    CameraSetSpeed(0.2, 0.2, 0.2)               -- Added this
     bCamActive = false
     PedSetActionNode(Dancer01, "/Global/3_01C/Flower", DancerActionFile)
     PedSetActionNode(Dancer02, "/Global/3_01C/Fairy", DancerActionFile)
@@ -308,7 +312,7 @@ function main() -- ! Modified
         if not bCam3Active then
             F_3_01A_SwitchCamera()
         end
-        ]]                     -- Not present in original script
+        ]]                     -- Removed this
         F_3_01A_SwitchCamera() -- Added this
         Wait(0)
     end
@@ -334,6 +338,7 @@ function main() -- ! Modified
             Wait(2500)
             CameraFade(-1, 0)
             Wait(FADE_OUT_TIME)
+            missionSuccess = true -- Added this
             MissionSucceed(false, false, false)
         else
             PedSetActionNode(gPlayer, "/Global/MGMusic/Animations/Failure", ActionAnimFile)
@@ -437,11 +442,11 @@ function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! H
                 if InstrumentIndex == 3 then
                     print("******************************* Soft **************************************")
                     if iAction == 1 then
-                        SoundPlay2D("TIMP_LEFT_S") -- Added this
+                        SoundPlay2D("TIMP_LEFT_S")  -- Added this
                     elseif iAction == 2 then
                         SoundPlay2D("TIMP_RIGHT_S") -- Added this
                     else
-                        SoundPlay2D("TIMP_BOTH_S") -- Added this
+                        SoundPlay2D("TIMP_BOTH_S")  -- Added this
                     end
                 else
                     --[[
