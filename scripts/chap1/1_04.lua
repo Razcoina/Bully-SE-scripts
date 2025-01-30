@@ -1,4 +1,3 @@
----@diagnostic disable: inject-field
 local bHasFailedElsewhere = false
 local bGaryHasDied = false
 local bSetWindows = false
