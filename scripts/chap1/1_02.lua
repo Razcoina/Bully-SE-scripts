@@ -1,5 +1,6 @@
 --[[ Changes to this file:
     * Added variable L36_1 (Even if remains unused)
+    * Modified function F_MonitorTraining2, may require testing
     * Rewritten function F_MonitorTraining1, requires testing
     * Removed function F_IssueInstructions, not present in original script
     * Heavily modified function F_SetSequence, requires testing
@@ -980,7 +981,7 @@ end
 
 local bShowHumiliationTutorial = false
 
-function F_MonitorTraining2()
+function F_MonitorTraining2() -- ! Modified
     F_CheeringSpeech()
     if PedGetHealth(gBully01) == 5 then
         if not bShowHumiliationTutorial then
@@ -996,6 +997,7 @@ function F_MonitorTraining2()
         if PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_IndianBurn", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_HitSelf", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_NoogieSpit", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/WaitForVictim/EmergencyAnim", true) then
             PedClearTether(gBully01)
             TutorialRemoveMessage()
+            PlayerSetControl(0) -- Added this
             PedSetMinHealth(gBully01, -1)
             while PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_IndianBurn", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_HitSelf", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_NoogieSpit", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/WaitForVictim/EmergencyAnim", true) do
                 Wait(0)
@@ -1035,10 +1037,6 @@ end
 local bIsBlocking = false
 local bStayInPosition = false
 
---[[
-    This function is for the fighting tutorial in the first mission
-    TODO: May have errors, needs testing
-]]
 function F_MonitorTraining1() -- ! Rewritten
     local L0 = false          -- ! Cannot recover original name
     F_CheeringSpeech()
@@ -1066,10 +1064,8 @@ function F_MonitorTraining1() -- ! Rewritten
                 F_SetSequence({ 10, true }, "1_02_R1but")
             end
         else
-            if not bIsBlocking then
-                if PedMePlaying(gPlayer, "0_BLOCK_0", true) then
-                    bIsBlocking = true
-                end
+            if not bIsBlocking and PedMePlaying(gPlayer, "0_BLOCK_0", true) then
+                bIsBlocking = true
             else
                 if bIsBlocking then
                     if not PedMePlaying(gPlayer, "0_BLOCK_0", true) then
@@ -1123,13 +1119,14 @@ function F_MonitorTraining1() -- ! Rewritten
                 L0 = true
                 bGrapplePunches = false
             end
+        else
+            if not PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
+            end
+            gCurrentPlayerMove = 3
+            gCurrentCombo = 1
+            bGrapplePunches = false
+            F_SetSequence({ 9, false }, "1_02_TBut1", true)
         end
-        if not PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
-        end
-        gCurrentPlayerMove = 3
-        gCurrentCombo = 1
-        bGrapplePunches = false
-        F_SetSequence({ 9, false }, "1_02_TBut1", true)
     elseif gCurrentPlayerMove == 5 then
         if PedIsPlaying(gPlayer, "/Global/TrainingPlayer/Default", true) then
             if gSequencePassed then
@@ -1156,7 +1153,7 @@ function F_MonitorTraining1() -- ! Rewritten
             gCurrentPlayerMove = 7
             bStayInPosition = false
             F_SetSequence({ 6, false }, "1_02_GroundKicks", true)
-        elseif PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
+        elseif not PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
             gCurrentPlayerMove = 5
             gCurrentCombo = 1
             bGrappleAttacks = true
@@ -1171,7 +1168,7 @@ function F_MonitorTraining1() -- ! Rewritten
                 bStayInPosition = true
             elseif PedIsPlaying(gBully01, "/Global/HitTree/Standing/PostHit/BellyUp/On_Ground", true) then
                 PedSetActionNode(gBully01, "/Global/1_02/On_Ground", "Act/Conv/1_02.act")
-                bStayInPosition = false
+                bStayInPosition = true
             end
         end
         if gSequencePassed then
@@ -1179,7 +1176,7 @@ function F_MonitorTraining1() -- ! Rewritten
             if PedIsPlaying(gPlayer, "/Global/TrainingPlayer/Attacks/GroundAttacks/GroundAttacks/Strikes/HeavyAttacks", true) then
                 while PedIsPlaying(gPlayer, "/Global/TrainingPlayer/Attacks/GroundAttacks/GroundAttacks/Strikes/HeavyAttacks", true) do
                     Wait(0)
-                    if PedIsPlaying(gBully01, "/Global/HitTree/GroundAndWallHits/On_Ground/BellyUp/GroundHitHeavy/GroundHitHeavy", true) or PedIsPlaying(gBully01, "/Global/HitTree/GroundAndWallHits/On_Ground/BellyUp/RollAway", false) or PedIsPlaying("/Global/HitTree/GroundAndWallHits", true) then
+                    if PedIsPlaying(gBully01, "/Global/HitTree/GroundAndWallHits/On_Ground/BellyUp/GroundHitHeavy/GroundHitHeavy", true) or PedIsPlaying(gBully01, "/Global/HitTree/GroundAndWallHits/On_Ground/BellyUp/RollAway", false) or PedIsPlaying(gBully01, "/Global/HitTree/GroundAndWallHits", true) then
                         gSequencePassed = false
                         L36_1 = false
                         gCurrentCombo = 1
@@ -1429,10 +1426,6 @@ function T_StartFightTut()
     collectgarbage()
 end
 
---[[
-    This function sets the input sequence for the fighting tutorial
-    TODO: May have errors, needs testing
-]]
 function F_SetSequence(buttonTbl, captioning, bGrapple) -- ! Heavily modified
     if not bGrapple or bGrapple == nil then
         while not PedIsPlaying(gPlayer, "/Global/TrainingPlayer/Default", true) do
@@ -1452,6 +1445,7 @@ function F_SetSequence(buttonTbl, captioning, bGrapple) -- ! Heavily modified
     --ButtonHistoryIgnoreSequence(24, 25, 26, 27, 30, 31, 34)
     ButtonHistorySetCallbackPassed(F_PassedCallback)
     ButtonHistorySetCallbackFailed(F_FailedCallback)
+    ButtonHistorySetCallbackCorrectButton(F_CorrectButtonPressed)
     if table.getn(buttonTbl) == 6 then
         --print("Setting 3 buttons!")
         --DebugPrint("************WMW - timeOutDelay is: " .. timeOutDelay) --Now it's always 30
