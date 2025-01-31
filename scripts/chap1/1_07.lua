@@ -197,7 +197,7 @@ function T_ManageDoors()
     end
 end
 
-function F_AskForHelp() -- Continue: line 520
+function F_AskForHelp()
     if idHitMan and not PedIsDead(idHitMan) then
         PedFaceObject(idHitMan, idBucky, 2, 1)
     end

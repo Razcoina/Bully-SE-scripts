@@ -828,7 +828,7 @@ function F_FireBathroomNIS()
     end
 end
 
-function MissionStageGymFight() -- Continue: line 2538
+function MissionStageGymFight()
     if gOutsidePool == true and shared.gAreaDATFileLoaded[13] == true then
         Wait(3000)
         gOutsidePool = false
