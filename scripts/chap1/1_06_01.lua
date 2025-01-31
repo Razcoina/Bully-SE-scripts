@@ -623,8 +623,10 @@ function F_MissionStageHoboFight() -- ! Modified
             gMonitoringHealth = false
             F_PlaySpeechAndWait(gHobo, "M_1_06_01", 32)
             CameraFade(-1, 0)
+            --[[
             PedStop(gHobo)
-            --Wait(FADE_OUT_TIME + 500)
+            Wait(FADE_OUT_TIME + 500)
+            ]] -- Removed this
             Wait(FADE_OUT_TIME)
             F_FirstMissionEndCutscene()
             PedStop(gPlayer)
@@ -836,7 +838,10 @@ function F_SetupActions(stageNo) -- ! Heavily modified
             {
                 { 7, false },
                 { 7, false },
+                --[[
                 { 6, false }
+                ]] -- Changed to:
+                { 6, true }
             },
             gTotalMoves = 1,
             condition = 2,
