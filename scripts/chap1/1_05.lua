@@ -114,6 +114,7 @@ function MissionSetup() -- ! Heavily modified
     SoundPlayInteractiveStream("MS_FriendshipAllyLow.rsm", MUSIC_DEFAULT_VOLUME)
     SoundSetMidIntensityStream("MS_FriendshipAllyMid.rsm", MUSIC_DEFAULT_VOLUME)
     SoundSetHighIntensityStream("MS_FriendshipAllyHigh.rsm", MUSIC_DEFAULT_VOLUME)
+    PlayCutsceneWithLoad("1-05", true) -- Added this
     DATLoad("1_05.DAT", 2)
     DATLoad("1_05b.DAT", 2)
     DATInit()
@@ -363,8 +364,8 @@ function F_Intro() -- ! Heavily modified
         Wait(33)
         waitCount = waitCount - 1
     end
-    ]]
-    while AreaGetVisible() == 0 do
+    ]] -- Changed to:
+    while not AreaGetVisible() == 0 do
         Wait(0)
     end
     Wait(100)
