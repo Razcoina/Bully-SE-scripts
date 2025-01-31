@@ -1184,7 +1184,7 @@ function NerdEscape()
     collectgarbage()
 end
 
-function T_NerdTeased() -- Continue: line 3100
+function T_NerdTeased()
     while bTeasing and missionRunning do
         SoundPlayScriptedSpeechEvent(sheet3Guard, "M_2_S04", 23, "large")
         WaitWhileSpeechPlays()
