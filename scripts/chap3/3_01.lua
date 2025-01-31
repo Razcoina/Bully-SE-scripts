@@ -173,12 +173,14 @@ function main() -- ! Modified
             currentDestination = F_GetNextDestination()
             PedMoveToPoint(gord, 0, gDest.dest, 1, F_KissTime, 0.3, false)
         end
-        --TODO: Code inside this chunk is not the same as the original. Needs further attention.
         if bCounterRunning then
+            --[[
             repeat
                 break -- pseudo-goto
             until true
             if bSkipClose then
+            ]] -- Changed to:
+            if true or bSkipClose then
                 gGordBlip = AddBlipForChar(gord, 5, 0, 5)
                 gLolaBlip = AddBlipForChar(lola, 4, 0, 5)
                 bCounterRunning = false
