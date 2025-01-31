@@ -1,3 +1,7 @@
+--[[ Changes to this file:
+    * Modified function MissionCleanup, may require testing
+]]
+
 ImportScript("Library\\LibPlayer.lua")
 local bLoop = true
 local bMissionFailed = false
@@ -36,7 +40,7 @@ function MissionSetup()
     --print("()xxxxx[:::::::::::::::> [finish] MissionSetup()")
 end
 
-function MissionCleanup()
+function MissionCleanup() -- ! Modified
     --print("()xxxxx[:::::::::::::::> [start] MissionCleanup()")
     shared.PlayerInClothingManager = nil
     shared.finishedFirstClothing = false
@@ -74,6 +78,7 @@ function MissionCleanup()
     PlayerSetControl(1)
     CameraSetWidescreen(false)
     collectgarbage()
+    MissionDontFadeInAfterCompetion()
     --print("()xxxxx[:::::::::::::::> [finish] MissionCleanup()")
 end
 
