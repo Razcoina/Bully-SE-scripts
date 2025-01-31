@@ -1,6 +1,5 @@
 --[[ Changes to this file:
     * Removed function call for GlobalImportScript (commented)
-    * Modified function MissionStageBreakIntoTheLocker, may require testing
 ]]
 
 ImportScript("Library/LibTable.lua")
@@ -703,7 +702,7 @@ function CB_TurnOnTheCheck()
     bCheckForRigging = true
 end
 
-function MissionStageBreakIntoTheLocker() -- ! Modified
+function MissionStageBreakIntoTheLocker()
     local x1, y1, z1 = GetPointFromPointList(POINTLIST._LOCKERPOS, 1)
     if PedIsInAreaXYZ(gPlayer, x1, y1, z1, 1.5, 0) and MinigameIsReady() == true then
         TextClear()
@@ -721,11 +720,9 @@ function MissionStageBreakIntoTheLocker() -- ! Modified
         if shared.gFailedPickingLocker then
             return
         end
-        --[[
         while PedIsPlaying(gPlayer, "/Global/NLockA/PedPropsActions/Interact/PlantStinkbomb/OpenDoor", true) do
             Wait(0)
         end
-        ]] -- This was inside the last if, but it doesn't work
         while not bGotNotes do
             Wait(0)
         end
@@ -773,7 +770,7 @@ function MissionStageBreakIntoTheLocker() -- ! Modified
     F_MonitorFatty()
 end
 
-function T_MonitorPrefect() -- Continue: line 2288
+function T_MonitorPrefect()
     while gLackey[10].ped do
         if gLackey[10].ped ~= nil and not PedIsDead(gLackey[10].ped) then
             if gLackey[10].bAttackedPlayer and PedIsValid(gLackey[10].ped) then
