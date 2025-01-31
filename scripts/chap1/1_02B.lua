@@ -1585,12 +1585,18 @@ function T_LockerLoop() -- ! Modified
     while bRusLockXTutorial do
         if PlayerIsInTrigger(TRIGGER._1_02B_OBJLOCKER) then
             --print("Player is in trigger.")
+            --[[
             if not bTutorialStarted then
-                --print("Start the tutorial")
+                print("Start the tutorial")
                 if MinigameIsActive() then
                     TutorialStart("RUSLOCKX")
                     bTutorialStarted = true
                 end
+            ]] -- Changed to:
+            if not bTutorialStarted and MinigameIsActive() then
+                --print("Start the tutorial")
+                TutorialStart("RUSLOCKX")
+                bTutorialStarted = true
             elseif bTutorialStarted then
                 if not MinigameIsActive() then
                     TutorialStop("RUSLOCKX")
