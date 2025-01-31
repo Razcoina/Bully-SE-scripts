@@ -1,6 +1,5 @@
 --[[ Changes to this file:
     * Modified function MissionSetup, may require testing
-    * Altered declaration of local functions F_NIS_CinGrocery, F_NIS_CinBarber, F_NIS_CinCloth and F_NIS_CinEnding. May be broken
 ]]
 
 local bDebugNIS = false
@@ -619,7 +618,16 @@ local gNIS = 1
 local b_DebuggingNIS = false
 local NISTotal = 4
 
-local function F_NIS_CinGrocery()
+local F_NIS_CinGrocery = function()
+end
+local F_NIS_CinBarber = function()
+end
+local F_NIS_CinCloth = function()
+end
+local F_NIS_CinEnding = function()
+end
+
+function F_NIS_CinGrocery()
     AreaTransitionPoint(26, POINTLIST._2_01_PLAYERSTORE)
     AreaOverridePopulation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     PlayerSetControl(0)
@@ -662,7 +670,7 @@ local function F_NIS_CinGrocery()
     AreaRevertToDefaultPopulation()
 end
 
-local function F_NIS_CinBarber()
+function F_NIS_CinBarber()
     AreaTransitionPoint(39, POINTLIST._2_01_CINBARBERSTART)
     AreaOverridePopulation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     PlayerSetControl(0)
@@ -705,7 +713,7 @@ local function F_NIS_CinBarber()
     AreaRevertToDefaultPopulation()
 end
 
-local function F_NIS_CinCloth()
+function F_NIS_CinCloth()
     AreaTransitionPoint(34, POINTLIST._2_01_CINCLOTHSTART)
     AreaOverridePopulation(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     PlayerSetControl(0)
@@ -748,7 +756,7 @@ local function F_NIS_CinCloth()
     AreaRevertToDefaultPopulation()
 end
 
-local function F_NIS_CinEnding()
+function F_NIS_CinEnding()
     AreaTransitionPoint(2, POINTLIST._2_01_CINENDINGSTART)
     Edna = PedCreatePoint(58, POINTLIST._2_01_EDNAFIN)
     PedSetFlag(Edna, 133, false)
