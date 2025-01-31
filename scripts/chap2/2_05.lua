@@ -1,5 +1,7 @@
 --[[ Changes to this file:
+    * Modified function F_RussellCleanup, may require testing
     * Modified function MissionInit, may require testing
+    * Modified function TadsGateOpened, may require testing
     * Modified function F_TadHasEmptyQs, may require testing
 ]]
 
@@ -499,14 +501,16 @@ function F_RussellCreate()
     --print("RUSSEL NEW HEALTH", PedGetHealth(gRussell.id))
 end
 
-function F_RussellCleanup()
+function F_RussellCleanup() -- ! Modified
     if F_PedExists(gRussell.id) then
         PedStop(gRussell.id)
         if VehicleIsValid(gRussellBike) then
             VehicleMakeAmbient(gRussellBike)
         end
         PedMakeAmbient(gRussell.id)
+        --[[
         PedDismissAlly(gPlayer, gRussell.id)
+        ]] -- Removed this
         F_CleanBlip(gRussell.blip)
     end
     --print(">>>[RUI]", "--F_RussellCleanup")
@@ -1095,8 +1099,11 @@ function Stage_02GetInYardLoop()
     Wait(1)
 end
 
-function TadsGateOpened()
+function TadsGateOpened() -- ! Modified
+    --[[
     return not (PlayerIsInTrigger(TRIGGER._2_05_FRONTGATE) or PlayerIsInTrigger(TRIGGER._2_05_BACKGATE)) or PAnimIsOpen(TRIGGER._TRICH_TADGATES) or PAnimIsOpen(TRIGGER._TRICH_TADGATES01)
+    ]] -- Changed to:
+    return (PlayerIsInTrigger(TRIGGER._2_05_FRONTGATE) or PlayerIsInTrigger(TRIGGER._2_05_BACKGATE)) and (PAnimIsOpen(TRIGGER._TRICH_TADGATES) or PAnimIsOpen(TRIGGER._TRICH_TADGATES01))
 end
 
 function CounterSetup(bOn, countMax)
