@@ -728,6 +728,7 @@ function T_OldLadyHazardSpawn() -- ! Modified
         bNorth = true
         ladyTrigger = TRIGGER._PR_OLDLADYNORTHSTART
         --print(">>>[RUI]", "T_OldLadyHazardSpawn Chose North event")
+        --[[
         while gMissionState == MISSION_RUNNING and MissionActive() do
             if PlayerIsInTrigger(ladyTrigger) then
                 OldLadyHazardCreate(bNorth)
@@ -735,6 +736,14 @@ function T_OldLadyHazardSpawn() -- ! Modified
             end
             Wait(0)
         end
+        ]] -- Moved this outside the if
+    end
+    while gMissionState == MISSION_RUNNING and MissionActive() do
+        if PlayerIsInTrigger(ladyTrigger) then
+            OldLadyHazardCreate(bNorth)
+            break
+        end
+        Wait(0)
     end
     --print(">>>[RUI]", "++T_OldLadyHazardSpawn")
     --[[
@@ -745,7 +754,7 @@ function T_OldLadyHazardSpawn() -- ! Modified
         end
         Wait(0)
     end
-    ]]-- Moved inside previous if
+    ]] -- Moved inside previous if
     --print(">>>[RUI]", "--T_OldLadyHazardSpawn")
     Wait(3000)
     gSpeechTimer = GetTimer()
@@ -783,7 +792,7 @@ function OldLadyHazardCreate(bNorth) -- ! Modified
     if bTestBlip then
         AddBlipForChar(gOldLady, 0, 2, 1)
     end
-    ]]-- Not present in original script
+    ]] -- Not present in original script
     gOrderly = PedCreatePoint(53, orderly, 1)
     PedSetTetherToPed(gOrderly, gOldLady, 10)
     --print(">>>[RUI]", "++OldLadyHazardCreate")
@@ -833,7 +842,7 @@ function EggerHazardCreate() --! Modified
             if bTestBlip then
                 AddBlipForChar(egger.id, 0, 2, 1)
             end
-            ]]-- -- Not present in original script
+            ]] -- -- Not present in original script
             PedSetWeapon(egger.id, 312, 4)
             PedCoverSet(egger.id, gPlayer, egger.point, 1, 15, 1, 0, 0, 0, 3, 0, 0, 1, 1, true)
             PedSetPedToTypeAttitude(egger.id, 13, 0)
@@ -869,7 +878,7 @@ function MailManHazardsCreate() -- ! Modified
             if bTestBlip then
                 AddBlipForChar(MailMan.id, 0, 2, 1)
             end
-            ]]-- Not present in original script
+            ]] -- Not present in original script
         end
     end
     bMailManHazardsCreated = true
@@ -932,7 +941,7 @@ function CarHazardsCreate() -- ! Modified
             if bTestBlip then
                 AddBlipForChar(car.driver, 0, 2, 1)
             end
-            ]]-- Not present in original script
+            ]] -- Not present in original script
         end
     end
     bCarHazardsCreated = true
@@ -1019,7 +1028,7 @@ function DogHazardsCreate() -- ! Modified
             if bTestBlip then
                 AddBlipForChar(dog.id, 0, 2, 1)
             end
-            ]]-- Not present in original script
+            ]] -- Not present in original script
         end
     end
     bDogHazardsCreated = true
