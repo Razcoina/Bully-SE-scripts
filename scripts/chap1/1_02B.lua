@@ -1,5 +1,4 @@
 --[[ Changes to this file:
-    * Modified function F_Stage1_Setup, may require testing
     * Modified function T_LockerLoop, may require testing
     * Function calls related to controls have been changed to match the PC version
 ]]
@@ -378,7 +377,7 @@ function F_Stage1()
     --print("()xxxxx[:::::::::::::::> [finish] F_Stage1()")
 end
 
-function F_Stage1_Setup() -- ! Modified
+function F_Stage1_Setup()
     --print("()xxxxx[:::::::::::::::> [start] F_Stage1_Setup()")
     SoundPlayInteractiveStream("MS_MisbehavingLow.rsm", MUSIC_DEFAULT_VOLUME)
     SoundSetMidIntensityStream("MS_MisbehavingMid.rsm", MUSIC_DEFAULT_VOLUME)
@@ -427,10 +426,10 @@ function F_Stage1_Setup() -- ! Modified
             --print("()xxxxx[:::::::::::::::> Waiting for NLockA action tree to load.")
             Wait(0)
         end
-        while not PAnimExists(TRIGGER._NLOCK01A) do -- ! This cycle was outside the if block
-            --print("()xxxxx[:::::::::::::::> Waiting for locker to load.")
-            Wait(0)
-        end
+    end
+    while not PAnimExists(TRIGGER._NLOCK01A) do
+        --print("()xxxxx[:::::::::::::::> Waiting for locker to load.")
+        Wait(0)
     end
     F_SetupLockerTable()
     F_ResetLockerStates(false)
