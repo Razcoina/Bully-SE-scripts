@@ -8,9 +8,9 @@ function main()
     shared.gAreaDataLoaded = true
     if IsMissionCompleated("3_02") then
         F_Bikes()
-        while AreaGetVisible() == 62 and not SystemShouldEndScript() do
-            Wait(0)
-        end
+    end
+    while AreaGetVisible() == 62 and not SystemShouldEndScript() do
+        Wait(0)
     end
     AreaRevertToDefaultPopulation()
     DATUnload(0)
