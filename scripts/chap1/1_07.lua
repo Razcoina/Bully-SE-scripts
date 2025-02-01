@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_BuckWasKnockedOutNIS, may require testing
-]]
-
 ImportScript("Library/LibObjective.lua")
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPed.lua")
@@ -1258,7 +1254,7 @@ function F_DoBuckyGrabbingNIS()
     MusicFadeWithCamera(true)
 end
 
-function F_BuckWasKnockedOutNIS() -- ! Modified
+function F_BuckWasKnockedOutNIS()
     CameraFade(500, 0)
     Wait(501)
     CameraSetWidescreen(true)
@@ -1320,15 +1316,10 @@ function F_BuckWasKnockedOutNIS() -- ! Modified
         PedSetAsleep(gCurrentBully02, false)
         Wait(10)
         PedFollowPath(gCurrentBully02, PATH._1_07_BUCKYPATH, 0, 1)
-        while MinigameIsShowingCompletion() do
-            Wait(0)
-        end
     end
-    --[[
     while MinigameIsShowingCompletion() do
         Wait(0)
     end
-    ]] -- Moved this inside the last if
     PlayerSetInvulnerable(false)
     F_MakePlayerSafeForNIS(false)
     CameraAllowChange(true)
