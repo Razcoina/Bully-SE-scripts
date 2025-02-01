@@ -7,6 +7,7 @@
     * Removed function PriorityQueueText, not present in original script
     * Removed function DumpTextQueue, not present in original script
     * Removed function ResetTextQueueTimer, not present in original script
+    * Modified function ExecuteActionNode, may require testing
     * Modified function AreaTransitionPoint, may require testing
     * Removed function F_CameraTweak, not present in original script
     * Modified function F_ProcessWakeUpMissionBasedLogic, may require testing
@@ -472,14 +473,15 @@ function ResetTextQueueTimer()
     gPreviousTextClock = 0
     gPreviousTextTimer = 0
 end
-]] -- Not present in original script
+]]                                                    -- Not present in original script
 
-function ExecuteActionNode(ped, actionNode, fileName)
+function ExecuteActionNode(ped, actionNode, fileName) -- ! Modified
     if string.find(actionNode, "Global") == nil then
         --print("============>>>> YOU HAVE NOT SPECIFIED A PROPER PATH FOR THE NODE!!!!")
         --print("============>>>> NODE PASSED IN: ", actionNode)
         --print("============>>>> FILE NAME REFERRENCED: ", fileName)
         do return end
+        --[[
         while true do
             Wait(0)
             if ped == nil then
@@ -492,6 +494,21 @@ function ExecuteActionNode(ped, actionNode, fileName)
                 else
                     return true
                 end
+            end
+        end
+        ]] -- Moved this outide the if
+    end
+    while true do
+        Wait(0)
+        if ped == nil then
+            return nil
+        elseif PedIsDead(ped) then
+            return false
+        elseif not PedIsDead(ped) then
+            if not PedIsPlaying(ped, actionNode, true) and not PedIsPlaying(ped, actionNode, false) then
+                PedSetActionNode(ped, actionNode, fileName)
+            else
+                return true
             end
         end
     end
