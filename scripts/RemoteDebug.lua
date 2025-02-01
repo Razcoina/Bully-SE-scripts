@@ -1,3 +1,7 @@
+--[[ Changes ti this file:
+    * Modified function main, may require testing
+]]
+
 gameprint = print
 
 function print(...)
@@ -35,10 +39,14 @@ function HandlePCMessage(cmd, param)
     end
 end
 
-function main()
+function main() -- ! Modified
     if GetNextDebugMessage == nil then
         --print("GetNextDebugMessage function not defined; RemoteDebug script exiting.")
+        --[[
         do return end
+        ]] -- Changed to:
+        return
+        --[[
         while true do
             local cmd, param
             cmd, param = GetNextDebugMessage()
@@ -47,6 +55,16 @@ function main()
             else
                 HandlePCMessage(cmd, param)
             end
+        end
+        ]] -- Moved this outside the if
+    end
+    while true do
+        local cmd, param
+        cmd, param = GetNextDebugMessage()
+        if cmd == nil then
+            Wait(0)
+        else
+            HandlePCMessage(cmd, param)
         end
     end
 end
