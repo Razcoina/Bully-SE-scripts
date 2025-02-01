@@ -1,6 +1,5 @@
 --[[ Changes to this file:
     * Modified function F_FailStuff, may require testing
-    * Modified funcrion main, may require testing
     * Modified function F_MissionLoop, may require testing
 ]]
 
@@ -656,7 +655,7 @@ function F_StimulateCrowd(bNerdStand, bJockStand, bApplause)
     end
 end
 
-function main() -- ! Modified
+function main()
     LoadAnimationGroup("1_03The Setup")
     LoadAnimationGroup("Cheer_Nerd1")
     LoadAnimationGroup("IDLE_NERD_A")
@@ -683,16 +682,7 @@ function main() -- ! Modified
     BlipRemove(hallblip)
     if not bMissionFailed then
         F_MissionLoop()
-        while mission_completed == false do
-            if SoundSpeechPlaying() then
-                LineTime = true
-            else
-                LineTime = false
-            end
-            Wait(0)
-        end
     end
-    --[[
     while mission_completed == false do
         if SoundSpeechPlaying() then
             LineTime = true
@@ -701,7 +691,6 @@ function main() -- ! Modified
         end
         Wait(0)
     end
-    ]] -- Moved this inside the previous if
     F_PlayerGotThingyNIS()
 end
 
