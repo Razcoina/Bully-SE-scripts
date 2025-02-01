@@ -1119,9 +1119,7 @@ function F_MonitorTraining1() -- ! Rewritten
                 L0 = true
                 bGrapplePunches = false
             end
-        else
-            if not PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
-            end
+        elseif not PedIsPlaying(gBully01, "/Global/Actions/Grapples/Front/Grapples", true) then
             gCurrentPlayerMove = 3
             gCurrentCombo = 1
             bGrapplePunches = false
