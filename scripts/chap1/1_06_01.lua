@@ -1,7 +1,6 @@
 --[[ Changes to this file:
     * Heavily modified function F_SetupActions, requires testing
     * Modified function F_AchieveReceiver, may require testing
-    * Modified function F_SetupNextMove, may require testing
     * Modified function F_MissionStageHoboFight, may require testing
 ]]
 
@@ -547,7 +546,7 @@ function F_SetupMissionStageHoboFight()
     gMissionFunction = F_MissionStageHoboFight
 end
 
-function F_SetupNextMove() -- ! Modified
+function F_SetupNextMove()
     if gConditions[gActions.condition] then
         if gActions.condition == 1 then
             ButtonHistoryIgnoreController(true)
@@ -557,16 +556,11 @@ function F_SetupNextMove() -- ! Modified
             ButtonHistoryAddSequenceLocalText("1_06_GRAPPLE")
             ButtonHistorySetSequenceTime(10)
             ButtonHistoryIgnoreController(false)
-            while not PedIsPlaying(gPlayer, gConditions[gActions.condition], true) do
-                Wait(0)
-            end
         end
-        --[[
-        print("[RAUL] Waiting for:", gConditions[gActions.condition])
+        --print("[RAUL] Waiting for:", gConditions[gActions.condition])
         while not PedIsPlaying(gPlayer, gConditions[gActions.condition], true) do
             Wait(0)
         end
-        ]]
         ToggleHUDComponentVisibility(21, false)
     end
     gButtonCorrect = false
