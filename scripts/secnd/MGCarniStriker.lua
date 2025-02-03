@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function HighStrikerRun, may require testing
-]]
-
 local bRunTutorial = GetMissionCurrentAttemptCount() <= 2
 local PINKY_CHEER = 1
 local PINKY_BOO = 2
@@ -209,7 +205,7 @@ function F_HammerSwingDone()
     bHammerSwingDone = true
 end
 
-function HighStrikerRun() -- ! Modified
+function HighStrikerRun()
     local result, power, action = 0, 0, 0
     MinigameStart()
     MinigameEnableHUD(true)
@@ -256,9 +252,6 @@ function HighStrikerRun() -- ! Modified
     local x, y, z = GetPointFromPointList(POINTLIST._HS_CAMLOOKAT, 1)
     CameraLookAtXYZ(x, y, z, true)
     CameraSetSpeed(400, 400, 0)
-    --[[
-    CameraSetPath(PATH._HS_DINGER_CAM_PATH, true)
-    ]] -- Removed this
     Wait(250)
     HighStrikerDingerRespond(result)
     MinigameEnd()

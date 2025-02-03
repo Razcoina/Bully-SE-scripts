@@ -1,14 +1,3 @@
---[[ Changes to this file:
-    * Removed local variable bTestBlip, not present in original script
-    * Modified function T_OldLadyHazardSpawn, may require testing
-    * Modified function OldLadyHazardCreate, may require testing
-    * Modified function EggerHazardCreate, may require testing
-    * Modified function MailManHazardsCreate, may require testing
-    * Modified function CarHazardsCreate, may require testing
-    * Modified function DogHazardsCreate, may require testing
-]]
-
---local bTestBlip = false
 local MISSION_RUNNING = 0
 local MISSION_PASS = 1
 local MISSION_FAIL = 2
@@ -720,7 +709,7 @@ gOldLadyEvents = {
     "BOISTEROUS"
 }
 
-function T_OldLadyHazardSpawn() -- ! Modified
+function T_OldLadyHazardSpawn()
     local roll = math.random(100)
     bNorth = false
     ladyTrigger = TRIGGER._PR_OLDLADYSOUTHSTART
@@ -728,15 +717,6 @@ function T_OldLadyHazardSpawn() -- ! Modified
         bNorth = true
         ladyTrigger = TRIGGER._PR_OLDLADYNORTHSTART
         --print(">>>[RUI]", "T_OldLadyHazardSpawn Chose North event")
-        --[[
-        while gMissionState == MISSION_RUNNING and MissionActive() do
-            if PlayerIsInTrigger(ladyTrigger) then
-                OldLadyHazardCreate(bNorth)
-                break
-            end
-            Wait(0)
-        end
-        ]] -- Moved this outside the if
     end
     while gMissionState == MISSION_RUNNING and MissionActive() do
         if PlayerIsInTrigger(ladyTrigger) then
@@ -746,15 +726,6 @@ function T_OldLadyHazardSpawn() -- ! Modified
         Wait(0)
     end
     --print(">>>[RUI]", "++T_OldLadyHazardSpawn")
-    --[[
-    while gMissionState == MISSION_RUNNING and MissionActive() do
-        if PlayerIsInTrigger(ladyTrigger) then
-            OldLadyHazardCreate(bNorth)
-            break
-        end
-        Wait(0)
-    end
-    ]] -- Moved inside previous if
     --print(">>>[RUI]", "--T_OldLadyHazardSpawn")
     Wait(3000)
     gSpeechTimer = GetTimer()
@@ -775,7 +746,7 @@ function T_OldLadyHazardSpawn() -- ! Modified
     collectgarbage()
 end
 
-function OldLadyHazardCreate(bNorth) -- ! Modified
+function OldLadyHazardCreate(bNorth)
     if bNorth then
         oldlady = POINTLIST._PR_OLDLADYNORTH
         orderly = POINTLIST._PR_ORDERLYNORTH
@@ -788,11 +759,6 @@ function OldLadyHazardCreate(bNorth) -- ! Modified
     gOldLady = PedCreatePoint(185, oldlady, 1)
     PedSetInfiniteSprint(gOldLady, true)
     PedFollowPath(gOldLady, oldladyPath, 1, 2)
-    --[[
-    if bTestBlip then
-        AddBlipForChar(gOldLady, 0, 2, 1)
-    end
-    ]] -- Not present in original script
     gOrderly = PedCreatePoint(53, orderly, 1)
     PedSetTetherToPed(gOrderly, gOldLady, 10)
     --print(">>>[RUI]", "++OldLadyHazardCreate")
@@ -831,18 +797,13 @@ function T_JoggerHazardSpawn()
     --print(">>>[RUI]", "--T_JoggerHazardSpawn")
 end
 
-function EggerHazardCreate() --! Modified
+function EggerHazardCreate()
     if not gEggersHazards then
         return -1
     end
     for _, egger in gEggersHazards do
         if egger.bActive then
             egger.id = PedCreatePoint(30, egger.point, 1)
-            --[[
-            if bTestBlip then
-                AddBlipForChar(egger.id, 0, 2, 1)
-            end
-            ]] -- -- Not present in original script
             PedSetWeapon(egger.id, 312, 4)
             PedCoverSet(egger.id, gPlayer, egger.point, 1, 15, 1, 0, 0, 0, 3, 0, 0, 1, 1, true)
             PedSetPedToTypeAttitude(egger.id, 13, 0)
@@ -865,7 +826,7 @@ function EggerHazardCleanup()
     --print(">>>[RUI]", "++EggerHazardCleanup")
 end
 
-function MailManHazardsCreate() -- ! Modified
+function MailManHazardsCreate()
     if not gMailManHazards then
         return -1
     end
@@ -874,11 +835,6 @@ function MailManHazardsCreate() -- ! Modified
         if MailMan.bActive then
             MailMan.id = PedCreatePoint(127, MailMan.point, 1)
             PedSetTetherToPoint(MailMan.id, MailMan.point, 1, 5)
-            --[[
-            if bTestBlip then
-                AddBlipForChar(MailMan.id, 0, 2, 1)
-            end
-            ]] -- Not present in original script
         end
     end
     bMailManHazardsCreated = true
@@ -915,7 +871,7 @@ function MailManHazardsCleanup()
     --print(">>>[RUI]", "--MailManHazardsCleanup")
 end
 
-function CarHazardsCreate() -- ! Modified
+function CarHazardsCreate()
     --print(">>>[RUI]", "++CarHazardsCreate")
     if not gCarHazards then
         return -1
@@ -937,11 +893,6 @@ function CarHazardsCreate() -- ! Modified
                 Wait(0)
             end
             VehicleEnableEngine(car.id, true)
-            --[[
-            if bTestBlip then
-                AddBlipForChar(car.driver, 0, 2, 1)
-            end
-            ]] -- Not present in original script
         end
     end
     bCarHazardsCreated = true
@@ -1015,7 +966,7 @@ function CarHazardsCleanup(bForce)
     --print(">>>[RUI]", "--CarHazardsCleanup")
 end
 
-function DogHazardsCreate() -- ! Modified
+function DogHazardsCreate()
     if not gDogHazards then
         return -1
     end
@@ -1024,11 +975,6 @@ function DogHazardsCreate() -- ! Modified
         if dog.bActive then
             dog.id = PedCreatePoint(RandomTableElement(gDogModels), dog.point, 1)
             PedSetTetherToPoint(dog.id, dog.point, 1, 5)
-            --[[
-            if bTestBlip then
-                AddBlipForChar(dog.id, 0, 2, 1)
-            end
-            ]] -- Not present in original script
         end
     end
     bDogHazardsCreated = true

@@ -1,16 +1,7 @@
---[[ Changed to this file:
-    * Added one local variable
-    * Modified value of one local variable
-    * Modified function F_IntroCinematic, may require testing
-    * Modified function F_EndIntroCinematic, may require testing
-    * Modified function F_RunMinigameLoop, may require testing
-    * Modified function F_MinigameFinished, may require testing
-]]
-
 local nCurrentClass
 local bStageLoaded = false
 local missionSuccess = false
-local L3_1 = 0 -- ! Cannot recover original name
+local L3_1 = 0
 local nCurrentQuestion = 1
 local QT_HIGHEST = 0
 local QT_LOWEST = 1
@@ -1308,9 +1299,6 @@ local tblMath04 = {
     },
     {
         questionType = QT_EQUATION,
-        --[[
-        title = "0.625Kg = ?",
-        ]] -- Changed to:
         title = ".625Kg = ?",
         texture = nil,
         numItems = nil,
@@ -2104,7 +2092,7 @@ function main()
     F_IntroCinematic()
 end
 
-function F_IntroCinematic() -- ! Modified
+function F_IntroCinematic()
     PedSetPosPoint(gPlayer, POINTLIST._C9_PSTART, 1)
     hattrick = PedCreatePoint(61, POINTLIST._C9_HATTRICK)
     student1 = PedCreatePoint(3, POINTLIST._C9_STUDENTS, 1)
@@ -2119,9 +2107,6 @@ function F_IntroCinematic() -- ! Modified
     PedSetAsleep(hattrick, true)
     CameraSetWidescreen(true)
     Wait(1000)
-    --[[
-    PedFaceHeading(hattrick, 0, 0)
-    ]] -- Removed this
     if not F_CheckIfPrefect() then
         CameraFade(1000, 1)
     end
@@ -2160,13 +2145,10 @@ function F_IntroCinematic() -- ! Modified
     F_EndIntroCinematic()
 end
 
-function F_EndIntroCinematic() -- ! Modified
+function F_EndIntroCinematic()
     MinigameStart()
     ClassMathSetNumQuestions(getTableSize(tblClasses[nCurrentClass].questionTable))
     F_RunQuestion(tblClasses[nCurrentClass].questionTable[nCurrentQuestion])
-    --[[
-    SoundPlayStream("MS_MathClass.rsm", 0.85, 0, 0)
-    ]] -- Changed to:
     SoundPlayStream("MS_MathClass.rsm", 0.15, 0, 0)
     F_InitRules()
 end
@@ -2190,7 +2172,7 @@ function F_InitRules()
     F_RunMinigameLoop()
 end
 
-function F_RunMinigameLoop() -- ! Modified
+function F_RunMinigameLoop()
     CameraSetWidescreen(false)
     MinigameEnableHUD(true)
     Wait(1000)
@@ -2208,9 +2190,6 @@ function F_RunMinigameLoop() -- ! Modified
             ClassMathSubtractTime(tblClasses[nCurrentClass].timeDecr)
             SoundPlay2D("MathIncorrect")
             Wait(100)
-            --[[
-            SoundPlayScriptedSpeechEvent(hattrick, "ClassMath", 12, "large")
-            ]] -- Changed to:
             SoundPlayScriptedSpeechEvent(hattrick, "ClassMath", 12, "generic", true)
         end
         if ClassMathAnswerGiven() == true then
@@ -2236,7 +2215,7 @@ function getTableSize(tbl)
     return count
 end
 
-function F_MinigameFinished() -- ! Modified
+function F_MinigameFinished()
     MinigameEnableHUD(false)
     CameraSetWidescreen(true)
     PedFaceObject(gPlayer, hattrick, 2, 0)
@@ -2244,9 +2223,6 @@ function F_MinigameFinished() -- ! Modified
     while PedIsPlaying(gPlayer, "/Global/C9/PlayerSit/PlayerStand", true) do
         Wait(0)
     end
-    --[[
-    SoundStopCurrentSpeechEvent(hattrick)
-    ]] -- Removed this
     if missionSuccess then
         if nCurrentClass == 1 then
             SoundPlayScriptedSpeechEvent(hattrick, "ClassMath", 6, "large", true)
@@ -2261,10 +2237,7 @@ function F_MinigameFinished() -- ! Modified
         end
         PedSetActionNode(gPlayer, "/Global/C9/PlayerVictory/PlayerVictory03", "Act/Conv/C9.act")
     else
-        --[[
-        SoundPlayScriptedSpeechEvent(hattrick, "ClassMath", 11, "large", true)
-        ]]                         -- Moved this inside the following if:
-        if nCurrentClass == 1 then -- Adde this
+        if nCurrentClass == 1 then
             SoundPlayScriptedSpeechEvent(hattrick, "ClassMath", 11, "large", true)
         end
         SoundPlay2D("Fatigued01")

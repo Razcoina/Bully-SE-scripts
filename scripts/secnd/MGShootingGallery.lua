@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-]]
-
 local gMissionTime = 60
 local gMissionTimeLimit = 60000
 local bRunTutorial = GetMissionCurrentAttemptCount() <= 2
@@ -551,7 +546,7 @@ function MissionSetup()
     math.randomseed(GetTimer())
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     SoundFadeWithCamera(true)
     MusicFadeWithCamera(true)
     MinigameDestroy()
@@ -562,20 +557,11 @@ function MissionCleanup() -- ! Modified
     end
     F_UnloadTriggers()
     collectgarbage()
-    --[[
-    AreaTransitionPoint(0, POINTLIST._MGS_PLAYEREXIT)
-    while AreaGetVisible() ~= 0 do
-        Wait(0)
-    end
-    ]] -- Removed this
     CameraAllowChange(true)
     CameraSetShot(2, 0)
     CameraReturnToPlayer()
     CameraClearRotationLimit()
     CameraDefaultFOV()
-    --[[
-    CameraReset()
-    ]] -- Removed this
     PlayerWeaponHudLock(false)
     PedDestroyWeapon(gPlayer, 391)
     CameraSetActive(1)
@@ -591,7 +577,7 @@ function MissionCleanup() -- ! Modified
         --print("()xxxxx[:::::::::::::::> [mgshootinggallery.lua] Restoring teddy bear.")
         bPlayerEnteredWithBear = false
     end
-    MissionDontFadeInAfterCompetion() -- Added this
+    MissionDontFadeInAfterCompetion()
     --print(">>>[RUI]", "--MissionCleanup")
 end
 
@@ -648,7 +634,7 @@ function MissionInit()
     --print(">>>[RUI]", "!!MissionInit")
 end
 
-function main() -- ! Modified
+function main()
     MissionInit()
     F_DisplayCountdown()
     if not bQuitGame then
@@ -703,35 +689,26 @@ function main() -- ! Modified
             Wait(3000)
             CameraFade(500, 0)
             Wait(501)
-            AreaDisableCameraControlForTransition(true) -- Added this
-            PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT) -- Added this
-            AreaDisableCameraControlForTransition(false) -- Added this
-            --[[
-            MissionSucceed(false, true, false)
-            ]] -- Changed to:
+            AreaDisableCameraControlForTransition(true)
+            PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT)
+            AreaDisableCameraControlForTransition(false)
             MissionSucceed(true, true, false)
         else
             SoundPlayAmbientSpeechEvent(gCarny, "CARNIE_GAME_EXIT_LOSE")
             Wait(3000)
             CameraFade(500, 0)
             Wait(501)
-            AreaDisableCameraControlForTransition(true) -- Added this
-            PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT) -- Added this
-            AreaDisableCameraControlForTransition(false) -- Added this
-            --[[
-            MissionFail(false, false)
-            ]] -- Changed to:
+            AreaDisableCameraControlForTransition(true)
+            PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT)
+            AreaDisableCameraControlForTransition(false)
             MissionFail(true, false)
         end
     else
         CameraFade(500, 0)
         Wait(501)
-        AreaDisableCameraControlForTransition(true) -- Added this
-        PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT) -- Added this
-        AreaDisableCameraControlForTransition(false) -- Added this
-        --[[
-        MissionFail(false, false)
-        ]] -- Changed to:
+        AreaDisableCameraControlForTransition(true)
+        PlayerSetPosPoint(POINTLIST._MGS_PLAYEREXIT)
+        AreaDisableCameraControlForTransition(false)
         MissionFail(true, false)
     end
 end

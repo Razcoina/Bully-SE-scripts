@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Added local variable
-    * Modified function main, may require testing
-    * Heavily modified function F_InitRules, requires testing
-    * Modified function F_IntroCinematic, requires testing
-]]
-
 local missionSuccess = false
 local nCurrentWordScore = 0
 local nCurrentScore = 0
@@ -50,7 +43,7 @@ local tblClasses = {
         grade = 5
     }
 }
-local tblClasses1 = { -- Added this
+local tblClasses1 = {
     {
         cinconv = "C7_INTRO_1",
         percent = 14,
@@ -154,7 +147,7 @@ function MissionCleanup()
     DATUnload(2)
 end
 
-function main() -- ! Modified
+function main()
     while not bStageLoaded do
         Wait(0)
         print("STUCK HERE")
@@ -174,9 +167,6 @@ function main() -- ! Modified
     F_IntroCinematic()
     ClassEnglishSetLevel(nCurrentClass)
     MinigameStart()
-    --[[
-    SoundPlayStream("MS_EnglishClass.rsm", 0.9, 0, 0)
-    ]] -- Changed to:
     SoundPlayStream("MS_EnglishClass.rsm", 0.15, 0, 0)
     F_InitRules()
     CameraSetWidescreen(false)
@@ -226,9 +216,6 @@ function main() -- ! Modified
     end
     SoundLoopPlay2D("TimeWarningLOOP", false)
     if missionSuccess and not bIsRepeatable then
-        --[[
-        PlayerSetGrade(2, tblClasses[nCurrentClass].grade)
-        ]] -- Changed to:
         if GetLanguage() == 7 then
             PlayerSetGrade(2, tblClasses1[nCurrentClass].grade)
         else
@@ -236,22 +223,13 @@ function main() -- ! Modified
         end
     end
     if not bIsRepeatable then
-        if GetLanguage() == 7 then -- Added this if, code inside was already here
-            --[[
-            if 0 < tblClasses[nCurrentClass].grade then
-            ]] -- Changed to:
+        if GetLanguage() == 7 then
             if 0 < tblClasses1[nCurrentClass].grade then
-                --[[
-                MinigameSetGrades(2, tblClasses[nCurrentClass].grade - 1)
-                ]] -- Changed to:
                 MinigameSetGrades(2, tblClasses1[nCurrentClass].grade - 1)
             else
-                --[[
-                MinigameSetGrades(2, tblClasses[nCurrentClass].grade)
-                ]] -- Changed to:
                 MinigameSetGrades(2, tblClasses1[nCurrentClass].grade)
             end
-        else -- Added this
+        else
             if 0 < tblClasses[nCurrentClass].grade then
                 MinigameSetGrades(2, tblClasses[nCurrentClass].grade - 1)
             else
@@ -298,22 +276,7 @@ function main() -- ! Modified
     CameraReset()
 end
 
-function F_InitRules() -- ! Heavily modified
-    --[[
-    if tblClasses[nCurrentClass].timer then
-        if tblClasses[nCurrentClass].taxicab then
-            ClassEnglishSetTimer(tblClasses[nCurrentClass].timer, tblClasses[nCurrentClass].taxicab)
-        else
-            ClassEnglishSetTimer(tblClasses[nCurrentClass].timer, 0)
-        end
-    end
-    if tblClasses[nCurrentClass].percent then
-        ClassEnglishSetScorePercentage(tblClasses[nCurrentClass].percent)
-    end
-    local dif = (100 - tblClasses[nCurrentClass].percent) / 2
-    ClassEnglishSetScoreMsg(tblClasses[nCurrentClass].percent, "MGCE_SCMSG1")
-    ClassEnglishSetScoreMsg(tblClasses[nCurrentClass].percent + dif, "MGCE_SCMSG2")
-    ]] -- Modified to the following if and else chunk:
+function F_InitRules()
     if GetLanguage() == 7 then
         if tblClasses1[nCurrentClass].timer then
             if tblClasses1[nCurrentClass].taxicab then
@@ -365,16 +328,13 @@ function F_CalcTime()
     --print(" TIMER ", endTimer - initTimer)
 end
 
-function F_IntroCinematic() -- ! Modified
+function F_IntroCinematic()
     PedSetPosPoint(gPlayer, POINTLIST._C7_PSTART, 1)
     galloway = PedCreatePoint(57, POINTLIST._C7_GALLOWAY)
     student1 = PedCreatePoint(3, POINTLIST._C7_STUDENTS, 1)
     student2 = PedCreatePoint(35, POINTLIST._C7_STUDENTS, 2)
     student3 = PedCreatePoint(66, POINTLIST._C7_STUDENTS, 3)
     Wait(1500)
-    --[[
-    PedFaceHeading(galloway, 0, 0)
-    ]] -- Removed this
     GeometryInstance("kidchair", true, -560.141, 322.159, -1.48522, false)
     PedIgnoreStimuli(galloway, true)
     PedIgnoreStimuli(student1, true)
@@ -408,21 +368,8 @@ function F_IntroCinematic() -- ! Modified
     end
     if nCurrentClass == 1 then
         Wait(0)
-        --[[
-    elseif nCurrentClass == 2 then
-        Wait(0)
-    elseif nCurrentClass == 3 then
-        Wait(2000)
-    ]] -- Removed this
     elseif nCurrentClass == 4 then
-        --[[
-        Wait(3500)
-    ]] -- Changed to:
         Wait(3000)
-        --[[
-    elseif nCurrentClass == 5 then
-        Wait(0)
-    ]] -- Changed to:
     else
         Wait(2000)
     end
@@ -435,30 +382,17 @@ function F_IntroCinematic() -- ! Modified
     PedSetActionNode(gPlayer, "/Global/C7/PlayerSit", "Act/Conv/C7.act")
     if nCurrentClass == 4 then
         F_PlaySpeechAndWait(galloway, "ENGLISH", 7, "large")
-        if GetLanguage() == 7 then -- Added this
+        if GetLanguage() == 7 then
             Wait(2000)
         end
     end
     if nCurrentClass == 1 then
         F_PlaySpeechAndWait(galloway, "ENGLISH", 3, "large")
-        if GetLanguage() == 7 then -- Added this
+        if GetLanguage() == 7 then
             Wait(1462)
         end
     end
-    --[[
-    if nCurrentClass == 1 then
-        Wait(0)
-    elseif nCurrentClass == 2 then
-        Wait(2000)
-    elseif nCurrentClass == 3 then
-        Wait(2000)
-    elseif nCurrentClass == 4 then
-        Wait(0)
-    elseif nCurrentClass == 5 then
-        Wait(2000)
-    end
-    ]]         -- Removed this
-    Wait(1838) -- Added this
+    Wait(1838)
     CameraFade(500, 0)
     Wait(600)
     F_CleanPrefect()

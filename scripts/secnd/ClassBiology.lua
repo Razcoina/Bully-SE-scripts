@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-]]
-
 local DT_FROG = 0
 local DT_RAT = 1
 local DT_PERCH = 2
@@ -78,9 +73,9 @@ function MissionSetup()
     SoundDisableSpeech_ActionTree()
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     --print("[ScottieP] --> Mission Cleanup")
-    PlayerSetControl(0)   -- Added this
+    PlayerSetControl(0)
     HUDRestoreVisibility()
     PlayerWeaponHudLock(false)
     SoundRestartPA()
@@ -115,14 +110,14 @@ function MissionCleanup() -- ! Modified
     end
 end
 
-function main() -- ! Modified
+function main()
     --print("[ScottieP] --> Main")
     while not bStageLoaded do
         Wait(0)
         --print("STUCK HERE")
     end
     F_MakePlayerSafeForNIS(true)
-    PlayerSetControl(0) -- Added this
+    PlayerSetControl(0)
     PlayerWeaponHudLock(true)
     VehicleOverrideAmbient(0, 0, 0, 0)
     AreaClearAllPeds()
@@ -135,10 +130,7 @@ function main() -- ! Modified
     LoadAnimationGroup("SBULL_X")
     F_IntroCinematic()
     ClassBiologySetAnimal(nCurrentClass - 1)
-    MinigameStart()
-    --[[
-    SoundPlayStream("MS_BiologyClass.rsm", 0.95, 0, 0)
-    ]] -- Changed to: 
+    MinigameStart() 
     SoundPlayStream("MS_BiologyClass.rsm", 0.15, 0, 0)
     F_InitRules()
     CameraSetWidescreen(false)

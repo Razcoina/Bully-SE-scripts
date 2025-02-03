@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Replaced function calls to SoundPlay2DWii by SoundPlay2D
-]]
-
 local missionSuccess = false
 local missionFailed = true
 local prefect
@@ -246,7 +241,7 @@ function MissionSetup()
     end
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     HUDRestoreVisibility()
     SoundRestartPA()
     SoundEnableInteractiveMusic(true)
@@ -309,11 +304,6 @@ function MissionCleanup() -- ! Modified
         if gUnlockText ~= nil then
             MinigameSetCompletion("MEN_BLANK", true, 0, gUnlockText)
         end
-        --[[
-        while PedIsPlaying(gPlayer, animsroot .. "Success", true) do
-            Wait(0)
-        end
-        ]] -- Removed this
     end
     TutorialRemoveMessage()
     PedSetFlag(gPlayer, 128, false)
