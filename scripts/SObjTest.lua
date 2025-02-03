@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified table ModelTable, may require testing
-]]
-
 LINEBREAK = 9999
 TestX = 2
 TestY = -15
@@ -24,20 +20,7 @@ shared.g_currentCreatedPed = -1
 PedLineupCreated = false
 shared.PedLineupTable = {}
 
-ModelTable = { -- ! Modified
-    --[[
-    MODELENUM._TE_GEOGRAPHY,
-    MODELENUM._TE_MUSIC,
-    MODELENUM._TO_SANTA,
-    MODELENUM._TO_SANTA_NB,
-    MODELENUM._TO_HOBOSANTA,
-    MODELENUM._TO_ELFF,
-    MODELENUM._TO_ELFM,
-    MODELENUM._PETER_NUTCRACK,
-    MODELENUM._GN_FATGIRL_FAIRY,
-    MODELENUM._GN_LGIRL_2_FLOWER,
-    MODELENUM._GN_HBOY_FLOWER,
-    ]] -- Not present in original script
+ModelTable = {
     MODELENUM._DOLEAD_RUSSELL,
     MODELENUM._DOLEAD_RUSSELL_BU,
     MODELENUM._GN_BULLY01,

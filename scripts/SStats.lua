@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Added one missing stat: "STAT0182"
-]]
-
 function sstats()
     StatLayoutAddGroup("G1")
     StatLayoutAddHeading("H1-0")
@@ -185,7 +181,7 @@ function sstats()
     StatLayoutAddGroup("G3")
     StatLayoutAddHeading("H3-0")
     StatLayoutAddStat("STAT0181", 129)
-    StatLayoutAddStat("STAT0182", 132) -- Added this
+    StatLayoutAddStat("STAT0182", 132)
     StatLayoutAddStat("STAT0183", 130)
     StatLayoutAddStat("STAT0184", 131)
     StatLayoutAddHeading("H3-1")
