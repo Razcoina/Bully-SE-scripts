@@ -1,22 +1,10 @@
---[[ Changes to this file:
-    * Removed unused local variables
-    * Modified function F_TableInit, may require testing
-    * Modified function MissionSetup, may require testing
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-    * Modified function F_InitDATLoad, may require testing
-]]
-
 ImportScript("Library/BikeRace_util.lua")
 local tblRace, tblPlayer, tblRacer, tblShortcut, tblHighlightedNode, tblPersistentEntity, missionName
 local raceLevel = 0
 local gReward = 1500
---[[
-local signedUp = true
-]] -- Not present in original script
 local nispath, nispathlook, szSpecialGroupToCleanup
 
-function F_TableInit() -- ! Modified
+function F_TableInit()
     if shared.g3_R08_CurrentRace == 0 then
         tblRace = {
             laps = 1,
@@ -1857,29 +1845,18 @@ function F_TableInit() -- ! Modified
             26
         }
         tblPersistentEntity = {}
-        --[[
-    else
-        TextPrintString("ERROR: You must sign up for a race before running this mission -- Jak", 3, 2)
-    ]] -- Not present in original script
     end
 end
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     GarageSetIsDeactivated(true)
     SoundEnableInteractiveMusic(false)
-    --[[
-    if signedUp == true then
-        DATInit()
-        WeaponRequestModel(300)
-        VehicleOverrideAmbient(2, 2, 0, 0)
-    end
-    ]] -- Not present in original script
     DATInit()
     WeaponRequestModel(300)
     VehicleOverrideAmbient(2, 2, 0, 0)
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     EnablePOI(true, true)
     AreaRevertToDefaultPopulation()
     VehicleRevertToDefaultAmbient()
@@ -1897,23 +1874,6 @@ function MissionCleanup() -- ! Modified
     GarageSetIsDeactivated(false)
     SoundEnableInteractiveMusic(true)
     SoundStopInteractiveStream()
-    --[[
-    if signedUp == true then
-        for i, entity in tblPersistentEntity do
-            DeletePersistentEntity(entity.poolIndex, entity.type)
-        end
-        if szSpecialGroupToCleanup then
-            AreaLoadSpecialEntities(szSpecialGroupToCleanup, false)
-        end
-        VehicleRevertToDefaultAmbient()
-        AreaRevertToDefaultPopulation()
-        DATUnload(2)
-        if tblRace.won == true then
-            shared.g3_R08_CurrentRace = nil
-            shared.g3_R08_LevelAttained = raceLevel
-        end
-    end
-    ]] -- Not present in original script
     for i, entity in tblPersistentEntity do
         DeletePersistentEntity(entity.poolIndex, entity.type)
     end
@@ -1929,16 +1889,13 @@ function MissionCleanup() -- ! Modified
     end
 end
 
-function main() -- ! Modified
+function main()
     LoadAnimationGroup("3_G3")
     while not shared.g3_R08_CurrentRace do
         Wait(0)
     end
     DisablePOI(true, true)
     PedSetMissionCritical(gPlayer, true, cbCritPlayer)
-    --[[
-    if signedUp == true then
-    ]] -- Not present in original script
     --print("faded")
     F_InitDATLoad()
     VehicleOverrideAmbient(0, 0, 0, 0)
@@ -1964,12 +1921,6 @@ function main() -- ! Modified
         end
     end
     --print("controlled")
-    --[[
-    else
-        SoundPlayMissionEndMusic(false, 8)
-        MissionFail()
-    end
-    ]] -- Not present in original script
 end
 
 function F_InitDATLoad()
@@ -2017,11 +1968,6 @@ function F_InitDATLoad()
     elseif shared.g3_R08_CurrentRace == 13 then
         DATLoad("3_R08_BusShortC.DAT", 2)
         raceLevel = 1
-        --[[
-    else
-        TextPrintString("ERROR: You must sign up for a race before launching mission -- Jak", 3, 2)
-        signedUp = false
-    ]] -- Not present in original script
     end
     if shared.g3_R08_CurrentRace == 0 then
         nispath, nispathlook = PATH._3_R08_RICHPATHCAM, PATH._3_R08_RICHPATHCAMLOOK

@@ -1,12 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_TableInit, may require testing
-    * Removed unused local variables
-    * Removed function F_PlayerPressedDebugSquare, not present in original script
-    * Removed function F_PlayerSelectNIS, not present in original script
-    * Removed function F_EndingCinematicTest, not present in original script
-    * Modified function main, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/BikeRace_util.lua")
 ImportScript("Library/LibPropNewer.lua")
@@ -23,9 +14,6 @@ local cheeringCrowdGenerated = false
 local ambientLola, bCritFail, bLolaMoved
 local bWin = false
 local szFailReason
---[[
-local currentNIS = 1
-]] -- Not present in original script
 local tblRequestCheerers = {
     22,
     29,
@@ -33,7 +21,7 @@ local tblRequestCheerers = {
     27
 }
 
-function F_TableInit() -- ! Modified
+function F_TableInit()
     tblAnimGroup = {
         "NPC_Love",
         "F_Girls",
@@ -398,18 +386,6 @@ function F_TableInit() -- ! Modified
     }
     tblRaceInfo = { race = tblRace, racers = tblRacer }
     tblObjective = {
-        --[[
-        enterNISDebug = {
-            successConditions = { F_PlayerPressedDebugSquare }
-        },
-        selectNIS = {
-            activator = {
-                "enterNISDebug"
-            },
-            successConditions = { F_PlayerSelectNIS },
-            successConditionParam = { F_EndingCinematicTest }
-        },
-        ]] -- Not present in original script
         winRace = {
             successConditions = { L_RaceIsOver },
             successConditionParam = tblRaceInfo,
@@ -440,37 +416,6 @@ function F_TableInit() -- ! Modified
         }
     }
 end
-
---[[
-function F_PlayerPressedDebugSquare()
-    retVal = F_IsButtonPressedWithDelayCheck(6, 1)
-    return false
-end
-
-function F_PlayerSelectNIS(tblNIS)
-    if F_IsButtonPressedWithDelayCheck(11, 1) then
-        local NISCount = table.getn(tblNIS)
-        currentNIS = currentNIS - 1
-        currentNIS = 0 < currentNIS and currentNIS or NISCount
-    elseif F_IsButtonPressedWithDelayCheck(13, 1) then
-        local NISCount = table.getn(tblNIS)
-        currentNIS = currentNIS + 1
-        currentNIS = NISCount >= currentNIS and currentNIS or 1
-    elseif F_IsButtonPressedWithDelayCheck(6, 1) then
-        tblNIS[currentNIS]()
-        CameraFade(1000, 1)
-    end
-    TextPrintString("Current NIS: " .. tostring(currentNIS), 0, 1)
-    return false
-end
-
-function F_EndingCinematicTest()
-    F_EndingCinematic_new()
-    SoundPlayMissionEndMusic(true, 8)
-    MissionSucceed(true)
-    RaceForceEnd()
-end
-]] -- Not present in original script
 
 function F_EndingCinematicPlacement()
     tblPlayer.bike = nil
@@ -855,7 +800,7 @@ function MissionCleanup()
     AreaEnsureSpecialEntitiesAreCreatedWithOverride("3_G3", 0)
 end
 
-function main() -- ! Modified
+function main()
     LoadActionTree("Act/Conv/3_G3.act")
     LoadActionTree("Act/Anim/Race.act")
     LoadAnimationGroup("3_G3")
@@ -878,12 +823,6 @@ function main() -- ! Modified
         Wait(0)
     end
     RaceHUDVisible(false)
-    --[[
-    for i, objective in tblObjective do
-        print("Objective " .. tostring(i) .. " was failed? " .. tostring(objective.failed))
-        print("Objective " .. tostring(i) .. " was completed? " .. tostring(objective.completed))
-    end
-    ]] -- Not present in original script
     PedSetMissionCritical(tblRaceInfo.race.countdown_ped.id, false)
     if bWin then
         F_EndingCinematic_new()

@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionSetup, may require testing
-    * Modified function MissionCleanup, may require testing
-    * Modified function F_AnimateSanta, may require testing
-    * Modified function F_UpdateSanta, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibObjective.lua")
 ImportScript("Library/LibPed.lua")
@@ -70,15 +63,12 @@ local currentTime = 0
 local timeOutOfArea = 0
 local bMissionFinised = false
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     WeatherSet(2)
     PlayCutsceneWithLoad("3-01BA", true)
     MissionDontFadeIn()
     ClockSet(19, 30)
     LoadAnimationGroup("NPC_Adult")
-    --[[
-    LoadAnimationGroup("MIRACLE")
-    ]] -- Not present in original script
     LoadPedModels({
         bumSantaModel,
         santaModel,
@@ -171,11 +161,11 @@ function main()
     F_DestroyCastle()
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     UnpauseGameClock()
     AreaLoadSpecialEntities("Miracle", false)
     AreaRevertToDefaultPopulation()
-    AreaEnableAllPatrolPaths() -- Added this
+    AreaEnableAllPatrolPaths()
     HideGeneralHealthBar()
     if PedIsValid(bum) == true then
         PedMakeAmbient(bum)
@@ -184,9 +174,6 @@ function MissionCleanup() -- ! Modified
     PedFlee(santa, gPlayer)
     PedDelete(santa)
     UnLoadAnimationGroup("NPC_Adult")
-    --[[
-    UnLoadAnimationGroup("MIRACLE")
-    ]] -- Not present in original script
     WeatherRelease()
     DATUnload(2)
     CameraSetWidescreen(false)
@@ -1138,21 +1125,18 @@ end
 
 local bSantaDoingMadAnim = false
 
-function F_AnimateSanta() -- ! Modified
+function F_AnimateSanta()
     if PedIsValid(santa) then
         bSantaDoingMadAnim = true
         PedFaceObject(santa, gPlayer, 3, 1)
         Wait(1000)
-        --[[
-        PedSetActionNode(santa, "/Global/3_XM/Anims/SantaMad", "Act/Conv/3_XM.act")
-        ]] -- Changed to:
         PedSetActionNode(santa, "/Global/3_XM/Anims/ShakeFist", "Act/Conv/3_XM.act")
         Wait(2000)
         bSantaDoingMadAnim = false
     end
 end
 
-function F_UpdateSanta() -- ! Modified
+function F_UpdateSanta()
     while bMissionFinised == false do
         Wait(1000)
         if PedIsValid(santa) and bSantaDoingMadAnim == false then
@@ -1172,11 +1156,6 @@ function F_UpdateSanta() -- ! Modified
                     PedFaceXYZ(santa, x, y, z, 1)
                     Wait(1500)
                 end
-                --[[
-                if PedIsPlaying(santa, "/Global/3_XM/Anims/SantaIdle", true) == false then
-                    PedSetActionNode(santa, "/Global/3_XM/Anims/SantaIdle", "Act/Conv/3_XM.act")
-                end
-                ]] -- Not present in original script
             end
         end
     end

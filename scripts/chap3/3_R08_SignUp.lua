@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-]]
-
 local missionName
 
 function MissionSetup()
@@ -10,7 +6,7 @@ end
 function MissionCleanup()
 end
 
-function main() -- ! Modified
+function main()
     local missionName = MissionGetCurrentName()
     if string.find(missionName, "Rich Area 1") then
         shared.g3_R08_CurrentRace = 0
@@ -27,10 +23,6 @@ function main() -- ! Modified
     elseif string.find(missionName, "School") then
         shared.g3_R08_CurrentRace = 4
         TextPrint("GOTO_RACESCHOOL", 3, 1)
-        --[[
-    else
-        TextPrintString("ERROR: Race sign-up failed -- Jak", 3, 2)
-    ]] -- Not present in original script
     end
     SoundPlayMissionEndMusic(true, 10)
     MissionSucceed()

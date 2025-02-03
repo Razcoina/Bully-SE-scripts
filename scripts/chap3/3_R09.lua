@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_PrepStage01, may require testing
-]]
-
 local gMaxKills = 6
 local gSimultEnemies = 3
 local gTimeForSpawns = 1500
@@ -1407,7 +1403,7 @@ function F_JockStage02DodgeballGame()
     end
 end
 
-function F_PrepStage01() -- ! Modified
+function F_PrepStage01()
     if gStagePart == 0 then
         AreaTransitionPoint(27, POINTLIST._3_R09_POSTERVIEWING, 1, true)
         Wait(1000)
@@ -1487,9 +1483,6 @@ function F_PrepStage01() -- ! Modified
         CameraFade(-1, 0)
         Wait(FADE_OUT_TIME)
         CameraSetWidescreen(false)
-        --[[
-        AreaTransitionPoint(0, POINTLIST._3_R09_BEACH, nil, true)
-        ]] -- Modified to:
         AreaTransitionPoint(0, POINTLIST._3_R09_BOXINGOUTSIDE, nil, true)
         gStagePart = 3
     elseif gStagePart == 3 then

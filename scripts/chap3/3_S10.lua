@@ -1,11 +1,3 @@
---[[ Changes to this file:
-    * Removed unused if chunk
-    * Removed function TagsReset, not present in original script
-    * Removed function TagsBlipAll, not present in original script
-    * Removed function TagsTotal, not present in original script
-    * Modified function MissionInit, may require testing
-]]
-
 local MISSION_DURATION = 5 * 60
 local SPRAY_PAINT_COST = 100
 local MAX_TARGET_TAGS = 2
@@ -116,52 +108,6 @@ function F_SetupCounter(bOn, tmax)
         CounterClearIcon()
     end
 end
-
---[[
-if PlayerHasItem(321) then
-    PedDestroyWeapon(gPlayer, 321)
-    --print(">>>[RUI]", "DEBUG removing spray for flow")
-end
-
-
-function TagsReset(tagGroup)
-    local set = tagGroup or -1
-    if set == 1 then
-        TagsActivate(gTutorialTag)
-    elseif set == 2 then
-        TagsActivate(gGreaserTags)
-    elseif set == 3 then
-    else
-        TagsActivate(gTutorialTag)
-        TagsActivate(gGreaserTags)
-    end
-end
-
-function TagsBlipAll(tagGroup)
-    local set = tagGroup or -1
-    if set == 1 then
-        TagsBlip(gTutorialTag)
-    elseif set == 2 then
-        TagsBlip(gGreaserTags)
-    elseif set == 3 then
-    else
-        TagsBlip(gTutorialTag)
-        TagsBlip(gGreaserTags)
-    end
-end
-
-function TagsTotal()
-    local money = 0
-    local time = 0
-    for _, tag in gGreaserTags do
-        money = money + tag.money
-        time = time + tag.time
-    end
-    money = money / 100
-    print(">>>[RUI]", "total money to be made = $" .. tostring(money))
-    print(">>>[RUI]", "total time bonus = " .. tostring(time) .. " seconds")
-end
-]] -- Not present in original script
 
 function TagsBlip(tagTbl, bOn, bShortRange)
     if not tagTbl then
@@ -981,18 +927,12 @@ function FailPlayerForLeavingPoorArea()
     return false
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     --print(">>>[RUI]", "!!MissionInit")
     shared.bSprayUnlocked = false
     LoadWeaponModels({ 321 })
     PlayerSetPosPoint(POINTLIST._3_S10_PLAYER_START)
     F_TagsInit()
-    --[[
-    if PlayerHasItem(321) or PlayerHasWeapon(321) then
-        PedDestroyWeapon(gPlayer, 321)
-        print(">>>[RUI]", "DEBUG removing spray for flow")
-    end
-    ]] -- Not present in original script
 end
 
 function FailMission(message)

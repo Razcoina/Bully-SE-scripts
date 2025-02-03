@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-    * Modified function F_SetupCameraWork, may require testing
-]]
-
 local tObjectives = {}
 local tAnims = {}
 local tKidSet = {}
@@ -80,9 +74,9 @@ function F_YearBookDummy()
     --print("F_YearBookDummy")
 end
 
-function MissionCleanup()     -- ! Modified
+function MissionCleanup()
     --print("3.10D MissionCleanup")
-    PhotoShowExitString(true) -- Added this
+    PhotoShowExitString(true)
     CameraSetActive(1)
     CameraReset()
     CameraReturnToPlayer()
@@ -111,7 +105,7 @@ function MissionCleanup()     -- ! Modified
     PedRestoreWeaponInventorySnapshot(gPlayer)
 end
 
-function main() -- ! Modified
+function main()
     --print("3.10D Main()")
     Rudy = PedCreatePoint(252, POINTLIST._3_01D_RUDYSTART)
     PedSetFlag(Rudy, 19, true)
@@ -131,9 +125,6 @@ function main() -- ! Modified
     F_SetupCollectables()
     table.insert(tObjectives, MissionObjectiveAdd("3_01D_OBJ1_01"))
     TextPrint("3_01D_OBJ1_01", 5, 1)
-    --[[
-    MissionTimerStart(180)
-    ]] -- Changed to:
     MissionTimerStart(185)
     while not (bObjectsCollected or bMissionOver) do
         Wait(0)
@@ -843,7 +834,7 @@ function F_RunAnimCycle()
     end
 end
 
-function F_SetupCameraWork() -- ! Modified
+function F_SetupCameraWork()
     --print("F_SetupCameraWork()")
     F_CollectableCleanup()
     if PlayerIsInAnyVehicle() then
@@ -862,7 +853,7 @@ function F_SetupCameraWork() -- ! Modified
     CameraSetActive(2)
     PedSetFlag(gPlayer, 2, true)
     CameraSetFOV(30)
-    PhotoShowExitString(false) -- Added this
+    PhotoShowExitString(false)
     CameraSetRotationLimit(0, 0, -1, 1, 0)
     CameraAllowChange(false)
     PlayerSetControl(1)
@@ -951,45 +942,41 @@ function F_SetupLine()
 end
 
 function F_SetFaceOn()
-    --[[
-    print("F_SetFaceOn")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    print("[RW]: SMILE ON")
-    ]]
+    --print("F_SetFaceOn")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
+    --print("[RW]: SMILE ON")
     bGoodFace = true
 end
 
 function F_SetFaceOff()
-    --[[
-    print("F_SetFaceOff")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    print("[RW]: FROWN AGAIN")
-    ]]
+    --print("F_SetFaceOff")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
+    --print("[RW]: FROWN AGAIN")
     bGoodFace = false
 end
 

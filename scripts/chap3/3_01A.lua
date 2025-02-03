@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Modified function F_StartMission, may require testing
-]]
-
 local bLoop = true
 local countMax = 3
 local CurrentMissionIndex = 0
@@ -137,7 +132,7 @@ function MissionSetup()
     LoadWeaponModels({ 313 })
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
     F_KillControls(false)
@@ -148,7 +143,7 @@ function MissionCleanup() -- ! Modified
     lVictim = nil
     tblVictimInfo = nil
     UnloadModels(tblPedModels)
-    PlayerSetInvulnerable(false) -- Added this
+    PlayerSetInvulnerable(false)
 end
 
 function main()
@@ -236,11 +231,11 @@ end
 local bGuyGotHit = false
 local bEndVictimCheck = false
 
-function F_StartMission() -- ! Modified
+function F_StartMission()
     local bCompleted = false
     local bx, by, bz = GetPointList(tblMissionParams[CurrentMissionIndex][1])
     local bTimerExpired = false
-    PlayerSetInvulnerable(true) -- Added this
+    PlayerSetInvulnerable(true)
     F_SetVictim()
     F_SetVictim()
     Wait(100)

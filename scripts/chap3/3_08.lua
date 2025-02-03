@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionSetup, may require testing
-    * Modified function F_StartNIS, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPed.lua")
 local gMissionRunning = true
@@ -21,14 +16,14 @@ local bPlayerGoToPrincipal = false
 local gCurrentArea
 local gMissionTimer = 0
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     MissionDontFadeIn()
     MissionSurpressMissionNameText()
     LoadAnimationGroup("Try_Clothes")
     LoadAnimationGroup("MINI_Lock")
     LoadAnimationGroup("NIS_3_08")
     PedSetUniqueModelStatus(59, -1)
-    DATLoad("PriOffice.DAT", 2) -- Added this
+    DATLoad("PriOffice.DAT", 2)
     DATLoad("3_08.DAT", 2)
     DATInit()
     shared.gPrincipalCheck = false
@@ -84,7 +79,7 @@ function F_FireSecretaryNIS()
     end
 end
 
-function F_StartNIS() -- ! Modified
+function F_StartNIS()
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
     PlayerSetControl(0)
@@ -125,9 +120,6 @@ function F_StartNIS() -- ! Modified
     SoundEnableSpeech_ActionTree()
     ClothingPlayerOwns("SP_XmsSweater", 1)
     ClothingGivePlayer("SP_XmsSweater", 1)
-    --[[
-    ClothingSetPlayerOutfit("Uniform")
-    ]] -- Removed this
     ClothingSetPlayer(1, "SP_XmsSweater")
     ClothingBuildPlayer()
     F_MakePlayerSafeForNIS(false)

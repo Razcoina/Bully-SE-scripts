@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_Stage3, may require testing
-]]
-
 local gObjectiveBlip, missionStage
 local missionCondition = "running"
 local gAmbientEventTable = {}
@@ -175,7 +171,7 @@ end
 
 local bGetBackObj, bPeanutObj
 
-function F_Stage3() -- ! Modified
+function F_Stage3()
     if bAlleyWarning then
         if MissionTimerHasFinished() or not PlayerIsInTrigger(TRIGGER._3_06_FailTrig) then
             ToggleHUDComponentVisibility(3, false)
@@ -189,9 +185,6 @@ function F_Stage3() -- ! Modified
             if gPeanut and PedIsValid(gPeanut) then
                 PedMakeAmbient(gPeanut)
             end
-            --[[
-        elseif PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
-        ]] -- Modified this to:
         elseif PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
             bAlleyWarning = false
             if bGetBackObj then

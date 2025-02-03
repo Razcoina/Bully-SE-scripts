@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-    * Modified function T_Photography, may require testing
-]]
-
 local MISSION_RUNNING = 0
 local MISSION_SUCCESS = 1
 local MISSION_FAILURE = -1
@@ -69,7 +64,7 @@ function MissionSetup()
     PedSetUniqueModelStatus(25, -1)
 end
 
-function main() -- ! Modified
+function main()
     local gotoBlip
     local missionStarted = true
     bCounterRunning = true
@@ -174,12 +169,6 @@ function main() -- ! Modified
             PedMoveToPoint(gord, 0, gDest.dest, 1, F_KissTime, 0.3, false)
         end
         if bCounterRunning then
-            --[[
-            repeat
-                break -- pseudo-goto
-            until true
-            if bSkipClose then
-            ]] -- Changed to:
             if true or bSkipClose then
                 gGordBlip = AddBlipForChar(gord, 5, 0, 5)
                 gLolaBlip = AddBlipForChar(lola, 4, 0, 5)
@@ -787,7 +776,7 @@ function F_ToggleBool(param)
     end
 end
 
-function T_Photography() -- ! Modified
+function T_Photography()
     local gPhotoTargets = {
         { cond = F_PhotConditionHandhold, obj = objPhotHand },
         { cond = F_PhotConditionFlower,   obj = objPhotFlow },
@@ -807,10 +796,7 @@ function T_Photography() -- ! Modified
         photohasbeentaken, wasValid = PhotoHasBeenTaken()
         if photohasbeentaken and wasValid then
             for i, target in gPhotoTargets do
-                joshLazyHack = target.valid or target.wasValid -- Added this
-                --[[
-                if target.valid == true and not target.taken then
-                ]] -- Changed to:
+                joshLazyHack = target.valid or target.wasValid
                 if joshLazyHack and not target.taken then
                     target.taken = true
                     F_ToggleBool(i)
@@ -828,7 +814,7 @@ function T_Photography() -- ! Modified
             end
         end
         for i, target in gPhotoTargets do
-            target.wasValid = target.valid -- Added this
+            target.wasValid = target.valid
             if target.valid == true and not target.taken then
                 target.valid = false
             end

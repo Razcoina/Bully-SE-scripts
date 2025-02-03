@@ -1,14 +1,3 @@
---[[ Changes to this file:
-    * Removed unused local variables
-    * Modified function SetPlayerInstrument, may require testing
-    * Modified function MissionSetup, may require testing
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-    * Heavily modified function F_3_01A_SwitchCamera, requires testing
-    * Removed function T_StartCam03, not present in original script
-    * Heavily modified function F_ActionsCallback, requires testing
-]]
-
 local NutDebugSet = false
 local missionSuccess = false
 local gGetReadyText = "3_01C_GETREADY"
@@ -47,7 +36,7 @@ function SetMusicTrack()
     ClassMusicSetSong(SongTable[SongIndex], 1)
 end
 
-function SetPlayerInstrument(PlayerIndex) -- ! Modified
+function SetPlayerInstrument(PlayerIndex)
     local tCowbells = {
         "CAROLS_COWBELL.scn"
     }
@@ -64,24 +53,24 @@ function SetPlayerInstrument(PlayerIndex) -- ! Modified
         "CAROLS_XYLOPHONE.scn"
     }
     if InstrumentIndex[PlayerIndex] == 1 then
-        SoundLoadBank("MINIGAME\\COWBELL_01.bnk") -- Added this
+        SoundLoadBank("MINIGAME\\COWBELL_01.bnk")
         ClassMusicInstrument(PlayerIndex + 1, tCowbells[SongIndex])
     elseif InstrumentIndex[PlayerIndex] == 2 then
-        SoundLoadBank("MINIGAME\\MARACAS_01.bnk") -- Added this
+        SoundLoadBank("MINIGAME\\MARACAS_01.bnk")
         ClassMusicInstrument(PlayerIndex + 1, tMaracas[SongIndex])
     elseif InstrumentIndex[PlayerIndex] == 3 then
-        SoundLoadBank("MINIGAME\\TIMPANI_01.bnk") -- Added this
+        SoundLoadBank("MINIGAME\\TIMPANI_01.bnk")
         ClassMusicInstrument(PlayerIndex + 1, tTimpanis[SongIndex])
     elseif InstrumentIndex[PlayerIndex] == 4 then
-        SoundLoadBank("MINIGAME\\SNARE_01.bnk") -- Added this
+        SoundLoadBank("MINIGAME\\SNARE_01.bnk")
         ClassMusicInstrument(PlayerIndex + 1, tSnares[SongIndex])
     elseif InstrumentIndex[PlayerIndex] == 5 then
-        SoundLoadBank("MINIGAME\\XYLO_01a.bnk") -- Added this
-        SoundLoadBank("MINIGAME\\XYLO_01b.bnk") -- Added this
-        SoundLoadBank("MINIGAME\\XYLO_01c.bnk") -- Added this
+        SoundLoadBank("MINIGAME\\XYLO_01a.bnk")
+        SoundLoadBank("MINIGAME\\XYLO_01b.bnk")
+        SoundLoadBank("MINIGAME\\XYLO_01c.bnk")
         ClassMusicInstrument(PlayerIndex + 1, tXylophones[SongIndex])
     end
-    SoundLoadBank("Clapping\\Claps.bnk") -- Added this
+    SoundLoadBank("Clapping\\Claps.bnk")
     Players[PlayerIndex].AnimList = {
         {
             Anim = Players[PlayerIndex].Animsroot .. "Right/" .. tblInstrument[InstrumentIndex[PlayerIndex]]
@@ -106,10 +95,10 @@ function F_ToggleHUDItems(b_on)
     ToggleHUDComponentVisibility(0, b_on)
 end
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     MissionDontFadeIn()
     DATLoad("3_01C.DAT", 2)
-    DATLoad("ClassMusic.DAT", 2) -- Added this
+    DATLoad("ClassMusic.DAT", 2)
     DATInit()
     PlayerSetControl(0)
     SoundStopPA()
@@ -124,12 +113,6 @@ function MissionSetup() -- ! Modified
     LoadAnimationGroup("UBO")
     LoadAnimationGroup("NPC_Spectator")
     LoadAnimationGroup("MINI_REACT")
-    --[[
-    SoundLoadBank("MINIGAME\\XYLO_01a.bnk")
-    SoundLoadBank("MINIGAME\\XYLO_01b.bnk")
-    SoundLoadBank("MINIGAME\\XYLO_01c.bnk")
-    SoundLoadBank("WII\\Claps.bnk")
-    ]] -- Removed this
     PedRequestModel(249)
     PedRequestModel(257)
     PedRequestModel(256)
@@ -150,10 +133,6 @@ function MissionSetup() -- ! Modified
     if AreaGetVisible() ~= 2 then
         AreaTransitionPoint(2, POINTLIST._3_01C_PLAYEREND)
     end
-    --[[
-    AreaClearAllPeds()
-    Wait(1)
-    ]] -- Not present in original script
     PlayCutsceneWithLoad("3-01CA", true)
     MinigameCreate("MUSIC", false)
     while not MinigameIsReady() do
@@ -169,7 +148,7 @@ function MissionSetup() -- ! Modified
     AreaTransitionPoint(19, POINTLIST._3_01C_PLAYERSTART, nil, true)
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     HUDRestoreVisibility()
     SoundRestartPA()
     SoundFadeWithCamera(true)
@@ -221,17 +200,14 @@ function MissionCleanup() -- ! Modified
         PedSetActionNode(gPlayer, animsroot .. "Success", ActionAnimFile)
         Wait(2000)
     end
-    SoundUnLoadBank("MINIGAME\\COWBELL_01.bnk") -- Added this
-    SoundUnLoadBank("MINIGAME\\MARACAS_01.bnk") -- Added this
-    SoundUnLoadBank("MINIGAME\\TIMPANI_01.bnk") -- Added this
-    SoundUnLoadBank("MINIGAME\\SNARE_01.bnk")   -- Added this
+    SoundUnLoadBank("MINIGAME\\COWBELL_01.bnk")
+    SoundUnLoadBank("MINIGAME\\MARACAS_01.bnk")
+    SoundUnLoadBank("MINIGAME\\TIMPANI_01.bnk")
+    SoundUnLoadBank("MINIGAME\\SNARE_01.bnk")
     SoundUnLoadBank("MINIGAME\\XYLO_01a.bnk")
     SoundUnLoadBank("MINIGAME\\XYLO_01b.bnk")
     SoundUnLoadBank("MINIGAME\\XYLO_01c.bnk")
-    --[[
-    SoundUnLoadBank("WII\\Claps.bnk")
-    ]]                                     -- Not present in original script
-    SoundUnLoadBank("Clapping\\Claps.bnk") -- Added this
+    SoundUnLoadBank("Clapping\\Claps.bnk")
     PlayerSetPunishmentPoints(0)
     if PlayerGetHealth() < PedGetMaxHealth(gPlayer) then
         PlayerSetHealth(PedGetMaxHealth(gPlayer))
@@ -245,11 +221,7 @@ function MissionCleanup() -- ! Modified
     DATUnload(2)
 end
 
---[[
-local bCam3Active = false
-]]              -- Not present in original script
-
-function main() -- ! Modified
+function main()
     PlayerUnequip()
     while WeaponEquipped() do
         Wait(0)
@@ -279,9 +251,6 @@ function main() -- ! Modified
     PedSetActionNode(Players[0].Player, Players[0].Animsroot .. "CustomIdle", ActionAnimFile)
     PedSetActionNode(Players[1].Player, Players[1].Animsroot .. "CustomIdle", ActionAnimFile)
     Wait(100)
-    --[[
-    CameraSetXYZ(-761.227, 305.409, 78.6611, -761.92865, 305.54236, 78.544655)
-    ]] -- Changed to:
     CameraSetXYZ(-761.265, 304.796, 78.6007, -761.92865, 305.54236, 78.544655)
     for i = 0, 1 do
         PedStop(Players[i].Player)
@@ -299,21 +268,16 @@ function main() -- ! Modified
     TutorialRemoveMessage()
     ClassMusicFeedbackCallback(F_ActionsCallback)
     ClassMusicStartSeq(3)
-    CameraSetPath(PATH._3_01C_CAMPATH02, false) -- Added this
-    gCurrentCam = 2                             -- Changed this value from 3 to 2
-    CameraSetSpeed(0.2, 0.2, 0.2)               -- Added this
+    CameraSetPath(PATH._3_01C_CAMPATH02, false)
+    gCurrentCam = 2
+    CameraSetSpeed(0.2, 0.2, 0.2)
     bCamActive = false
     PedSetActionNode(Dancer01, "/Global/3_01C/Flower", DancerActionFile)
     PedSetActionNode(Dancer02, "/Global/3_01C/Fairy", DancerActionFile)
     PedSetActionNode(Dancer03, "/Global/3_01C/Flower", DancerActionFile)
     PedSetActionNode(musicTeach, "/Global/MGMusic/Animations/Teacher", ActionAnimFile)
     while MinigameIsActive() do
-        --[[
-        if not bCam3Active then
-            F_3_01A_SwitchCamera()
-        end
-        ]]                     -- Removed this
-        F_3_01A_SwitchCamera() -- Added this
+        F_3_01A_SwitchCamera()
         Wait(0)
     end
     Wait(1000)
@@ -338,7 +302,7 @@ function main() -- ! Modified
             Wait(2500)
             CameraFade(-1, 0)
             Wait(FADE_OUT_TIME)
-            missionSuccess = true -- Added this
+            missionSuccess = true
             MissionSucceed(false, false, false)
         else
             PedSetActionNode(gPlayer, "/Global/MGMusic/Animations/Failure", ActionAnimFile)
@@ -359,38 +323,11 @@ function main() -- ! Modified
     end
 end
 
---[[
-local CamWaitTime = 5000
-]]                              -- Not present in original script
-
-function F_3_01A_SwitchCamera() -- ! Heavily modified
+function F_3_01A_SwitchCamera()
     if bCamActive == false then
         gCamTimer = GetTimer()
         bCamActive = true
     end
-    --[[
-    if GetTimer() - gCamTimer > CamWaitTime then
-        if gCurrentCam == 1 then
-            CameraSetPath(PATH._3_01C_CAMPATH04, false)
-            gCurrentCam = 2
-            CamWaitTime = 12000
-            CameraSetSpeed(0.3, 0.3, 0.3)
-        elseif gCurrentCam == 2 then
-            CameraSetPath(PATH._3_01C_CAMPATH01, false)
-            gCurrentCam = 3
-            CamWaitTime = 20000
-            CameraSetSpeed(0.2, 0.2, 0.2)
-        else
-            CameraSetPath(PATH._3_01C_CAMPATH02, false)
-            gCurrentCam = 1
-            CamWaitTime = 10000
-            CameraSetSpeed(0.2, 0.2, 0.2)
-        end
-        CameraSetSpeed(0.2, 0.2, 0.2)
-        bCamActive = false
-    end
-    ]] -- Different from original script
-    -- Added the following:
     if 25000 < GetTimer() - gCamTimer then
         if gCurrentCam == 1 then
             CameraSetPath(PATH._3_01C_CAMPATH02, false)
@@ -404,21 +341,6 @@ function F_3_01A_SwitchCamera() -- ! Heavily modified
     end
 end
 
---[[
-function T_StartCam03()
-    Wait(105000)
-    bCam3Active = true
-    CameraSetPath(PATH._3_01C_CAMPATH04, false)
-    CameraSetSpeed(0.4, 0.4, 0.4)
-    Wait(25000)
-    CameraSetPath(PATH._3_01C_CAMPATH02, false)
-    gCurrentCam = 2
-    CameraSetSpeed(0.4, 0.4, 0.4)
-    bCamActive = false
-    bCam3Active = false
-end
-]] -- Not present in original script
-
 function PickRandom(tbl)
     if type(tbl) ~= "table" then
         --DebugPrint("PickRandom tbl~=table")
@@ -431,7 +353,7 @@ function PickRandom(tbl)
     return tbl[math.random(1, table.getn(tbl))]
 end
 
-function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! Heavily modified
+function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState)
     --DebugPrint("F_ActionsCallback(): pass:" .. tostring(bPassed))
     if iAction ~= 0 then
         if bPassed then
@@ -442,17 +364,13 @@ function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! H
                 if InstrumentIndex == 3 then
                     print("******************************* Soft **************************************")
                     if iAction == 1 then
-                        SoundPlay2D("TIMP_LEFT_S")  -- Added this
+                        SoundPlay2D("TIMP_LEFT_S")
                     elseif iAction == 2 then
-                        SoundPlay2D("TIMP_RIGHT_S") -- Added this
+                        SoundPlay2D("TIMP_RIGHT_S")
                     else
-                        SoundPlay2D("TIMP_BOTH_S")  -- Added this
+                        SoundPlay2D("TIMP_BOTH_S")
                     end
                 else
-                    --[[
-                    SoundPlay2DWii(sNote, 1, 0)
-                    ]] -- Not present in original script
-                    -- Added the following:
                     if InstrumentIndex == 4 then
                         if iAction == 1 then
                             SoundPlay2D("SNARE_LEFT_S")
@@ -465,7 +383,6 @@ function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! H
                         SoundPlay2D(sNote)
                     end
                 end
-                -- Added the following (to the end of this else chunk):
             else
                 if InstrumentIndex[cPIndex] == 1 then
                     if iAction == 1 then
@@ -501,15 +418,6 @@ function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! H
                     end
                 end
             end
-            --[[
-            elseif InstrumentIndex[cPIndex] ~= 3 or iAction == 1 then
-            else
-                if iAction == 2 then
-                else
-                end
-            end
-            ]] -- Not present in original script
-            -- Added the following (to the end of this elseif chunk):
         elseif ActionState < 6 then
             if InstrumentIndex[cPIndex] == 1 then
                 SoundPlay2D("COWBELL_MISTAKE")
@@ -523,10 +431,5 @@ function F_ActionsCallback(cPIndex, iAction, sNote, bPassed, ActionState) -- ! H
                 SoundPlay2D("MISTAKE")
             end
         end
-        --[[	
-        elseif ActionState < 6 and InstrumentIndex[cPIndex] == 5 then
-            SoundPlay2DWii("MISTAKE", 1, 0)
-        end
-        ]] -- Not present in original script
     end
 end
