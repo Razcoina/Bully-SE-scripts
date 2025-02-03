@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function T_ClothingManager, may require testing
-]]
-
 local gCurrentCam = 0
 local gCanExit = true
 local gTryingTime = 0
@@ -118,7 +114,7 @@ function L_ClothingSetup(initialHeading, endCallback, avoidFadeIn)
     CreateThread("T_ClothingManager")
 end
 
-function T_ClothingManager() -- ! Modified
+function T_ClothingManager()
     if F_CheckClock() then
         CameraFade(500, 0)
         Wait(500)
@@ -164,13 +160,6 @@ function T_ClothingManager() -- ! Modified
                     gInWidescreen = true
                 end
                 if IsButtonPressed(15, 0) then
-                    --[[
-                    clothingHeading = gClothingHeading
-                elseif IsButtonPressed(24, 0) then
-                    clothingHeading = clothingHeading - 5
-                elseif IsButtonPressed(25, 0) then
-                    clothingHeading = clothingHeading + 5
-                    ]] -- Changed to (to the end of this if):
                     UItempcounter = UItempcounter - 1
                     if UItempcounter == 0 then
                         clothingHeading = gClothingHeading

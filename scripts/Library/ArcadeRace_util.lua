@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function RaceRestartGameClock, may require testing
-]]
-
 local mission_running = true
 local mission_succeed = false
 local racepassed = false
@@ -402,7 +398,7 @@ function RaceStopGameClock()
     --print("Game start time set = " .. gTimeStarted)
 end
 
-function RaceRestartGameClock() -- ! Modified
+function RaceRestartGameClock()
     local timePassed = GetTimer() - gTimeStarted
     if not bClockIsPaused then
         --print("Race time started = " .. StartHour .. ":" .. StartMinute)
@@ -432,20 +428,6 @@ function RaceRestartGameClock() -- ! Modified
         end
         --print("Race time ended1  = " .. StartHour .. ":" .. StartMinute)
     end
-    --[[
-    if 23 < StartHour then
-        StartHour = 23
-    end
-    if StartHour < 0 then
-        StartHour = 0
-    end
-    if 59 < StartMinute then
-        StartMinute = 59
-    end
-    if StartMinute < 0 then
-        StartMinute = 0
-    end
-    ]] -- Removed this
     ClockSet(StartHour, StartMinute)
     if not bClockIsPaused then
         UnpauseGameClock()

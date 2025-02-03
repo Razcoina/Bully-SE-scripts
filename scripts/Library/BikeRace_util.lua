@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_AnyRaceFinished, may require testing
-    * Modified function F_RaceEndNIS, may require testing
-]]
-
 local gReward = 1500
 local tblRaceFinishCheck = {
     {
@@ -731,11 +726,11 @@ function F_AllRacesFinished()
     return false
 end
 
-function F_AnyRaceFinished() -- ! Modified
+function F_AnyRaceFinished()
     if not ClothingPlayerOwns("SP_BikeHelmet", 0) then
         ClothingGivePlayer("SP_BikeHelmet", 0)
         ClothingGivePlayer("SP_BikeJersey", 1)
-        ClothingGivePlayerOutfit("BMX Champion") -- Added this
+        ClothingGivePlayerOutfit("BMX Champion")
         return true
     end
 end
@@ -764,7 +759,7 @@ function F_DeleteUnusedVehicles(x, y, z, radius)
     end
 end
 
-function F_RaceEndNIS() -- ! Modified
+function F_RaceEndNIS()
     PlayerSetControl(0)
     CameraSetWidescreen(true)
     PedStop(gPlayer)
@@ -784,7 +779,7 @@ function F_RaceEndNIS() -- ! Modified
     end
     if not MissionActiveSpecific("2_04") or not not MissionActiveSpecific("3_G3") then
         if F_AllRacesFinished() then
-            AwardAchievement("THE_CHAMPION") -- Added this
+            AwardAchievement("THE_CHAMPION")
             race.unlock = "3_R08_BMXHELMET"
         elseif F_AnyRaceFinished() and not MissionActiveSpecific("2_04") then
             race.unlock = "3_R08_REWARD"
