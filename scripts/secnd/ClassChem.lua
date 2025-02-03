@@ -2786,8 +2786,8 @@ function MissionSetup() -- ! Modified
     LoadAnimationGroup("WeaponUnlock")
     LoadAnimationGroup("MINI_React")
     LoadAnimationGroup("NPC_Spectator") -- Added this
-    LoadAnimationGroup("NPC_Adult")  -- Added this
-    LoadAnimationGroup("MG_Craps")   -- Added this
+    LoadAnimationGroup("NPC_Adult")     -- Added this
+    LoadAnimationGroup("MG_Craps")      -- Added this
     --[[
     LoadAnimationGroup("MINIBIKE")
     LoadAnimationGroup("SHOPBIKE")
@@ -2950,7 +2950,7 @@ function MissionCleanup() -- ! Modified
     if PlayerGetHealth() < PedGetMaxHealth(gPlayer) then
         PlayerSetHealth(PedGetMaxHealth(gPlayer))
     end
-    if L18_1 == 5 then -- Added this
+    if nCurrentClass == 5 then -- Added this
         UnLoadAnimationGroup("NPC_Spectator")
     end
     PlayerSetControl(1)
@@ -2963,7 +2963,7 @@ function MissionCleanup() -- ! Modified
     ]]                                   -- Removed this
     UnLoadAnimationGroup("NPC_Adult")
     UnLoadAnimationGroup("WeaponUnlock") -- Added this
-    UnLoadAnimationGroup("MINI_React") -- Added this
+    UnLoadAnimationGroup("MINI_React")   -- Added this
     --[[
     UnLoadAnimationGroup("UBO")
     UnLoadAnimationGroup("MINIBIKE")
@@ -2976,7 +2976,7 @@ function main() -- ! Modified
     while not bStageLoaded do
         Wait(0)
     end
-    F_SetDifficulty()       -- Added this
+    F_SetDifficulty()          -- Added this
     for _, value in AnimSeq do -- Added this
         if value.tab then
             value.act = PickRandom(value.tab)
@@ -3008,11 +3008,11 @@ function main() -- ! Modified
     PedSetPosPoint(gPlayer, POINTLIST._C4_P_TABLE)
     Wait(100)
     ]]                                                    -- Removed this
-    bUsingTimer = false                                -- Added this
-    MissionObjectiveAdd("C4_INST01", 0, -1)            -- Added this
-    TextPrintString("", 0.1, 1)                        -- Added this
+    bUsingTimer = false                                   -- Added this
+    MissionObjectiveAdd("C4_INST01", 0, -1)               -- Added this
+    TextPrintString("", 0.1, 1)                           -- Added this
     PedFollowPath(chemTeach, PATH._C4_TEACHER_PATH, 1, 0) -- Moved this here
-    if nCurrentClass == 1 then                         -- Moved this here
+    if nCurrentClass == 1 then                            -- Moved this here
         SoundPlayScriptedSpeechEvent(chemTeach, "CHEM", 3, "jumbo", true)
     elseif nCurrentClass == 2 then
         SoundPlayScriptedSpeechEvent(chemTeach, "CHEM", 11, "jumbo", true)
@@ -3051,13 +3051,13 @@ function main() -- ! Modified
         SoundPlayScriptedSpeechEvent(chemTeach, "CHEM", 2, "jumbo", true)
     end
     ]]                               -- Moved this a few lines back
-    local L3_2 = -1               -- Added this
-    local L4_2 = 0                -- Added this
-    local L5_2 = 1                -- Added this
+    local L3_2 = -1                  -- Added this
+    local L4_2 = 0                   -- Added this
+    local L5_2 = 1                   -- Added this
     local L6_2 = table.getn(AnimSeq) -- Added this
-    local L7_2 = 0                -- Added this
-    local L8_2 = 0                -- Added this
-    while L4_2 < 1 and L7_2 < 3 do -- Added this
+    local L7_2 = 0                   -- Added this
+    local L8_2 = 0                   -- Added this
+    while L4_2 < 1 and L7_2 < 3 do   -- Added this
         L5_2 = 1
         Wait(2000)
         MinigameStart()
@@ -3100,7 +3100,7 @@ function main() -- ! Modified
         while MinigameIsActive() do
             if L6_2 > L5_2 then
                 if ClassChemGetActionJustFinished(AnimSeq[L5_2].act) then
-                    F_ActionsCallback(L29_1[L5_2], true)
+                    F_ActionsCallback(AnimSeq[L5_2], true)
                     L5_2 = L5_2 + 1
                     Wait(300)
                 end
@@ -3295,8 +3295,8 @@ function F_IntroCinematic() -- ! Modified
         SoundPlayScriptedSpeechEvent(chemTeach, "CHEM", 1, "jumbo", true)
     end
     PedSetActionNode(chemTeach, "/Global/C4/Animations/TeacherFinishClass", "Act/Conv/C4.act") -- Added this
-    Wait(2738)                                                                              -- Added this
-    PlayerFaceHeading(180, 1)                                                               -- Added this
+    Wait(2738)                                                                                 -- Added this
+    PlayerFaceHeading(180, 1)                                                                  -- Added this
     Wait(1095)
     if nCurrentClass == 1 then
         IntroConv = "C4_INTRO1"
@@ -3319,13 +3319,13 @@ function F_IntroCinematic() -- ! Modified
     F_CleanPrefect()
     PedStop(gPlayer)
     PedClearObjectives(gPlayer)
-    PlayerSetPosPoint(POINTLIST._C4_P_TABLE)                                           -- Added this
-    Wait(100)                                                                          -- Added this
-    CameraSetWidescreen(false)                                                         -- Added this
-    CameraSetPath(camerasTable[6].cameraPath, true)                                    -- Added this
-    CameraSetSpeed(camerasTable[6].speed, camerasTable[6].speed, camerasTable[6].speed) -- Added this
-    CameraLookAtXYZ(camerasTable[6].x, camerasTable[6].y, camerasTable[6].z, true)     -- Added this
-    CameraFade(1000, 1)                                                                -- Added this
+    PlayerSetPosPoint(POINTLIST._C4_P_TABLE)                                              -- Added this
+    Wait(100)                                                                             -- Added this
+    CameraSetWidescreen(false)                                                            -- Added this
+    CameraSetPath(camerasTable[6].cameraPath, true)                                       -- Added this
+    CameraSetSpeed(camerasTable[6].speed, camerasTable[6].speed, camerasTable[6].speed)   -- Added this
+    CameraLookAtXYZ(camerasTable[6].x, camerasTable[6].y, camerasTable[6].z, true)        -- Added this
+    CameraFade(1000, 1)                                                                   -- Added this
     PedSetActionNode(gPlayer, "/Global/C4/Animations/StartAnimations", "Act/Conv/C4.act") -- Added this
 end
 
@@ -3566,8 +3566,8 @@ function F_EndPresentation() -- ! Modified
         unlockAnim2 = animsroot .. "Unlocks/SuccessHi2"
         ]]                                                       -- Removed this
         PlayerSetWeapon(301, 3, false)
-        unlockText = "C4_unlock01"                         -- Added this
-        unlockMissionText = "TUT_CHEM1C1"                  -- Added this
+        unlockText = "C4_unlock01"                               -- Added this
+        unlockMissionText = "TUT_CHEM1C1"                        -- Added this
         unlockAnim2 = "/Global/C4/Animations/Unlocks/SuccessHi2" -- Added this
     elseif nCurrentClass == 2 then
         --[[
@@ -3576,7 +3576,7 @@ function F_EndPresentation() -- ! Modified
         unlockAnim2 = animsroot .. "Unlocks/SuccessMed1"
         ]]                                                        -- Removed this
         PlayerSetWeapon(309, 3, false)
-        unlockText = "C4_unlock02"                          -- Added this
+        unlockText = "C4_unlock02"                                -- Added this
         unlockAnim2 = "/Global/C4/Animations/Unlocks/SuccessMed1" -- Added this
     elseif nCurrentClass == 3 then
         --[[
@@ -3584,10 +3584,10 @@ function F_EndPresentation() -- ! Modified
         unlockAnim = animsroot .. "Unlocks/EarnB"
         unlockAnim2 = animsroot .. "Unlocks/SuccessHi2"
         ]]                                                       -- Removed this
-        unlockAnim = "/Global/C4/Animations/Unlocks/EarnB" -- Added this
+        unlockAnim = "/Global/C4/Animations/Unlocks/EarnB"       -- Added this
         PlayerSetWeapon(394, 3, false)
-        unlockText = "C4_Unlock03"                         -- Added this
-        unlockAnim = "/Global/C4/Animations/Unlocks/EarnB" -- Added this
+        unlockText = "C4_Unlock03"                               -- Added this
+        unlockAnim = "/Global/C4/Animations/Unlocks/EarnB"       -- Added this
         unlockAnim2 = "/Global/C4/Animations/Unlocks/SuccessHi2" -- Added this
     elseif nCurrentClass == 4 then
         unlockText = "C4_Unlock04"
