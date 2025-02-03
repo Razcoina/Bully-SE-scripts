@@ -23,7 +23,7 @@ LUAC=$HOME/Games/Bully/Programs/LUA/compiler/luac.exe
 
 # Keep debug data - Set this to true
 # Remove debug data - Set this to false
-KEEP_DEBUG=true
+KEEP_DEBUG=false
 
 # Change the location if debug is kept
 if [ "$KEEP_DEBUG" = true ] ; then
