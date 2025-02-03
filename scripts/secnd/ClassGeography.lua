@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Modified function main, may require testing
-    * Modified function F_IntroCinematic, may require testing
-    * Modified function F_EndCinematic, may require testing
-]]
-
 local missionSuccess = false
 local nCurrentWordScore = 0
 local nCurrentScore = 0
@@ -69,10 +62,7 @@ function MissionSetup()
     SoundDisableSpeech_ActionTree()
 end
 
-function MissionCleanup() -- ! Modified
-    --[[
-    AreaLoadSpecialEntities("geography", false)
-    ]] -- Removed this
+function MissionCleanup()
     HUDRestoreVisibility()
     PlayerWeaponHudLock(false)
     --print("1aaaaaaaaaaaaaaa")
@@ -96,9 +86,6 @@ function MissionCleanup() -- ! Modified
     UnLoadAnimationGroup("SBULL_X")
     --print("6aaaaaaaaaaaaaaa")
     if not transitioned then
-        --[[
-        AreaTransitionPoint(2, POINTLIST._C7_PEND)
-        ]] -- Changed to:
         AreaTransitionPoint(2, POINTLIST._C7_GEO_PEND)
     end
     --print("7aaaaaaaaaaaaaaa")
@@ -116,15 +103,11 @@ function MissionCleanup() -- ! Modified
     DATUnload(2)
 end
 
-function main() -- ! Modified
+function main()
     while not bStageLoaded do
         Wait(0)
         --print("STUCK HERE")
     end
-    --[[
-    AreaLoadSpecialEntities("geography", true)
-    AreaEnsureSpecialEntitiesAreCreated()
-    ]] -- Removed this
     F_MakePlayerSafeForNIS(true)
     PlayerWeaponHudLock(true)
     VehicleOverrideAmbient(0, 0, 0, 0)
@@ -139,9 +122,6 @@ function main() -- ! Modified
     F_IntroCinematic()
     ClassGeographySetLevel(nCurrentClass)
     MinigameStart()
-    --[[
-    SoundPlayStream("MS_GeographyClass.rsm", 1, 0, 0)
-    ]] -- Changed to:
     SoundPlayStream("MS_GeographyClass.rsm", 0.15, 0, 0)
     F_InitRules()
     CameraSetWidescreen(false)
@@ -264,16 +244,13 @@ function F_CalcTime()
     --print(" TIMER ", endTimer - initTimer)
 end
 
-function F_IntroCinematic() -- ! Modified
+function F_IntroCinematic()
     PedSetPosPoint(gPlayer, POINTLIST._C7_PSTART, 1)
     teacher = PedCreatePoint(248, POINTLIST._C7_GALLOWAY)
     student1 = PedCreatePoint(3, POINTLIST._C7_STUDENTS, 1)
     student2 = PedCreatePoint(35, POINTLIST._C7_STUDENTS, 2)
     student3 = PedCreatePoint(66, POINTLIST._C7_STUDENTS, 3)
     Wait(1500)
-    --[[
-    PedFaceHeading(teacher, 0, 0)
-    ]] -- Removed this
     GeometryInstance("kidchair", true, -560.141, 322.159, -1.48522, false)
     PedIgnoreStimuli(teacher, true)
     PedIgnoreStimuli(student1, true)
@@ -294,9 +271,6 @@ function F_IntroCinematic() -- ! Modified
     PedFollowPath(gPlayer, PATH._C7_PLAYERPATH, 0, 0)
     PedPathNodeReachedDistance(gPlayer, 0.5)
     SoundPlayScriptedSpeechEvent(teacher, "ClassGeography", nCurrentClass, "large", true)
-    --[[
-    Wait(7500)
-    ]] -- Changed to:
     Wait(7000)
     PedStop(gPlayer)
     PedClearObjectives(gPlayer)
@@ -331,24 +305,18 @@ function F_ChangeMusic()
     gStartedLoop = GetTimer()
 end
 
-function F_EndCinematic() -- ! Modified
+function F_EndCinematic()
     local victoryAnim
     if nCurrentClass == 1 then
         ClothingGivePlayer("SP_EiffelHat", 0)
         victoryAnim = "/Global/C7/PlayerVictory/"
         unlockText = "MGGE_Unlock01"
     elseif nCurrentClass == 2 then
-        --[[
-        ClothingGivePlayerOutfit("Nascar", true, true)
-        ]] -- Changed to:
         ClothingGivePlayer("SP_Nascar_H", 0)
         victoryAnim = "/Global/C7/PlayerVictory/Unlocks/SuccessMed1"
         unlockText = "MGGE_Unlock02"
         CollectibleOnMapEnable(2, true)
     elseif nCurrentClass == 3 then
-        --[[
-        ClothingGivePlayerOutfit("Panda", true, true)
-        ]] -- Changed to:
         ClothingGivePlayer("SP_Panda_H", 0)
         victoryAnim = "/Global/C7/PlayerVictory/Unlocks/SuccessHi2"
         unlockText = "MGGE_Unlock03"
@@ -368,9 +336,6 @@ function F_EndCinematic() -- ! Modified
     CameraFade(-1, 0)
     Wait(FADE_OUT_TIME + 1000)
     PlayerSetControl(0)
-    --[[
-    AreaTransitionPoint(2, POINTLIST._C7_PEND, nil, true)
-    ]] -- Changed to:
     AreaTransitionPoint(2, POINTLIST._C7_GEO_PEND, nil, true)
     NonMissionPedGenerationDisable()
     HUDRestoreVisibility()

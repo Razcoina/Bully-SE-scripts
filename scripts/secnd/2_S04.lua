@@ -1,11 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionInit, may require testing
-    * Modified function main, may require testing
-    * Modified function InterruptSheet4Wait, may require testing
-    * Modified function T_SheetMonitor, may require testing
-    * Modified function DropCharacterSheet, may require testing
-]]
-
 local gRewardMoney = 1000
 local missionRunning = true
 local sheets_collected = false
@@ -71,7 +63,7 @@ function MissionSetup()
     LoadAnimationGroups(true)
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     fleeTaunts = { 18 }
     arriveTaunts = {
         8,
@@ -80,9 +72,6 @@ function MissionInit() -- ! Modified
         14
     }
     marbleTaunts = { 6, 7 }
-    --[[
-    PlayerSetPosPoint(POINTLIST._2_S04_START)
-    ]] -- Removed this
     savedState = PedGetUniqueModelStatus(6)
     PedSetUniqueModelStatus(6, -1)
     DisablePOI()
@@ -164,10 +153,10 @@ function LoadAnimationGroups(bLoad)
     end
 end
 
-function main() -- ! Modified
+function main()
     OpeningCutscene()
     MissionInit()
-    while not AreaDisablePatrolPath(PATH._SGD_PREFECT3) do -- Added this loop
+    while not AreaDisablePatrolPath(PATH._SGD_PREFECT3) do
         Wait(0)
     end
     CreateCharacters()
@@ -1152,12 +1141,7 @@ function T_Sheet4AttackMonitor()
     collectgarbage()
 end
 
-function InterruptSheet4Wait() -- ! Modified
-    --[[
-    if bSheet4GuardHit then
-        print(">>>[RUI]", "bSheet4Interrupted == true")
-    end
-    ]] -- Not present in original script
+function InterruptSheet4Wait()
     return bSheet4GuardHit or F_PedIsDead(sheet4Guard)
 end
 
@@ -1260,11 +1244,8 @@ function F_MelvinReceivedSheets()
     bMelvinReceivedSheets = true
 end
 
-function T_SheetMonitor() -- ! Modified
+function T_SheetMonitor()
     Wait(100)
-    --[[
-    sheet1, sheet2, sheet3, sheet4 = nil, nil, nil, nil
-    ]] -- Changed to:
     sheet1, sheet2, sheet3, sheet4 = nil, nil, nil, nil, nil
     while not (not missionRunning or sheets_collected) do
         if bCheckSheet1 and not sheet1_dropped and F_PedIsDead(sheet1Guard) then
@@ -1620,9 +1601,9 @@ function DropSodaCan(nerd, bWander)
     --print(">>>[RUI]", "++DropSodaCan")
 end
 
-function DropCharacterSheet(ped, bNoDelay) -- ! Modified
+function DropCharacterSheet(ped, bNoDelay)
     local x3, y3, z3 = PedGetPosXYZ(ped)
-    if not bNoDelay then                   -- Added this
+    if not bNoDelay then
         Wait(gSheetDropDelay)
     end
     local sheetPickup = PickupCreateXYZ(497, x3, y3, z3, "PermanentButes")

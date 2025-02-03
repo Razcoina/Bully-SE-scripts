@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Removed function StatLog, not present in original script
-]]
-
 local bRunTutorial = GetMissionCurrentAttemptCount() <= 2
 local gClerk
 local TARGET_UMPIRE = 0
@@ -696,10 +691,7 @@ function MissionSetup()
     F_PreLoadTriggers()
 end
 
-function MissionCleanup() -- ! Modified
-    --[[
-    StatLog()
-    ]] -- Removed this
+function MissionCleanup()
     SoundFadeWithCamera(true)
     MusicFadeWithCamera(true)
     PedSetActionTree(gPlayer, "/Global/Player", "Act/Player.act")
@@ -995,19 +987,3 @@ function EnableHudComponents(bShow)
     ToggleHUDComponentVisibility(4, show)
     ToggleHUDComponentVisibility(0, show)
 end
-
---[[
-function StatLog()
-    print(">>>[RUI]", "-------------BEGIN STATS------------")
-    gBadThrows = gBallsThrown - gGoodThrows
-    print(" ", "STAT", "thisGame")
-    print("thrown", tostring(StatGetAsInt(51)), gBallsThrown)
-    print("GOOD", tostring(StatGetAsInt(50)), gGoodThrows)
-    print("BONUS", tostring(StatGetAsInt(233)), gBonusesHit)
-    print("strikes", tostring(StatGetAsInt(236)), gStrikes)
-    print("bad", " ", gBadThrows)
-    print("BALL", tostring(StatGetAsInt(235)), gBallsHit)
-    print("umpires", tostring(StatGetAsInt(234)), gUmpiresHit)
-    print(">>>[RUI]", "-------------END STATS------------")
-end
-]] -- Not present in original script

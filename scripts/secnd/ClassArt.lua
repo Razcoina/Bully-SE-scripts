@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_InitialCutscene, may require testing
-    * Modified function main, may require testing
-]]
-
 local gStageLoaded = false
 local missionSuccess = false
 local gStudents = {}
@@ -518,7 +513,7 @@ function F_CreateStudent(model, point)
     table.insert(gStudents, student)
 end
 
-function F_InitialCutscene() -- ! Modified
+function F_InitialCutscene()
     teacher = PedCreatePoint(63, POINTLIST._C2_TEACHER, 1)
     F_CreateStudent(3, 1)
     F_CreateStudent(14, 3)
@@ -544,13 +539,13 @@ function F_InitialCutscene() -- ! Modified
     Wait(500)
     F_CleanPrefect()
     PedSetActionNode(teacher, "/Global/C2_ArtClass/TeacherSpeaking", "Act/Conv/C2.act")
-    CameraSetWidescreen(false) -- Added this
+    CameraSetWidescreen(false)
     PedSetActionNode(teacher, "/Global/C2_ArtClass/TeacherSpeaking", "Act/Conv/C2.act")
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
 end
 
-function main() -- ! Modified
+function main()
     LoadAnimationGroup("MINI_React")
     MinigameCreate("ART", false)
     while MinigameIsReady() == false do
@@ -571,9 +566,6 @@ function main() -- ! Modified
     F_SetupMinigame()
     F_InitialCutscene()
     Wait(100)
-    --[[
-    SoundPlayStream("MS_ArtClass.rsm", 0.9)
-    ]] -- Changed to:
     SoundPlayStream("MS_ArtClass.rsm", 0.2)
     MinigameStart()
     MinigameEnableHUD(true)

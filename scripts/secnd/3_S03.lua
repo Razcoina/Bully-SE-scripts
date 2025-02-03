@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Added local variable
-    * Modified function F_Stage1_Objectives, may require testing
-    * Modified function F_Stage2_Objectives, may require testing
-    * Modified function F_Stage3_Objectives, may require testing
-]]
-
 local bDebugMode = false
 local bDebugStage = 2
 local bLoop = true
@@ -30,7 +23,7 @@ local wasValid = false
 local validGreaserTarget = false
 local validJockTarget = false
 local validHattrickTarget = false
-local L25_1 = false -- ! Cannot recover original name
+local L25_1 = false
 
 function MissionSetup()
     --print("()xxxxx[:::::::::::::::> [start] MissionSetup()")
@@ -349,7 +342,7 @@ function F_StartAtStage4()
     --print("()xxxxx[:::::::::::::::> [finish] F_StartAtStage4()")
 end
 
-function F_Stage1_Objectives() -- ! Modified
+function F_Stage1_Objectives()
     if not bArrivedAtGreasers then
         if PlayerIsInTrigger(TRIGGER._3_S03_OBJECTIVEGREASER) then
             BlipRemove(blipGreaserObjective)
@@ -385,31 +378,28 @@ function F_Stage1_Objectives() -- ! Modified
         end
         if not bPicGreaser then
             validGreaserTarget = false
-            wasValidTarget = L25_1 -- Added this
+            wasValidTarget = L25_1
             if PhotoTargetInFrame(pedPrep.id, 2) then
                 --print("()xxxxx[:::::::::::::::> [photo loop] greaser is valid")
                 validGreaserTarget = true
             end
-            L25_1 = validGreaserTarget -- Added this
+            L25_1 = validGreaserTarget
             PhotoSetValid(validGreaserTarget)
             photohasbeentaken, wasValid = PhotoHasBeenTaken()
-            joshLazyHack = validGreaserTarget or wasValidTarget -- Added this
-            --[[
-            if photohasbeentaken and wasValid and validGreaserTarget then
-            ]] -- Modified to:
+            joshLazyHack = validGreaserTarget or wasValidTarget
             if photohasbeentaken and wasValid and joshLazyHack then
                 CounterSetCurrent(1)
                 F_DisperseGreaser()
                 F_StopTimer()
                 bPicGreaser = true
-                L25_1 = false -- Added this
+                L25_1 = false
                 bGoToStage2 = true
             end
         end
     end
 end
 
-function F_Stage2_Objectives() -- ! Modified
+function F_Stage2_Objectives()
     if not bArrivedInPool and PlayerIsInTrigger(TRIGGER._3_S03_POOLAREA) then
         MissionObjectiveComplete(gObjective03)
         gObjective04 = MissionObjectiveAdd("3_S03_MOBJ_04")
@@ -447,31 +437,28 @@ function F_Stage2_Objectives() -- ! Modified
         end
         if not bPicJock then
             validJockTarget = false
-            wasValidTarget = L25_1 -- Added this
+            wasValidTarget = L25_1
             if PhotoTargetInFrame(pedPoolPrep.id, 2) then
                 --print("()xxxxx[:::::::::::::::> [photo loop] jock is valid")
                 validJockTarget = true
             end
-            L25_1 = validJockTarget -- Added this
+            L25_1 = validJockTarget
             PhotoSetValid(validJockTarget)
             photohasbeentaken, wasValid = PhotoHasBeenTaken()
-            joshLazyHack = validJockTarget or wasValidTarget -- Added this
-            --[[
-            if photohasbeentaken and wasValid and validJockTarget then
-            ]] -- Modified to:
+            joshLazyHack = validJockTarget or wasValidTarget
             if photohasbeentaken and wasValid and joshLazyHack then
                 CounterSetCurrent(2)
                 F_DisperseJock()
                 F_StopTimer()
                 bPicJock = true
-                L25_1 = false -- Added this
+                L25_1 = false
                 bGoToStage3 = true
             end
         end
     end
 end
 
-function F_Stage3_Objectives() -- ! Modified
+function F_Stage3_Objectives()
     if bDeletePoolPrep then
         if F_PedExists(pedPoolPrep.id) then
             PedDelete(pedPoolPrep.id)
@@ -519,18 +506,15 @@ function F_Stage3_Objectives() -- ! Modified
         end
         if not bPicHattrick then
             validHattrickTarget = false
-            wasValidTarget = L25_1 -- Added this
+            wasValidTarget = L25_1
             if PhotoTargetInFrame(pedHattrick.id, 2) then
                 --print("()xxxxx[:::::::::::::::> [photo loop] hattrick is valid")
                 validHattrickTarget = true
             end
-            L25_1 = validHattrickTarget -- Added this
+            L25_1 = validHattrickTarget
             PhotoSetValid(validHattrickTarget)
             photohasbeentaken, wasValid = PhotoHasBeenTaken()
             joshLazyHack = validHattrickTarget or wasValidTarget
-            --[[
-            if photohasbeentaken and wasValid and validHattrickTarget then
-            --]] -- Modified to:
             if photohasbeentaken and wasValid and joshLazyHack then
                 CounterSetCurrent(3)
                 F_DisperseHattrick()

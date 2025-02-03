@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_PopulateTables, may require testing
-]]
-
 ImportScript("Library/LibTagging.lua")
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibObjective.lua")
@@ -673,7 +669,7 @@ function FleePlayer(ped)
     end
 end
 
-function F_PopulateTables() -- ! Modified
+function F_PopulateTables()
     tblSchoolTags = {
         {
             id = TRIGGER._4_G4_SCHOOLTAG2,
@@ -769,7 +765,7 @@ function F_PopulateTables() -- ! Modified
             OnSetup = nil,
             bIsTagged = false,
             bIsTagDone = false,
-            bIsTagDone = true, -- Added this
+            bIsTagDone = true,
             tagType = 5,
             tagName = "BusinessTagComics",
             startNode = "/Global/TagSmall/Useable",
