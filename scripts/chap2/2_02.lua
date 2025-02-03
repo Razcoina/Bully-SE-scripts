@@ -432,7 +432,6 @@ function T_MonitorKlepto()
                 bCurrentMusicIsMid = true
             end
             if PedIsDead(pedKlepto.id) then
-                --PedHideHealthBar()
                 local tempX, tempY, tempZ = PedGetPosXYZ(pedKlepto.id)
                 blipComic = BlipAddXYZ(tempX, tempY, tempZ, 0, 4, 0)
                 MissionObjectiveComplete(gObjective01)
