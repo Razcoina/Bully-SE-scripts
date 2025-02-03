@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function T_LockerLoop, may require testing
-    * Function calls related to controls have been changed to match the PC version
-]]
-
 local bDebugFlag = false
 local gDebugLevel = 2
 local bLoop = true
@@ -1579,19 +1574,11 @@ function T_MonitorPlayerLocation()
     --print("()xxxxx[:::::::::::::::> [finish] T_MonitorPlayerLocation()")
 end
 
-function T_LockerLoop() -- ! Modified
+function T_LockerLoop()
     local bTutorialStarted = false
     while bRusLockXTutorial do
         if PlayerIsInTrigger(TRIGGER._1_02B_OBJLOCKER) then
             --print("Player is in trigger.")
-            --[[
-            if not bTutorialStarted then
-                print("Start the tutorial")
-                if MinigameIsActive() then
-                    TutorialStart("RUSLOCKX")
-                    bTutorialStarted = true
-                end
-            ]] -- Changed to:
             if not bTutorialStarted and MinigameIsActive() then
                 --print("Start the tutorial")
                 TutorialStart("RUSLOCKX")

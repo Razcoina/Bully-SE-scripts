@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Heavily modified function MissionSetup, requires testing
-    * Heavily modified function F_Intro, requires testing
-    * Modified function MissionCleanup, may require testing
-    * Modified function F_SetupWorld, may require testing
-]]
-
 local bLoop = true
 local bMissionFailed = false
 local bMissionPassed = false
@@ -108,43 +101,21 @@ local bAlgieRightBullySpeech = false
 local bAlgieLeftBullySpeech = false
 local pedNumberAlgie = 0
 
-function MissionSetup() -- ! Heavily modified
+function MissionSetup()
     shared.gCloseStallDoors = true
     --print("()xxxxx[:::::::::::::::> [start] MissionSetup()")
     SoundPlayInteractiveStream("MS_FriendshipAllyLow.rsm", MUSIC_DEFAULT_VOLUME)
     SoundSetMidIntensityStream("MS_FriendshipAllyMid.rsm", MUSIC_DEFAULT_VOLUME)
     SoundSetHighIntensityStream("MS_FriendshipAllyHigh.rsm", MUSIC_DEFAULT_VOLUME)
-    PlayCutsceneWithLoad("1-05", true) -- Added this
+    PlayCutsceneWithLoad("1-05", true)
     DATLoad("1_05.DAT", 2)
     DATLoad("1_05b.DAT", 2)
     DATInit()
-    --[[
-    DisablePOI()
-    LoadAnimationGroup("2_08WeedKiller")
-    LoadAnimationGroup("GEN_Social")
-    LoadAnimationGroup("F_Pref")
-    LoadAnimationGroup("Px_Sink")
-    LoadAnimationGroup("Px_Gen")
-    LoadAnimationGroup("NPC_Cheering")
-    LoadAnimationGroup("POI_Smoking")
-    LoadAnimationGroup("HUMIL_5-8F_A")
-    WeaponRequestModel(300)
-    WeaponRequestModel(405)
-    WeaponRequestModel(362)
-    PedRequestModel(102)
-    PedRequestModel(99)
-    PedRequestModel(85)
-    PedRequestModel(145)
-    PedRequestModel(146)
-    PedRequestModel(147)
-    LoadActionTree("Act/Conv/1_05.act")
-    ]]
     MissionDontFadeIn()
     PlayerSetControl(0)
-    --PlayCutsceneWithLoad("1-05", true)
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     shared.gCloseStallDoors = nil
     --print("()xxxxx[:::::::::::::::> [start] MissionCleanup()")
     PedSetUniqueModelStatus(4, pedNumberAlgie)
@@ -197,14 +168,7 @@ function MissionCleanup() -- ! Modified
     CameraSetWidescreen(false)
     CameraReturnToPlayer()
     PlayerSetControl(1)
-    --[[
-    print("()xxxxx[:::::::::::::::> [finish] MissionCleanup()")
-    local isDemoBuild = false
-    isDemoBuild = IsDemoBuildEnabled()
-    if isDemoBuild == true then
-        DemoBuildReturnToMain()
-    end
-    ]]
+    --print("()xxxxx[:::::::::::::::> [finish] MissionCleanup()")
 end
 
 function main()
@@ -313,15 +277,8 @@ function F_TableInit()
     --print("()xxxxx[:::::::::::::::> [finish] F_TableInit()")
 end
 
-function F_SetupWorld() -- ! Modified
+function F_SetupWorld()
     AreaClearAllPeds()
-    --[[]
-    local waitCount = 60
-    while not AreaDisablePatrolPath(PATH._SGD_PREFECT2) and 0 < waitCount do
-        Wait(33)
-        waitCount = waitCount - 1
-    end
-    ]]
     while not AreaDisablePatrolPath(PATH._SGD_PREFECT2) do
         Wait(0)
     end
@@ -332,7 +289,7 @@ function F_SetupWorld() -- ! Modified
     PedSetUniqueModelStatus(4, -1)
 end
 
-function F_Intro() -- ! Heavily modified
+function F_Intro()
     --print("()xxxxx[:::::::::::::::> [start] F_Intro()")
     DisablePOI()
     LoadAnimationGroup("2_08WeedKiller")
@@ -358,13 +315,6 @@ function F_Intro() -- ! Heavily modified
     AreaTransitionPoint(0, POINTLIST._1_05_SPAWNPLAYER, 1, true)
     F_SetupWorld()
     F_Stage1_Setup()
-    --[[
-    local waitCount = 150
-    while not AreaGetVisible() == 0 and 0 < waitCount do
-        Wait(33)
-        waitCount = waitCount - 1
-    end
-    ]] -- Changed to:
     while not AreaGetVisible() == 0 do
         Wait(0)
     end

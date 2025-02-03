@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-]]
-
 ImportScript("Library\\LibPlayer.lua")
 local bLoop = true
 local bMissionFailed = false
@@ -40,7 +36,7 @@ function MissionSetup()
     --print("()xxxxx[:::::::::::::::> [finish] MissionSetup()")
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     --print("()xxxxx[:::::::::::::::> [start] MissionCleanup()")
     shared.PlayerInClothingManager = nil
     shared.finishedFirstClothing = false

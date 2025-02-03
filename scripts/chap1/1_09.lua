@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_FailStuff, may require testing
-    * Modified function F_MissionLoop, may require testing
-]]
-
 mission_completed = false
 Earnest = nil
 SpeechOn = true
@@ -233,9 +228,6 @@ function F_CheckMascot()
             --print("MASCOT HIT!!!!!")
             if PedGetHealth(Mascot) < 80 then
                 PedSetActionNode(Mascot, "/Global/1_09/CustomPedTree/Break", "Act\\Anim\\NPC1_09.act")
-                --[[
-                PedSetActionNode(Mascot, "/Global/1_09/CustomPedTree/Break", "Act/Anim/NPC1_09.act")
-                ]] -- Minor difference, should be the same though
                 MascotRun = true
                 Wait(10)
                 PedSetInvulnerable(Mascot, true)
@@ -250,9 +242,6 @@ function F_CheckMascot()
                 Wait(0)
                 if not PedIsPlaying(Mascot, "/Global/NPC1_09/Mascot/MascotDancing", true) then
                     PedSetActionNode(Mascot, "/Global/NPC1_09/Mascot/MascotDancing", "Act\\Anim\\NPC1_09.act")
-                    --[[
-                    PedSetActionNode(Mascot, "/Global/NPC1_09/Mascot/MascotDancing", "Act/Anim/NPC1_09.act")
-                    ]] -- Minor difference, should be the same though
                     bMascotDancing = true
                 end
             end
@@ -265,9 +254,6 @@ function F_MascotDance2(PedID, PathID, NodeID)
         PedClearObjectives(PedID)
         PedFaceObjectNow(PedID, gPlayer, 2)
         PedSetActionNode(PedID, "/Global/NPC1_09/Mascot/MascotDancing", "Act\\Anim\\NPC1_09.act")
-        --[[
-        PedSetActionNode(PedID, "/Global/NPC1_09/Mascot/MascotDancing", "Act/Anim/NPC1_09.act")
-        ]] -- Minor difference, should be the same though
     end
 end
 
@@ -565,10 +551,7 @@ function F_CheckFailure()
     end
 end
 
-function F_FailStuff(szFailMessage) -- ! Modified
-    --[[
-    bMissionFailed = true
-    ]] -- This was here, now it's at the end
+function F_FailStuff(szFailMessage)
     if PedIsValid(Earnest) then
         SoundStopCurrentSpeechEvent(Earnest)
         Wait(500)
@@ -592,10 +575,6 @@ function F_FailStuff(szFailMessage) -- ! Modified
     end
     if AreaGetVisible() == 19 then
         Wait(5500)
-        --[[
-        AreaTransitionPoint(2, POINTLIST._1_09_ENDTRANS)
-        AreaLoadSpecialEntities("vote", false)
-        ]] -- This was here, now it's down there
         PlayerWeaponHudLock(false)
         PlayerUnequip()
         CameraAllowChange(true)
@@ -709,7 +688,7 @@ function F_Success()
     mission_completed = true
 end
 
-function F_MissionLoop() -- ! Modified
+function F_MissionLoop()
     MissionTimerStop()
     if MissionObj1 then
         MissionObjectiveRemove(MissionObj1)
@@ -790,7 +769,6 @@ function F_MissionLoop() -- ! Modified
     PlayerWeaponHudLock(true)
     F_SetupDialog()
     PlayerSetControl(1)
-    --PlayerLockButtonInputsExcept(true, 18, 22, 19, 23, 2, 3, 26)
     PlayerLockButtonInputsExcept(true, 18, 22, 19, 23, 2, 3, 12)
     CameraFade(500, 1)
     F_MakePlayerSafeForNIS(false, false)

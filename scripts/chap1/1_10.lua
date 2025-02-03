@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionInit, may require testing
-    * Removed function TestGary, unused anyway
-]]
-
 shared.on_mission_110 = true
 shared.gAreaDATFileLoaded[8] = false
 local MISSION_RUNNING = 0
@@ -985,7 +980,7 @@ function MissionSetup()
     AreaOverridePopulationPedType(11, 0)
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     LoadModels({
         23,
         10,
@@ -998,7 +993,6 @@ function MissionInit() -- ! Modified
         85
     })
     LoadModels({ 130, 362 })
-    --LoadWeaponModels({ 326, 306 })
     LoadWeaponModels({ 326, 303 })
     LoadAnimationGroup("1_10Betrayal")
     LoadAnimationGroup("Px_RedButton")
@@ -1012,7 +1006,6 @@ function MissionInit() -- ! Modified
     AreaLoadSpecialEntities("PumpkinPost", true)
     AreaTransitionPoint(0, POINTLIST._1_10_PSTART_MM)
     --print(">>>[RUI]", "++DEBUG make sure player has a slingshot")
-    --GiveWeaponToPlayer(306)
     gGary = GaryCreate(POINTLIST._1_10_NEMESIS_MM)
     AreaSetDoorLocked("DT_TSCHOOL_SCHOOLSIDEDOORL", true)
     AreaSetDoorLocked("TSCHOOL_SCHOOLSIDEDOORR", true)
@@ -1117,9 +1110,3 @@ function FiresCleanup()
     bFiresCreated = false
     --print(">>>[RUI]", "--FiresCleanup()")
 end
-
---[[
-function TestGary()
-    PedSetPunishmentPoints(gGary, 500)
-end
-]]

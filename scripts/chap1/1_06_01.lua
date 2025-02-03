@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Heavily modified function F_SetupActions, requires testing
-    * Modified function F_AchieveReceiver, may require testing
-    * Modified function F_MissionStageHoboFight, may require testing
-]]
-
 local gNumTransis = 0
 local gGaryBlip, gPeteBlip, gGary, gPete
 local gObjectives = {}
@@ -295,7 +289,7 @@ function T_TransForFight1()
     collectgarbage()
 end
 
-function F_AchieveReceiver() -- ! Modified
+function F_AchieveReceiver()
     if not gMissionFail then
         if ItemGetCurrentNum(476) > 0 then
             if gObjBlip then
@@ -309,7 +303,6 @@ function F_AchieveReceiver() -- ! Modified
             if gCoronaBlip then
                 BlipRemove(gCoronaBlip)
             end
-            --Wait(5000)
             gObjBlip = AddBlipForChar(gHobo, 9, 17, 4)
             MissionObjectiveComplete(gObjectives[2])
             table.insert(gObjectives, MissionObjectiveAdd("1_06_OBJ03"))
@@ -588,7 +581,7 @@ function F_SetupNextMove()
     ButtonHistoryIgnoreController(false)
 end
 
-function F_MissionStageHoboFight() -- ! Modified
+function F_MissionStageHoboFight()
     if gSequencePassed then
         while not PedIsPlaying(gPlayer, gConditions[gActions.condition], true) do
             Wait(0)
@@ -617,10 +610,6 @@ function F_MissionStageHoboFight() -- ! Modified
             gMonitoringHealth = false
             F_PlaySpeechAndWait(gHobo, "M_1_06_01", 32)
             CameraFade(-1, 0)
-            --[[
-            PedStop(gHobo)
-            Wait(FADE_OUT_TIME + 500)
-            ]] -- Removed this
             Wait(FADE_OUT_TIME)
             F_FirstMissionEndCutscene()
             PedStop(gPlayer)
@@ -675,11 +664,10 @@ function F_GiveTransistorToHobo()
     bHoboReceivedTransistor = true
 end
 
-function F_SetupActions(stageNo) -- ! Heavily modified
+function F_SetupActions(stageNo)
     if stageNo == 1 then
         gActions = {
             {
-                --{37, false}
                 { 6, true }
             },
             gTotalMoves = 1,
@@ -695,8 +683,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
     elseif stageNo == 2 then
         gActions = {
             {
-                --{33, false},
-                --{38, false}
                 { 6, false },
                 { 6, true }
             },
@@ -713,11 +699,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
     elseif stageNo == 3 then
         gActions = {
             {
-                --[[
-                {33, false},
-                {32, false},
-                {37, false}
-                ]]
                 { 6, false },
                 { 6, false },
                 { 6, true }
@@ -735,13 +716,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
     elseif stageNo == 4 then
         gActions = {
             {
-                --[[
-                {33, false},
-                {32, false},
-                {33, false},
-                {32, false},
-                {33, false}
-                ]]
                 { 6, false },
                 { 6, false },
                 { 6, false },
@@ -761,12 +735,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
     elseif stageNo == 7 then
         gActions = {
             {
-                --[[
-                {33, false},
-                {32, false},
-                {33, false},
-                {38, false}
-                ]]
                 { 6, false },
                 { 6, false },
                 { 6, false },
@@ -786,13 +754,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
     elseif stageNo == 8 then
         gActions = {
             {
-                --[[
-                {33, false},
-                {32, false},
-                {33, false},
-                {32, false},
-                {37, false}
-                ]]
                 { 6, false },
                 { 6, false },
                 { 6, false },
@@ -832,9 +793,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
             {
                 { 7, false },
                 { 7, false },
-                --[[
-                { 6, false }
-                ]] -- Changed to:
                 { 6, true }
             },
             gTotalMoves = 1,
@@ -871,7 +829,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
                 { 7, false },
                 { 7, false },
                 { 7, false },
-                --{6, false}
                 { 6, true }
             },
             gTotalMoves = 1,
@@ -889,7 +846,6 @@ function F_SetupActions(stageNo) -- ! Heavily modified
             {
                 {
                     12,
-                    --false,
                     true,
                     10
                 },

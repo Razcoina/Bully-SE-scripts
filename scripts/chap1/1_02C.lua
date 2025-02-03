@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-    * Function calls related to controls have been changed to match the PC version
-]]
-
 local classDoor = TRIGGER._DT_TSCHOOL_GYML
 local classBlip, objID
 local timerRanOut = false
@@ -23,7 +18,7 @@ function MissionSetup()
     PlayerSetPunishmentPoints(0)
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     if bSuccess then
         --print("ObjectTypeSetPickupListOverride CALLED!!!")
         --print("ObjectTypeSetPickupListOverride CALLED!!!")
@@ -37,7 +32,7 @@ function MissionCleanup() -- ! Modified
     SoundStopFireAlarm()
     BlipRemove(classBlip)
     DATUnload(2)
-    MissionDontFadeInAfterCompetion() -- Added this function call
+    MissionDontFadeInAfterCompetion()
 end
 
 function F_TimerPassed(time)

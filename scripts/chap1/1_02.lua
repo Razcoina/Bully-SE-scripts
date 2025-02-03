@@ -1,12 +1,3 @@
---[[ Changes to this file:
-    * Added variable L36_1 (Even if remains unused)
-    * Modified function F_MonitorTraining2, may require testing
-    * Rewritten function F_MonitorTraining1, requires testing
-    * Removed function F_IssueInstructions, not present in original script
-    * Heavily modified function F_SetSequence, requires testing
-    * Function calls related to controls have been changed to match the PC version
-]]
-
 local gGary
 local gObjectives = {}
 local gMissionState = "main"
@@ -40,7 +31,7 @@ local gBully01, gBully02, gBully03
 local gPushers = {}
 local gSequencePassed = false
 local gSequenceFailed = false
-local L36_1 = false -- ! Cannot recover original name
+local L36_1 = false
 local bLightAttacks = false
 local bHeavyAttacks = false
 local bGrappleAttacks = false
@@ -981,7 +972,7 @@ end
 
 local bShowHumiliationTutorial = false
 
-function F_MonitorTraining2() -- ! Modified
+function F_MonitorTraining2()
     F_CheeringSpeech()
     if PedGetHealth(gBully01) == 5 then
         if not bShowHumiliationTutorial then
@@ -997,7 +988,7 @@ function F_MonitorTraining2() -- ! Modified
         if PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_IndianBurn", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_HitSelf", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_NoogieSpit", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/WaitForVictim/EmergencyAnim", true) then
             PedClearTether(gBully01)
             TutorialRemoveMessage()
-            PlayerSetControl(0) -- Added this
+            PlayerSetControl(0)
             PedSetMinHealth(gBully01, -1)
             while PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_IndianBurn", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_HitSelf", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/Humiliate_Me/5-8_NoogieSpit", true) or PedIsPlaying(gPlayer, "/Global/Player/Social_Actions/HarassMoves/Humiliations/Humiliate_Init/WaitForVictim/EmergencyAnim", true) do
                 Wait(0)
@@ -1037,8 +1028,8 @@ end
 local bIsBlocking = false
 local bStayInPosition = false
 
-function F_MonitorTraining1() -- ! Rewritten
-    local L0 = false          -- ! Cannot recover original name
+function F_MonitorTraining1()
+    local L0 = false
     F_CheeringSpeech()
     if gCurrentPlayerMove == 1 then
         if PedIsPlaying(gPlayer, "/Global/HitTree/Standing/BlockHits", true) then
@@ -1237,128 +1228,6 @@ function F_MonitorTraining1() -- ! Rewritten
     end
 end
 
---[[
-function F_IssueInstructions()
-    if gCurrentPlayerMove == 1 then
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 35)
-        F_SetSequence({ 35, false }, "1_02_Wii_FTut1")
-        ButtonHistorySetSequenceTime(10)
-    elseif gCurrentPlayerMove == 2 then
-        bIgnoreR1 = true
-        bLightAttacks = true
-        if gbWiiFight2Shown == nil then
-            TutorialShowMessage("1_02_Wii_FTut2A", 3500, false)
-            Wait(4000)
-            gbWiiFight2Shown = true
-        end
-        GameSetPedStat(gBully01, 12, 50)
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 33)
-        F_SetSequence({
-            33,
-            false,
-            33,
-            false,
-            33,
-            false
-        }, "1_02_Wii_FTut3", false)
-        bCanBullyLaunchAttacks = false
-    elseif gCurrentPlayerMove == 3 then
-        bLightAttacks = true
-        GameSetPedStat(gBully01, 12, 50)
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 32)
-        F_SetSequence({
-            32,
-            false,
-            32,
-            false,
-            32,
-            false
-        }, "1_02_Wii_FTut4", false)
-        bCanBullyLaunchAttacks = false
-    elseif gCurrentPlayerMove == 4 then
-        if gbWiiFight5Shown == nil then
-            TutorialShowMessage("1_02_Wii_FTut5", 3500, false)
-            Wait(4000)
-            gbWiiFight5Shown = true
-        end
-        bLightAttacks = true
-        GameSetPedStat(gBully01, 12, 50)
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 32, 33)
-        F_SetSequence({
-            33,
-            false,
-            32,
-            false,
-            33,
-            false
-        }, "1_02_Wii_FTut6A", false, 2)
-        bCanBullyLaunchAttacks = false
-    elseif gCurrentPlayerMove == 5 then
-        bLightAttacks = true
-        GameSetPedStat(gBully01, 12, 50)
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 32, 33)
-        F_SetSequence({
-            32,
-            false,
-            33,
-            false,
-            32,
-            false
-        }, "1_02_Wii_FTut7A", false, 2)
-        bCanBullyLaunchAttacks = false
-    elseif gCurrentPlayerMove == 6 then
-        gSequencePassed = false
-        gCurrentCombo = 1
-        bGrappleAttacks = true
-        if gbWiiFight9Shown == nil then
-            TutorialShowMessage("1_02_Wii_FTut9", 3500, false)
-            Wait(4000)
-            gbWiiFight9Shown = true
-        end
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 29)
-        F_SetSequence({ 29, false }, "1_02_Wii_FTut8", true)
-    elseif gCurrentPlayerMove == 7 then
-        DebugPrint("************WMW - ISSUING THE ONES WE WANT***************************")
-        gSequencePassed = false
-        gCurrentCombo = 1
-        bGrapplePunches = true
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 32)
-        F_SetSequence({
-            32,
-            false,
-            32,
-            false,
-            32,
-            false
-        }, "1_02_Wii_FTut10", true)
-    elseif gCurrentPlayerMove == 8 then
-        gSequencePassed = false
-        gCurrentCombo = 1
-        bGrapplePunches = true
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 29)
-        F_SetSequence({ 29, false }, "1_02_Wii_FTut8", true)
-    elseif gCurrentPlayerMove == 9 then
-        DebugPrint("************WMW - Telling him to throw from grab***************************")
-        gSequencePassed = false
-        gCurrentCombo = 1
-        bGrappleAttacks = true
-        PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21, 33)
-        F_SetSequence({ 33, false }, "1_02_Wii_FTut11", true)
-    elseif gCurrentPlayerMove == 10 then
-        ToggleHUDComponentVisibility(21, false)
-        ButtonHistoryClearSequence()
-        F_AddMissionObjective("1_02_FightMsg", true)
-        MissionObjectiveReminderTime(1000000000)
-        PedSetMinHealth(gBully01, 5)
-        GameSetPedStat(gBully01, 8, 100)
-        PlayerLockButtonInputsExcept(false)
-        bCreateCrowd = true
-        bFinalStage = true
-        gMissionUpdateFunction = F_MonitorTraining2
-    end
-    gTimeToRefresh = false
-end
-]] -- Not present in original script
 
 function F_TriggerFight()
     if table.getn(gObjectives) > 0 then
@@ -1408,7 +1277,6 @@ function F_TriggerFight()
     ButtonHistoryIgnoreController(false)
     ToggleHUDComponentVisibility(21, true)
     PedSetMinHealth(gBully01, 75)
-    --PlayerLockButtonInputsExcept(true, 35, 16, 17, 20, 21)
     F_SetSequence({ 10, true }, "1_02_R1but")
     ButtonHistorySetSequenceTime(10)
     Wait(1000)
@@ -1424,14 +1292,13 @@ function T_StartFightTut()
     collectgarbage()
 end
 
-function F_SetSequence(buttonTbl, captioning, bGrapple) -- ! Heavily modified
+function F_SetSequence(buttonTbl, captioning, bGrapple)
     if not bGrapple or bGrapple == nil then
         while not PedIsPlaying(gPlayer, "/Global/TrainingPlayer/Default", true) do
             Wait(0)
             --print("F_SetSequence false")
         end
     end
-    --local timeOutDelay = iComboTime or 30 (timeOutDelay was another parameter this function could recieve)
     ButtonHistoryClearSequence()
     ButtonHistoryIgnoreController(true)
     ToggleHUDComponentVisibility(21, true)
@@ -1440,7 +1307,6 @@ function F_SetSequence(buttonTbl, captioning, bGrapple) -- ! Heavily modified
     else
         ButtonHistoryIgnoreSequence(16, 17, 20, 21, 11, 12, 13, 8, 7, 14)
     end
-    --ButtonHistoryIgnoreSequence(24, 25, 26, 27, 30, 31, 34)
     ButtonHistorySetCallbackPassed(F_PassedCallback)
     ButtonHistorySetCallbackFailed(F_FailedCallback)
     ButtonHistorySetCallbackCorrectButton(F_CorrectButtonPressed)
@@ -1451,7 +1317,6 @@ function F_SetSequence(buttonTbl, captioning, bGrapple) -- ! Heavily modified
     elseif table.getn(buttonTbl) == 4 then
         --print("Setting 2 buttons!")
         --DebugPrint("************WMW - timeOutDelay is: " .. timeOutDelay)
-        --ButtonHistoryAddSequence(buttonTbl[1], buttonTbl[2], 30, buttonTbl[3], buttonTbl[4], 30)
         ButtonHistoryAddSequence(buttonTbl[1], buttonTbl[2], buttonTbl[3], buttonTbl[4])
     elseif table.getn(buttonTbl) == 2 then
         --print("Setting 1 button!")
@@ -1542,7 +1407,6 @@ function F_FinalAttacks()
 end
 
 function F_FailedCallback(button)
-    --gTimeToRefresh = true
     SoundPlay2D("WrongBtn")
 end
 

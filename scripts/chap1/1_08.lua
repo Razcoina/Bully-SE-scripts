@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Removed function call for GlobalImportScript (commented)
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPed.lua")
 local missionStage
@@ -56,7 +52,6 @@ local gStinkBombs
 local bSpawnFatty = true
 local gFattyOriginHealth = 0
 local bGirlRanAway = false
---GlobalImportScript("Test/TNIS.lua")
 local gDebugging = false
 local bGotNotes = false
 local bSuccessSoLoadHalloween = false
