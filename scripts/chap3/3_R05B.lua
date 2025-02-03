@@ -185,10 +185,6 @@ function F_SetGiftReceiver(dude)
     RegisterPedEventHandler(dude, 0, F_HitReceiver)
 end
 
---[[
-    ? Here lies the place where we can fix the most annoying bug in the entire game:
-    ? If we the player shoots anywhere, it's as if he hit the customer
-]]
 function F_ResetReceiver(dude)
     PlayerSetControl(0)
     PedSetGrappleTarget(dude, gPlayer)

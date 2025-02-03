@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Removed function TestJohnny, not present in original script
-    * Modified function T_MagnetVibrate, may require testing
-]]
-
 local bMissionRunning = true
 local bPassedMission = false
 local gObjective, gFailMessage
@@ -1003,12 +998,6 @@ function F2_JohnnySetUpForBikeBattle()
     PedPutOnBike(gJV_OnBike, gJV_Bike)
 end
 
---[[
-function TestJohnny()
-    PedSetActionNode(gJV_OnBike, "/Global/Vehicles/Bikes/Ground/Dismount/GetOff", "Act/Vehicles.act")
-end
-]] -- Not present in original script
-
 function F2_PeteySetup()
     --print(">>>[RUI]", "++F2_PeteySetup")
     if not F_PedExists(gPeter) then
@@ -1511,25 +1500,16 @@ function F3_StageThree()
     gCurrentStage = STAGE_NONE
 end
 
-function T_MagnetVibrate() -- ! Modified
+function T_MagnetVibrate()
     --print(">>>[RUI]", "++T_MagnetVibrate")
     while bMissionRunning do
         if PlayerIsInTrigger(TRIGGER._3_B_MAGNET) then
             --print("[RW] IN TRIGGER >>>>>> IN TRIGGER")
             if bMagnetOn then
-                --[[
-                StartVibration(1, 500, 128)
-                ]] -- Modified to:
                 StartVibration(0, 1000, 255)
             else
-                --[[
-                StartVibration(1, 250, 64)
-                ]] -- Modified to:
                 StartVibration(0, 1000, 128)
             end
-            --[[
-            Wait(2000)
-            ]] -- Modified to:
             Wait(1000)
         else
             Wait(100)
