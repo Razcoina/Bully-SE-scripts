@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function T_MonitorKlepto, may require testing
-]]
-
 local gActFile = "Act/Conv/2_03.act"
 
 function F_PlayerHasAquaberrySweater()
@@ -687,7 +683,7 @@ function F_StartKeyMaster()
     --print(">>>[RUI]", "++F_StartKeyMaster")
 end
 
-function KeyMasterMonitor() -- ! Modified
+function KeyMasterMonitor()
     if not bKeyDropped and monitor_ready then
         if not bKeyMasterChosen then
             if PlayerIsInTrigger(TRIGGER._2_03_FRONTGATEAREA) or bKeyMasterHit then
@@ -697,10 +693,7 @@ function KeyMasterMonitor() -- ! Modified
                     gObjective = UpdateObjectiveLog("2_03_OBJ6", nil)
                     bKeyMasterChosen = true
                 end
-            --elseif (PlayerIsInTrigger(TRIGGER._2_03_REARGATEAREA) or bKeyMasterHit) and not bHasKey then
-            elseif (PlayerIsInTrigger(TRIGGER._2_03_REARGATEAREA) or bKeyMasterHit) then
-                if not bHasKey then
-                end
+            elseif (PlayerIsInTrigger(TRIGGER._2_03_REARGATEAREA) or bKeyMasterHit) and not bHasKey then
                 KeyMasterChoose(gKeyMaster2, "back")
                 PedCleanup(gKeyMaster1)
                 gObjective = UpdateObjectiveLog("2_03_OBJ6", nil)

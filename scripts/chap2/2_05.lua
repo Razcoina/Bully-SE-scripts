@@ -2,7 +2,6 @@
     * Modified function F_RussellCleanup, may require testing
     * Modified function MissionInit, may require testing
     * Modified function TadsGateOpened, may require testing
-    * Modified function F_TadHasEmptyQs, may require testing
 ]]
 
 ImportScript("Library/LibTable.lua")
@@ -1248,9 +1247,8 @@ function Stage_04LeaveYardLoop()
     Wait(100)
 end
 
-function F_TadHasEmptyQs() -- ! Modified
-    --return table.getn(tblTad.roomsToInvestigate) == 0 and table.getn(tblTad.patrolsToSend) == 0
-    return table.getn(tblTad.roomsToInvestigate) == 0
+function F_TadHasEmptyQs()
+    return table.getn(tblTad.roomsToInvestigate) == 0 and table.getn(tblTad.patrolsToSend) == 0
 end
 
 function UpdateObjectiveLog(newObjStr, oldObj)

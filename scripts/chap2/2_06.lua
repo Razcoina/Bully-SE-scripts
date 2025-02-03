@@ -1,6 +1,5 @@
 --[[ Changes to this file:
     * Modified function main, may require testing
-    * Modified function F_KissEunice, may require testing
 ]]
 
 local bMissionOver = false
@@ -834,7 +833,7 @@ function F_GiftEunice()
     gBlipKissZone = BlipAddXYZ(kissX, kissY, kissZ, 0, 1, 7)
 end
 
-function F_KissEunice() -- ! Modified
+function F_KissEunice()
     PlayerSetControl(0)
     F_MakePlayerSafeForNIS(true)
     MusicFadeWithCamera(false)
@@ -855,17 +854,10 @@ function F_KissEunice() -- ! Modified
     if not PedIsInAreaObject(idEunice.id, gPlayer, 2, 0.6, 0) then
         PedLockTarget(idEunice.id, gPlayer)
         PedMoveToPoint(idEunice.id, 0, POINTLIST._2_06_KISSKISS)
-        while not PedIsInAreaObject(idEunice.id, gPlayer, 2, 0.6, 0) do
-            Wait(0)
-        end
     end
-    --[[
-    local waitCount = 90
-    while not PedIsInAreaObject(idEunice.id, gPlayer, 2, 0.6, 0) and 0 < waitCount do
-        Wait(33)
-        waitCount = waitCount - 1
+    while not PedIsInAreaObject(idEunice.id, gPlayer, 2, 0.6, 0) do
+        Wait(0)
     end
-    ]] -- Original code (altered and moved inside previous if)
     PedFaceObject(gPlayer, idEunice.id, 2, 1)
     PedStop(idEunice.id)
     PedSetStationary(idEunice.id, true)

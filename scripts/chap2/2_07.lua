@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_PlayerHasTrophy, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPed.lua")
 local mission_running = true
@@ -418,7 +414,7 @@ function F_WavesCompleted()
     --print("()xxxxx[:::::::::::::::> [finish] F_WavesCompleted()")
 end
 
-function F_PlayerHasTrophy() -- ! Modified
+function F_PlayerHasTrophy()
     --print("()xxxxx[:::::::::::::::> [start] F_PlayerHasTrophy()")
     mission_running = false
     TerminateThread(threadPreppySpawner)
@@ -441,15 +437,10 @@ function F_PlayerHasTrophy() -- ! Modified
         while PedIsPlaying(gPlayer, "/Global/2_07/CelebrateTrophy", true) do
             Wait(0)
         end
-        while MinigameIsShowingCompletion() do
-            Wait(0)
-        end
     end
-    --[[
     while MinigameIsShowingCompletion() do
         Wait(0)
     end
-    ]]-- Moved this inside previous if
     CameraFade(500, 0)
     Wait(501)
     CameraReset()
