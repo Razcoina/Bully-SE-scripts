@@ -297,7 +297,7 @@ function main() -- ! Modified
         CameraLookAtXYZ(-620.81586, -62.866936, 60.866943, true)
         CameraSetXYZ(-618.8813, -60.227734, 60.907146, -620.81586, -62.866936, 60.866943)
         CameraFade(1000, 1)
-        PedSetActionNode(L5_1, "/Global/C31Strt/LuisIntro", "Act/Conv/C3_1.act")
+        PedSetActionNode(opponent, "/Global/C31Strt/LuisIntro", "Act/Conv/C3_1.act")
         Wait(3000)
         CameraFade(500, 0)
         Wait(550)
@@ -329,7 +329,7 @@ function main() -- ! Modified
     F_FightSetup()
     ]]                      -- Removed this
     F_PreFight(classNumber) -- Added this
-    L11_1 = true         -- Added this
+    L11_1 = true            -- Added this
     gMissionRunning = true
     SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 13, "jumbo")
     local newHealth = PedGetMaxHealth(opponent) / 3 * 2
@@ -1067,7 +1067,7 @@ function F_MissionStageFight() -- ! Added this
             PedSetActionNode(gPlayer, "/Global/1_06/PlayerVictory", "Act/Conv/1_06.act")
         end
         gMoveSucceed = gMoveSucceed + 1
-        if gMoveSucceed >= L23_1 then
+        if gMoveSucceed >= gMaxSucceedCount then
             gMoveSucceed = 0
             gCurrentMove = gCurrentMove + 1
             gNewMove = true
@@ -1103,7 +1103,7 @@ function F_MissionStageFight() -- ! Added this
         end
         PlayerSetControl(1)
     end
-    if gSequenceFailed and not gSucceededTutorial and not gSequencePassed and 8000 < GetTimer() - gFailTimer then
+    if gSequenceFailed and not gSucceededTutorial and not gSequencePassed and GetTimer() - gFailTimer > 8000 then
         SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 11, "jumbo")
         gFailTimer = GetTimer()
         gSequenceFailed = false
@@ -1301,7 +1301,7 @@ function F_PreFight(parm) -- ! Added this
             Wait(0)
         end
         CounterMakeHUDVisible(false)
-        MissionTimerStart(L3_1)
+        MissionTimerStart(MISSION_TIME)
         gMissionTimer = true
     else
         gSpeechTimer = GetTimer()
