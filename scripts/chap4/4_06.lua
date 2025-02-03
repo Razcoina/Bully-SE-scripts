@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_PlantRiggedBall, may require testing
-]]
-
 local playerBike
 local bComplete_Operation = false
 local bWaitingToTrigger = true
@@ -1906,7 +1902,7 @@ function F_GlueIt()
     end
 end
 
-function F_PlantRiggedBall() -- ! Modified
+function F_PlantRiggedBall()
     x1, y1, z1 = GetPointFromPointList(POINTLIST._4_06_OBJECTIVE_C, 1)
     fx, fy, fz = PickupGetXYZ(Frisbee.id)
     local gRunnerId = PedCreatePoint(232, POINTLIST._4_06_BALL_GUARD, 2)
@@ -1961,18 +1957,12 @@ function F_PlantRiggedBall() -- ! Modified
             gPlayerNearBag = true
             PedSetActionNode(gPlayer, "/Global/4_06/Break", "Act/Conv/4_06.act")
             PlayerSetPosSimple(-21.7, -24, 2)
-            --[[
-            PlayerFaceHeadingNow(45.5)
-            ]] -- Changed to:
             PlayerFaceHeadingNow(85.5)
             CameraSetFOV(40)
             CameraSetXYZ(-19.67809, -25.873928, 4.134796, -20.392143, -25.27204, 3.777333)
             PedDestroyWeapon(gPlayer, 400)
             PedSetActionNode(gPlayer, "/Global/WProps/Peds/ScriptedPropInteract", "Act/WProps.act")
             Wait(250)
-            --[[
-            PlayerFaceHeadingNow(90)
-            ]] -- Removed this
             CameraFade(-1, 1)
             Wait(500)
         end

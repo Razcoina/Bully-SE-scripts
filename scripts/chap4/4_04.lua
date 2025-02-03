@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_ProcessMonitor, may require testing
-    * Modified function F_SetupGraveyardCam, may require testing
-    * Modified function F_SetupReaper, may require testing
-]]
-
 local bDebug = false
 local gStage = 1
 local gTablePeds = {}
@@ -373,7 +367,7 @@ function F_GraveyardMonitor()
     end
 end
 
-function F_ProcessMonitor() -- ! Modified
+function F_ProcessMonitor()
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
     CameraFade(500, 0)
@@ -384,9 +378,6 @@ function F_ProcessMonitor() -- ! Modified
     MonitorSetText(1, "")
     MonitorSetText(2, "")
     MonitorSetText(3, "")
-    --[[
-    PlayerLockButtonInputsExcept(false)
-    ]] -- Removed this
     ToggleHUDComponentVisibility(39, false)
     ToggleHUDComponentVisibility(11, true)
     PedSetActionNode(gPlayer, "/Global/404Conv/QuickIdle/Anim", "Act/Conv/4_04.act")
@@ -1022,12 +1013,9 @@ function F_RestoreDefaultCam()
     Wait(0)
 end
 
-function F_SetupGraveyardCam() -- ! Modified
+function F_SetupGraveyardCam()
     CameraAllowChange(true)
     CameraLookAtPlayer(true, 0.5)
-    --[[
-    CameraSetRelativePath(PATH._GRAVE_RELATIVE_CAM, POINTLIST._GRAVE_RELATIVE, 270, true)
-    ]] -- Changed to:
     CameraSetRelativePath(PATH._GRAVE_RELATIVE_CAM, POINTLIST._GRAVE_RELATIVE, 350, true)
     CameraAllowChange(false)
 end
@@ -1098,7 +1086,7 @@ function F_RaiseLadder()
     PAnimSetActionNode(TRIGGER._IFUNHOUS_FLBLADER, "/Global/Ladder/AnimatedLadder/NotUseable", "Act/Props/Ladder.act")
 end
 
-function F_SetupReaper() -- ! Modified
+function F_SetupReaper()
     local gCurrentReaper, gCurrentPath, gCurrentPoint
     local bUsedScythe = true
     local bKilledJock = false
@@ -1143,9 +1131,6 @@ function F_SetupReaper() -- ! Modified
         }
     end
     ToggleHUDComponentVisibility(39, true)
-    --[[
-    PlayerLockButtonInputsExcept(true, 29)
-    ]] -- Removed this
     ToggleHUDComponentVisibility(11, false)
     if nCurrentReaper == 1 then
         F_SetupNerds(POINTLIST._4_04_RPRPATH1, POINTLIST._4_04_RPRPATH1B, false)

@@ -1,10 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_Wave4, may require testing
-    * Modified function T_Delete_Wave3_2, may require testing
-    * Modified function F_CreateWindowSnipers, may require testing
-    * Modified function F_SetUpWave, may require testing
-]]
-
 local gThad, gCorn, gFatty, gBeatriceWave1, gThadWave1
 local bWindowSpawners = false
 local bSpawnersActive = false
@@ -909,7 +902,7 @@ function F_ApproachWave04()
     return PlayerIsInTrigger(TRIGGER._4_02_P_WAVE4)
 end
 
-function F_Wave4() -- ! Modified
+function F_Wave4()
     F_MakePlayerSafeForNIS(true, true)
     CameraSetWidescreen(true)
     PlayerSetControl(0)
@@ -934,9 +927,6 @@ function F_Wave4() -- ! Modified
     gCannonNerd = PedCreatePoint(10, POINTLIST._4_02_SPUD_NERD01)
     PedSetEffectedByGravity(gCannonNerd, false)
     Wait(50)
-    --[[
-    PedDestroyWeapon(gCannonNerd, 8)
-    ]] -- Changed to:
     PedDestroyWeapon(gCannonNerd, 299)
     PedClearAllWeapons(gCannonNerd)
     PedClearObjectives(gCannonNerd)
@@ -952,24 +942,7 @@ function F_Wave4() -- ! Modified
     end
     PedLockTarget(gCannonNerd, gPlayer, 3)
     SoundSetAudioFocusCamera()
-    CameraLookAtObject(gCannonNerd, 2, true)                                                                                    -- Added this
-    CameraSetPath(PATH._4_02_CANNON_PATH, true)                                                                                 -- Added this
-    CameraSetSpeed(15, 5, 30)                                                                                                   -- Added this
-    Wait(1500)                                                                                                                  -- Added this
-    SoundPlayScriptedSpeechEvent_2D("M_4_02_2D", 21)                                                                            -- Added this
-    Wait(6000)                                                                                                                  -- Added this
-    PedSetTaskNode(gCannonNerd, "/Global/AI/GeneralObjectives/SpecificObjectives/UseSpudCannon/PreFireWait/Fire", "Act/AI/AI.act") -- Added this
-    Wait(2000)                                                                                                                  -- Added this
-    PedLockTarget(gCannonNerd, -1)                                                                                              -- Added this
-    PedClearObjectives(gCannonNerd)                                                                                             -- Added this
-    PedSetActionTree(gCannonNerd, "/Global/N_Ranged_A", "Act/Anim/N_Ranged_A.act")                                              -- Added this
-    PedIgnoreStimuli(gCannonNerd, true)                                                                                         -- Added this
-    bSpudLinePlayed = true                                                                                                      -- Added this
-    --[[
-    local cameraX = 33.885
-    local cameraY = -133.481
-    local cameraZ = 8.554
-    CameraLookAtXYZ(cameraX, cameraY, cameraZ, true)
+    CameraLookAtObject(gCannonNerd, 2, true)
     CameraSetPath(PATH._4_02_CANNON_PATH, true)
     CameraSetSpeed(15, 5, 30)
     Wait(1500)
@@ -982,7 +955,6 @@ function F_Wave4() -- ! Modified
     PedSetActionTree(gCannonNerd, "/Global/N_Ranged_A", "Act/Anim/N_Ranged_A.act")
     PedIgnoreStimuli(gCannonNerd, true)
     bSpudLinePlayed = true
-    ]] -- Removed this
     local fx, fy, fz = GetPointList(POINTLIST._4_02_FUSE_POINT)
     CameraLookAtXYZ(fx, fy, fz, false)
     Wait(500)
@@ -1002,7 +974,7 @@ function F_Wave4() -- ! Modified
     TextPrint("4_02_TRANS", 5, 1)
 end
 
-function T_Delete_Wave3_2() -- ! Modified
+function T_Delete_Wave3_2()
     while not (not MissionActive() or bWave3Dead) do
         if PlayerIsInTrigger(TRIGGER._4_02_DELETE_WAVE3) then
             bWave3Dead = true
@@ -1011,9 +983,6 @@ function T_Delete_Wave3_2() -- ! Modified
             gCannonNerd = PedCreatePoint(10, POINTLIST._4_02_SPUD_NERD01)
             PedSetEffectedByGravity(gCannonNerd, false)
             Wait(50)
-            --[[
-            PedDestroyWeapon(gCannonNerd, 8)
-            ]] -- Changed to:
             PedDestroyWeapon(gCannonNerd, 299)
             PedClearAllWeapons(gCannonNerd)
             PedClearObjectives(gCannonNerd)
@@ -1129,11 +1098,8 @@ function T_Door_Health()
     collectgarbage()
 end
 
-function F_CreateWindowSnipers(idPed, spudbool) -- ! Modified
+function F_CreateWindowSnipers(idPed, spudbool)
     PedClearObjectives(idPed)
-    --[[
-    PedDestroyWeapon(idPed, 8)
-    ]] -- Changed to:
     PedDestroyWeapon(idPed, 299)
     PedClearAllWeapons(idPed)
     if spudbool then
@@ -1221,13 +1187,10 @@ function cbSpawner6()
     bHasMoved06 = true
 end
 
-function F_SetUpWave(tbl) -- ! Modified
+function F_SetUpWave(tbl)
     for n, nerd in tbl do
         nerd.id = PedCreatePoint(nerd.model, nerd.point)
         if not nerd.bNoCover then
-            --[[
-            PedDestroyWeapon(nerd.id, 8)
-            ]] -- Changed to:
             PedDestroyWeapon(nerd.id, 299)
             PedClearAllWeapons(nerd.id)
             PedSetWeaponNow(nerd.id, nerd.p_weapon, nerd.ammo, false)

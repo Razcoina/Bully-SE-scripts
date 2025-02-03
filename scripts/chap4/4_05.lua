@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_CutStealCostume, may require testing
-]]
-
 local bDebugModeOn = false
 local bDebugLevel = 2
 local bLoop = true
@@ -1283,7 +1279,7 @@ function cbMascotFledToPool(pedID, pathID, nodeID)
     end
 end
 
-function F_CutStealCostume() -- ! Modified
+function F_CutStealCostume()
     --print("()xxxxx[:::::::::::::::> [start] F_CutStealCostume()")
     PlayerSetControl(0)
     SoundFadeWithCamera(false)
@@ -1302,9 +1298,6 @@ function F_CutStealCostume() -- ! Modified
     CameraSetXYZ(-674.7147, -65.22737, 55.77168, -675.0499, -64.290924, 55.87489)
     CameraFade(-1, 1)
     Wait(500)
-    --[[
-    PedFollowPath(gPlayer, PATH._4_05CUT_POOLJIMMY, 0, 0, cbPlayerKneel)
-    ]] -- Removed this
     SoundPlayScriptedSpeechEventWrapper(gPlayer, "M_4_05", 47)
     F_WaitForSpeech(gPlayer)
     SoundFadeWithCamera(false)

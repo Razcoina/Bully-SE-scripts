@@ -1,7 +1,3 @@
---[[ Changed to:
-    * Modified function F_NISFail, may require testing
-]]
-
 local nFirstBarricadeJockNumber = 6
 local nSecondBarricadeJockNumber = 10
 local tblPedModels = {
@@ -493,7 +489,7 @@ function T_FailureConditions()
     end
 end
 
-function F_NISFail() -- ! Modified
+function F_NISFail()
     SoundFadeWithCamera(false)
     MusicFadeWithCamera(false)
     PlayerSetControl(0)
@@ -507,9 +503,6 @@ function F_NISFail() -- ! Modified
     PedSetFlag(gPlayer, 108, true)
     F_MakePlayerSafeForNIS(true)
     PedSetInvulnerable(gPlayer, true)
-    --[[
-    AreaClearAllPeds()
-    ]] -- Removed this
     local ped1, ped2, ped3, ped4, thad
     ped1 = PedCreatePoint(110, POINTLIST._4_03_CAMFAILJOCKS, 1)
     ped2 = PedCreatePoint(111, POINTLIST._4_03_CAMFAILJOCKS, 2)

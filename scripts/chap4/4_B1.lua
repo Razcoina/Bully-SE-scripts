@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Modified function Stage1_Objectives, may require testing
-    * Modified function Stage2_Objectives, may require testing
-    * Modified function Stage3_Objectives, may require testing
-]]
-
 local bDebugFlag = false
 local gDebugLevel = 3
 local bombLocation = {}
@@ -359,20 +353,14 @@ function F_Stage3_Loop()
     end
 end
 
-function Stage1_Objectives() -- ! Modified
+function Stage1_Objectives()
     if not bS1M1Destroyed and PAnimIsDestroyed("OBSMotor", -700.137, 86.2676, 29.2188) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -698.497, 86.012, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -698.497, 86.012, 29.031)
         BlipRemove(blipMotor01)
         SoundPlay2D("MotorDamge03")
         bS1M1Destroyed = true
     end
     if not bS1M2Destroyed and PAnimIsDestroyed("OBSMotor", -692.547, 86.2075, 29.2906) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -694.166, 86.012, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -694.166, 86.012, 29.031)
         BlipRemove(blipMotor02)
         SoundPlay2D("MotorDamge03")
@@ -386,18 +374,12 @@ end
 
 function Stage2_Objectives()
     if not bS2M1Destroyed and PAnimIsDestroyed("OBSMotor", -706.995, 79.206, 29.291) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -706.751, 77.592, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -706.751, 77.592, 29.031)
         BlipRemove(blipMotor04)
         SoundPlay2D("MotorDamge03")
         bS2M1Destroyed = true
     end
     if not bS2M2Destroyed and PAnimIsDestroyed("OBSMotor", -706.986, 71.6268, 29.291) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -706.751, 73.261, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -706.751, 73.261, 29.031)
         BlipRemove(blipMotor03)
         SoundPlay2D("MotorDamge03")
@@ -411,18 +393,12 @@ end
 
 function Stage3_Objectives()
     if not bS3M1Destroyed and PAnimIsDestroyed("OBSMotor", -692.507, 64.7766, 29.291) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -694.123, 64.948, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -694.123, 64.948, 29.031)
         BlipRemove(blipMotor05)
         SoundPlay2D("MotorDamge03")
         bS3M1Destroyed = true
     end
     if not bS3M2Destroyed and PAnimIsDestroyed("OBSMotor", -700.087, 64.7677, 29.291) then
-        --[[
-        PAnimBreakLight("JanMotorLight03", -698.455, 64.948, 29.031)
-        ]] -- Changed to:
         PAnimBreakLight("JanMotorLight02", -698.455, 64.948, 29.031)
         BlipRemove(blipMotor06)
         SoundPlay2D("MotorDamge03")

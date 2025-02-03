@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Added one local variable
-    * Modified function Stage1_Objectives, may require testing
-    * Modified function Stage2_Objectives, may require testing
-]]
-
 local bDebugFlag = false
 local gDebugLevel = 3
 local bLoop = true
@@ -359,9 +353,7 @@ function F_Stage3_Loop()
     end
 end
 
-local L38_1 = false          -- Added this
-
-function Stage1_Objectives() -- ! Modified
+function Stage1_Objectives()
     if not bIsPlayerInsideGym and (PlayerIsInTrigger(TRIGGER._4_01_GYMINSIDEDOOR) or PlayerIsInTrigger(TRIGGER._4_01_GYMTUNNEL)) then
         F_StartCheerRoutine()
         bIsPlayerInsideGym = true
@@ -372,19 +364,16 @@ function Stage1_Objectives() -- ! Modified
             --print("()xxxxx[:::::::::::::::> [photo loop] mandy gym is valid")
             validGymTarget = true
         end
-        bValidNowOrBefore = validGymTarget or L38_1 -- Added this
-        L38_1 = validGymTarget                -- Added this
+        bValidNowOrBefore = validGymTarget or L38_1
+        L38_1 = validGymTarget
         PhotoSetValid(validGymTarget)
         photohasbeentaken, wasValid = PhotoHasBeenTaken()
-        --[[
-        if photohasbeentaken and wasValid and validGymTarget then
-        ]] -- Changed to:
         if photohasbeentaken and wasValid and bValidNowOrBefore then
             CounterSetCurrent(1)
             F_CutPhotoGym()
             bMonitorCheerleaders = false
             bPicMandyGym = true
-            L38_1 = false -- Added this
+            L38_1 = false
             bGoToStage2 = true
         end
     end
@@ -402,7 +391,7 @@ function Stage1_Objectives() -- ! Modified
     end
 end
 
-function Stage2_Objectives() -- ! Modified
+function Stage2_Objectives()
     if not bTutLattice then
         PedIsInAreaXYZ(gPlayer, latticeX, latticeY, latticeZ, 1, 7)
         if PlayerIsInTrigger(TRIGGER._4_01_TUTLATTICE) and PedIsPlaying(gPlayer, "/Global/Trellis/Trellis_Actions/Climb_ON_BOT", true) then
@@ -463,13 +452,10 @@ function Stage2_Objectives() -- ! Modified
             --print("()xxxxx[:::::::::::::::> [photo loop] mandy shower is valid")
             validShowerTarget = true
         end
-        bValidNowOrBefore = validShowerTarget or L38_1 -- Added this
-        L38_1 = validShowerTarget                -- Added this
+        bValidNowOrBefore = validShowerTarget or L38_1
+        L38_1 = validShowerTarget
         PhotoSetValid(validShowerTarget)
         photohasbeentaken, wasValid = PhotoHasBeenTaken()
-        --[[
-        if photohasbeentaken and wasValid and validShowerTarget then
-        ]] -- Changed to:
         if photohasbeentaken and wasValid and bValidNowOrBefore then
             CounterSetCurrent(2)
             F_CutPhotoShower()
@@ -478,7 +464,7 @@ function Stage2_Objectives() -- ! Modified
             gObjective01c = MissionObjectiveAdd("4_01_MOBJ_01C")
             TextPrint("4_01_MOBJ_01C", 3, 1)
             bMandyIsInShower = false
-            L38_1 = false -- Added this
+            L38_1 = false
             bPicMandyShower = true
         end
     end
@@ -488,13 +474,10 @@ function Stage2_Objectives() -- ! Modified
             --print("()xxxxx[:::::::::::::::> [photo loop] mandy bedroom is valid")
             validBedroomTarget = true
         end
-        bValidNowOrBefore = validBedroomTarget or L38_1 -- Added this
-        L38_1 = validBedroomTarget                -- Added this
+        bValidNowOrBefore = validBedroomTarget or L38_1
+        L38_1 = validBedroomTarget
         PhotoSetValid(validBedroomTarget)
         photohasbeentaken, wasValid = PhotoHasBeenTaken()
-        --[[
-        if photohasbeentaken and wasValid and validBedroomTarget then
-        ]] -- Changed to:
         if photohasbeentaken and wasValid and bValidNowOrBefore then
             if not bMandyRoomDialogue then
                 SoundPlayScriptedSpeechEventWrapper(pedMandyBedroom.id, "M_4_01", 90, "large")
