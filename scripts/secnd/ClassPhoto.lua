@@ -690,7 +690,7 @@ function F_CheckThread()
     --print("<<<<<<<<<<<<<< INITIALIZING THREAD")
     local totalTargets = 0
     local properString = gGoodStringOne
-    local L3_2 = -1 -- Added this
+    local L3_2 = -1
     while gMissionRunning do
         if gClassNo == 2 then
             validTarget = false
