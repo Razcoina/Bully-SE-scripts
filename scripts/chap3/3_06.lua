@@ -192,22 +192,14 @@ function F_Stage3() -- ! Modified
             --[[
         elseif PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
         ]] -- Modified this to:
-        else
-            if PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
-            end
+        elseif PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
             bAlleyWarning = false
             if bGetBackObj then
-                --[[
                 MissionObjectiveRemove(bGetBackObj)
                 TextPrint("3_06_FightPeanut", 4, 1)
                 bPeanutObj = MissionObjectiveAdd("3_06_FightPeanut")
                 bGetBackObj = nil
-                ]] -- This is now outside this if
             end
-            MissionObjectiveRemove(bGetBackObj)
-            TextPrint("3_06_FightPeanut", 4, 1)
-            bPeanutObj = MissionObjectiveAdd("3_06_FightPeanut")
-            bGetBackObj = nil
         end
     elseif not bAlleyWarning and not PlayerIsInTrigger(TRIGGER._FINALFIGHTTRIG) then
         bAlleyWarning = true
