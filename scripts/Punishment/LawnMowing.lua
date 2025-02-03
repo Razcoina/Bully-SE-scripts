@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Modified function JobTier1_Setup, may require testing
-    * Modified function JobTier2_Setup, may require testing
-    * Modified function T_MissionTutorial, may require testing
-]]
-
 local MISSION_RUNNING = -1
 local MISSION_PASSED = 0
 local MISSION_FAILED = 1
@@ -676,7 +670,7 @@ function PunishmentTier3_Setup(difficulty)
     --print(">>>[RUI]", "SetupDifficulty  Punishment tier 3")
 end
 
-function JobTier1_Setup(difficulty) -- ! Modified
+function JobTier1_Setup(difficulty)
     gMissionType = MISSION_JOB
     DisablePOI(true, true)
     if difficulty == DIFFICULTY_EASY then
@@ -708,30 +702,27 @@ function JobTier1_Setup(difficulty) -- ! Modified
     gMowerPoint = POINTLIST._LM3_MOVETO
     gameArea = TRIGGER._LM3_GAMEAREA
     camPath = PATH._LM3_CAM
-    --[[
-    gTutorialMessage = "TUT_JOBL01"
-    ]]                               -- Changed to:
     gTutorialMessage = "TUT_LMP_01"
-    gTutorialMessage2 = "TUT_JOBL01" -- Adde this
+    gTutorialMessage2 = "TUT_JOBL01"
     JobTier1_CreatePlants()
     --print(">>>[RUI]", "SetupDifficulty  Job tier 1")
 end
 
-function JobTier2_Setup(difficulty) -- ! Modified
+function JobTier2_Setup(difficulty)
     gMissionType = MISSION_JOB
     DisablePOI(true, true)
     if difficulty == DIFFICULTY_EASY then
         gAccuracy = 70
-        PROP_DAMAGE_COST = 500 -- Added this
+        PROP_DAMAGE_COST = 500
     elseif difficulty == DIFFICULTY_MEDIUM then
         gAccuracy = 80
-        PROP_DAMAGE_COST = 550 -- Added this
+        PROP_DAMAGE_COST = 550
     elseif difficulty == DIFFICULTY_HARD then
         gAccuracy = 90
-        PROP_DAMAGE_COST = 600 -- Added this
+        PROP_DAMAGE_COST = 600
     else
         gAccuracy = 70
-        PROP_DAMAGE_COST = 500 -- Added this
+        PROP_DAMAGE_COST = 500
     end
     gMissionTime = 180
     gAwardMoney = 2000
@@ -1166,7 +1157,7 @@ function MissionInit(tier)
     PedSetAsleep(gPrefect, true)
 end
 
-function T_MissionTutorial() -- ! Modified
+function T_MissionTutorial()
     if gTutorialMessage then
         Wait(1000)
         --print(">>>[RUI]", "++T_MissionTutorial")

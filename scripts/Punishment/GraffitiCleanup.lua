@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function LockStores, may require testing
-    * Modified function Intro, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibObjective.lua")
 ImportScript("Library/LibPlayer.lua")
@@ -433,17 +428,17 @@ function BlipNextTag()
     end
 end
 
-function LockStores(bLock) -- ! Modified
+function LockStores(bLock)
     AreaSetDoorLocked("DT_tbusines_BikeShopDoor", bLock)
     AreaSetDoorLocked("DT_tbusines_ClothDoor", bLock)
     AreaSetDoorLocked("DT_tbusines_ComicShopDoor", bLock)
-    AreaSetDoorLocked("DT_tbusines_FirewShopDoor", bLock) -- Added this
+    AreaSetDoorLocked("DT_tbusines_FirewShopDoor", bLock)
     AreaSetDoorLocked("DT_tbusines_GenShop1Door", bLock)
     AreaSetDoorLocked("DT_tbusines_GenShop2Door", bLock)
     AreaSetDoorLocked("DT_tbusiness_Barber", bLock)
     AreaSetDoorLocked("DT_tpoor_Barber", bLock)
     AreaSetDoorLocked("DT_trich_BikeShopDoor", bLock)
-    AreaSetDoorLocked("DT_trich_FirewShopDoor", bLock) -- Added this
+    AreaSetDoorLocked("DT_trich_FirewShopDoor", bLock)
     AreaSetDoorLocked("DT_trich_ClothRichDoor", bLock)
     AreaSetDoorLocked("DT_trich_GenShopDoor", bLock)
 end
@@ -486,19 +481,12 @@ function PrefectHitByPlayer()
     return bPrefectAttacked
 end
 
-function Intro() -- ! Modified
+function Intro()
     --print(">>>[RUI]", "!!Intro")
     F_MakePlayerSafeForNIS(true)
     gPrefect = GuardCreate(prefectStart, guardModel)
     PedFaceObject(gPrefect, gPlayer, 3, 1, false)
     L_TagLoad("CleanMe", tblCurrentTags)
-    --[[
-    if bUseCameraTweak then
-        WaitSkippable(1.99999996E11)
-        TextPrintString("CameraTweak Mode ON", 4, 1)
-        F_CameraTweak()
-    end
-    ]] -- Removed this
     PlayerSetWeapon(MODELENUM._WBRUSH, 1, false)
     CameraFade(500, 0)
     Wait(501)
