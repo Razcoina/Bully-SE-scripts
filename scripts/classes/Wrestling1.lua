@@ -1,57 +1,6 @@
---[[ Changes to this file:
-    * Rewrote all local variables, did my best to find names, definitely requires testing
-    * Modified function F_SetupClass, may require testing
-    * Added function F_ClassInit, may require testing
-    * Modified function main, may require testing
-    * Added function CbPlayerPath, may require testing
-    * Added function F_SetupNextMove, may require testing
-    * Removed function F_IsMoveAllowed, not present in original script
-    * Removed function F_FightSetup, not present in original script
-    * Removed function F_IssueInstructions, not present in original script
-    * Removed function F_ProvideInstructions, not present in original script
-    * Removed function F_ReIssueCurrentObjective, not present in original script
-    * Removed function F_FightMonitor, not present in original script
-    * Removed function F_CompletedMove, not present in original script
-    * Removed function F_ProcessSuccessfulMove, not present in original script
-    * Removed function F_IsConditionMet, not present in original script
-    * Removed function F_PlaySuccessDialogue, not present in original script
-    * Removed function F_CheckSignificantProgress, not present in original script
-    * Removed function F_FailedMove, not present in original script
-    * Added function F_MissionStageFight, may require testing
-    * Removed function F_IsMounting, not present in original script
-    * Removed function F_IsHeadbutAvailable, not present in original script
-    * Removed function F_CanFattyReverseEarly, not present in original script
-    * Added function F_PreFight, may require testing
-    * Added function F_PassedCallback, may require testing
-    * Added function F_FailedCallback, may require testing
-    * Added function F_CorrectButtonPressed, may require testing
-    * Modified function F_ResetPeds, may require testing
-    * Heavily modified function F_InMat, requires testing
-    * Removed function DEBUG_GetMove, not present in original script
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPed.lua")
 ImportScript("Library/LibPlayer.lua")
---[[
-local bExitedMat = false
-local bHeadButLocked = false
-local bMoveAllowed = false
-local bMoveCompleted = false
-local bNeedInstructionUpdate = false
-local bCompletedASequence = false
-local bTutorialPartCompleted = false
-local bSuccessPause = false
-local bFattyCanReverseEarly = false
-local SUCCESSPAUSETIME = 3000
-local bWidescreenFromScript = false
-local iLastStateCompleted = 0
-local opponent, burton
-local classNumber = 1
-local opponentModel = 122
-local index_mat, simpleObject_mat, index_glow, simpleObject_glow
-]] -- Changed to:
-
 local L0_1 = 3
 local L1_1 = 2
 local L2_1 = 3
@@ -149,8 +98,8 @@ function F_ToggleHUDItems(b_on)
     ToggleHUDComponentVisibility(0, b_on)
 end
 
-function F_SetupClass(param) -- ! Modified
-    gParam = param           -- ? Here gParam was a global variable
+function F_SetupClass(param)
+    gParam = param
     if param == 1 then
         MISSION_TIME = 90
         opponentModel = 122
@@ -192,7 +141,7 @@ function F_SetupClass(param) -- ! Modified
     setupDone = true
 end
 
-function F_ClassInit(parm) -- ! Added this function
+function F_ClassInit(parm)
     PedSetHealth(opponent, opponentHealth)
     if parm == 1 then
         gActions = {
@@ -252,7 +201,7 @@ function F_CheckLoop(classNo)
     end
 end
 
-function main() -- ! Modified
+function main()
     while not setupDone do
         Wait(0)
     end
@@ -293,7 +242,7 @@ function main() -- ! Modified
     F_Intro()
     CameraSetWidescreen(true)
     SoundPlayStream("MS_GymClass.rsm", 0.5, 2, 1)
-    if classNumber == 5 then -- Added this
+    if classNumber == 5 then
         CameraLookAtXYZ(-620.81586, -62.866936, 60.866943, true)
         CameraSetXYZ(-618.8813, -60.227734, 60.907146, -620.81586, -62.866936, 60.866943)
         CameraFade(1000, 1)
@@ -321,53 +270,31 @@ function main() -- ! Modified
     PedStop(opponent)
     PedClearObjectives(opponent)
     CameraFade(1000, 1)
-    F_ClassInit(classNumber) -- Added this
+    F_ClassInit(classNumber)
     gOldHealth = PedGetHealth(opponent)
     gInsideMat = true
     PedSetActionNode(opponent, "/Global/WrestlingNPC", "Act/Anim/WrestlingNPC_ACT.act")
-    --[[
-    F_FightSetup()
-    ]]                      -- Removed this
-    F_PreFight(classNumber) -- Added this
-    L11_1 = true            -- Added this
+    F_PreFight(classNumber)
+    L11_1 = true
     gMissionRunning = true
     SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 13, "jumbo")
     local newHealth = PedGetMaxHealth(opponent) / 3 * 2
     PedSetHealth(opponent, newHealth)
     PedSetMaxHealth(opponent, newHealth)
     while gMissionRunning do
-        --[[
-        if bExitedMat == true and bTutorialPartCompleted == false then
-            F_ResetPeds()
-            F_ReIssueCurrentObjective()
-            bExitedMat = false
-        end
-        if bNeedInstructionUpdate == true then
-            DebugPrint(DEBUG_GetMove(curState))
-            F_IssueInstructions()
-            bNeedInstructionUpdate = false
-        end
-        F_FightMonitor()
-        ]] -- Removed this
         F_CheckLoop(classNumber)
         PedInRectangle(opponent, matX1, matY1, matX2, matY2)
         if PedIsDead(opponent) then
             gMissionRunning = false
             missionPassed = true
         end
-        if gMissionTimer and MissionTimerHasFinished() then -- Added this
+        if gMissionTimer and MissionTimerHasFinished() then
             MissionTimerStop()
             L22_1 = true
             gMissionRunning = false
             missionPassed = true
         end
         F_InMat()
-        --[[
-        if bCompletedASequence == true then
-            F_ProcessSuccessfulMove()
-            bCompletedASequence = false
-        end
-        ]] -- Removed this
         Wait(0)
     end
     SoundFadeoutStream()
@@ -381,7 +308,7 @@ function main() -- ! Modified
     end
 end
 
-function CbPlayerPath(pedId, pathId, nodeId) -- ! Added this
+function CbPlayerPath(pedId, pathId, nodeId)
     if nodeId == 2 then
     elseif nodeId == 4 then
         PedSetActionNode(gPlayer, "/Global/C31Strt/PlayerStretch", "Act/Conv/C3_1.act")
@@ -596,7 +523,7 @@ function F_FailMission()
     MissionFail()
 end
 
-function F_SetupNextMove() -- ! Added this
+function F_SetupNextMove()
     if gAnims[gActions.condition] then
         if PedIsPlaying(opponent, "/Global/AI/CombatActions/CombatActions/PostHit/OnGround", true) then
             local startTime = GetTimer()
@@ -669,376 +596,7 @@ function F_SetupNextMove() -- ! Added this
     ButtonHistoryIgnoreController(false)
 end
 
---[[
-function F_IsMoveAllowed()
-    if bMoveAllowed == true then
-        return 1
-    else
-        return 0
-    end
-end
-
-
-function F_FightSetup()
-    DebugPrint("************WMW - Enter: F_FightSetup***************************")
-    if classNumber == 1 then
-        curState = 1
-    elseif classNumber == 2 then
-        curState = 20
-    else
-        curState = 33
-    end
-    CreateThread("T_RestoreHealth")
-    ButtonHistorySetCallbackPassed(F_CompletedMove)
-    ButtonHistorySetCallbackFailed(F_FailedMove)
-    bMonitoringActive = true
-    gHealthTreadCheck = true
-    TextPrint("C3_01_30", 4, 1)
-    Wait(3000)
-    CameraSetWidescreen(false)
-    PlayerSetControl(1)
-    F_OpponentStartFight()
-    PedClearObjectives(gPlayer)
-    PedStop(gPlayer)
-    CameraSetShot(9, "Wrestling", false)
-    CameraAllowChange(false)
-    PedAttackPlayer(opponent)
-    gFailTimer = GetTimer()
-    DebugPrint("************WMW - About to exit: F_FightSetup***************************")
-    bNeedInstructionUpdate = true
-end
-
-
-function F_IssueInstructions()
-    DebugPrint(DEBUG_GetMove(curState))
-    bHeadButLocked = false
-    bMoveAllowed = true
-    bShouldBeGrappling = false
-    bShouldBeMounting = false
-    bMoveCompleted = false
-    bFattyCanReverseEarly = false
-    curSequenceInputTime = 10
-    if curState == 1 then
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 2 then
-        curMoveName = "C3_Move02"
-        bShouldBeGrappling = true
-        curBtnSequence = { 38 }
-        bMoveCompleted = true
-    elseif curState == 3 then
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 4 then
-        curMoveName = "C3_Move02"
-        bShouldBeGrappling = true
-        curBtnSequence = { 38 }
-        bMoveCompleted = true
-    elseif curState == 5 then
-        bHeadButLocked = true
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 6 then
-        bHeadButLocked = true
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move04"
-        curBtnSequence = {
-            32,
-            32,
-            38
-        }
-        bMoveCompleted = true
-    elseif curState == 7 then
-        bHeadButLocked = true
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 8 then
-        bHeadButLocked = true
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move04"
-        curBtnSequence = {
-            32,
-            32,
-            38
-        }
-        bMoveCompleted = true
-    elseif curState == 20 then
-        bMoveAllowed = false
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 21 then
-        bMoveAllowed = false
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move06"
-        curBtnSequence = { 40 }
-        bMoveCompleted = true
-        if gbWiiTakedownShown == nil then
-            TutorialShowMessage("C3_TakeDown_Wii", 3500, false)
-            gbWiiTakedownShown = true
-        end
-    elseif curState == 22 then
-        bMoveAllowed = false
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 23 then
-        bMoveAllowed = false
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move06"
-        curBtnSequence = { 40 }
-    elseif curState == 24 then
-        bMoveAllowed = false
-        bShouldBeMounting = true
-        curMoveName = "C3_Move08"
-        curBtnSequence = { 29 }
-        bMoveCompleted = true
-    elseif curState == 25 then
-        bMoveAllowed = false
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 26 then
-        bMoveAllowed = false
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move06"
-        curBtnSequence = { 40 }
-    elseif curState == 27 then
-        bMoveAllowed = false
-        bShouldBeMounting = true
-        curMoveName = "C3_Move09"
-        curBtnSequence = { 39 }
-        bMoveCompleted = true
-    elseif curState == 28 then
-        bMoveAllowed = false
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 29 then
-        bMoveAllowed = false
-        bShouldBeGrappling = true
-        curMoveName = "C3_Move06"
-        curBtnSequence = { 40 }
-    elseif curState == 30 then
-        bShouldBeMounting = true
-        curMoveName = "C3_Move10"
-        curBtnSequence = { 38 }
-        bMoveCompleted = true
-    elseif curState == 31 then
-        bMoveAllowed = false
-        curMoveName = "C3_Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 32 then
-        bShouldBeGrappling = true
-        bMoveAllowed = false
-        curMoveName = "C3_Move06"
-        curBtnSequence = { 40 }
-    elseif curState == 33 then
-        curMoveName = "C3_Move11"
-        bShouldBeMounting = true
-        curBtnSequence = {
-            32,
-            32,
-            32
-        }
-        bMoveCompleted = true
-    end
-    F_ProvideInstructions(curBtnSequence, curMoveName)
-end
-
-
-function F_ProvideInstructions(btnSequence, text)
-    DebugPrint("************WMW - Enter: F_ProvideInstructions***************************")
-    ButtonHistoryIgnoreController(true)
-    ButtonHistoryClearSequence()
-    ToggleHUDComponentVisibility(21, false)
-    ButtonHistorySetCallbackPassed(F_CompletedMove)
-    ButtonHistorySetCallbackFailed(F_FailedMove)
-    ButtonHistorySetSequenceTime(curSequenceInputTime)
-    ButtonHistoryAddSequenceLocalText(text)
-    if table.getn(curBtnSequence) == 1 then
-        ButtonHistoryAddSequence(curBtnSequence[1], false)
-    elseif table.getn(curBtnSequence) == 3 then
-        ButtonHistoryAddSequence(curBtnSequence[1], false, curBtnSequence[2], false, curBtnSequence[3], false)
-    end
-    ButtonHistoryIgnoreController(false)
-    ToggleHUDComponentVisibility(21, true)
-end
-
-
-function F_ReIssueCurrentObjective()
-    curState = iLastStateCompleted + 1
-    bNeedInstructionUpdate = true
-end
-
-function F_FightMonitor()
-    local bStateChanged = false
-    if bMonitoringActive == false then
-        return
-    end
-    if bShouldBeGrappling then
-        if not PedIsPlaying(gPlayer, "/Global/Actions/Grapples/Front/Grapples", true) then
-            DebugPrint("************WMW - Should be grappling, but aren't")
-            curState = curState - 1
-            bStateChanged = true
-        end
-    elseif bShouldBeMounting then
-        if not F_IsMounting() then
-            DebugPrint("************WMW - got a negative back from F_IsMounting***************************")
-            curState = curState - 2
-            bStateChanged = true
-        else
-            DebugPrint("************WMW - Nothing to report from F_IsMounting. That means we should still be grappling***************************")
-        end
-    end
-    if bStateChanged == true then
-        DebugPrint("WMW - State Changed from within Fight Monitor")
-        bNeedInstructionUpdate = true
-    end
-end
-
-function F_CompletedMove(button)
-    SoundPlay2D("RightBtn")
-    ToggleHUDComponentVisibility(21, false)
-    bMonitoringActive = false
-    bCompletedASequence = true
-end
-
-function F_ProcessSuccessfulMove()
-    DebugPrint("************WMW - Enter F_ProcessSuccessfulMove -> " .. DEBUG_GetMove(curState))
-    if bExitedMat == true then
-        return
-    end
-    bMonitoringActive = true
-    F_PlaySuccessDialogue()
-    if bMoveCompleted == true then
-        iLastStateCompleted = curState
-        bSuccessPause = true
-        F_CheckSignificantProgress()
-    end
-    DebugPrint("************WMW - curState: " .. tostring(curState))
-    curState = curState + 1
-    DebugPrint("************WMW - New curState: " .. tostring(curState))
-    if classNumber == 1 and curState > 8 or curState > 33 then
-        DebugPrint("++++++++++++++++++++++++ - WMW -F_ProcessSuccessfulMove - wrapping this lesson up ++++++++++++++++++++++++")
-        bTutorialPartCompleted = true
-        bMonitoringActive = false
-        Wait(SUCCESSPAUSETIME)
-        TextPrint("C3_01_24", 3, 1)
-        MissionObjectiveAdd("C3_01_24")
-        PedSetHealth(opponent, gOldHealth)
-        PedShowHealthBar(opponent, false)
-        bHeadButLocked = false
-        bMoveAllowed = true
-        gHealthTreadCheck = false
-        ToggleHUDComponentVisibility(21, false)
-        ButtonHistoryClearSequence()
-        ButtonHistorySetCallbackPassed(nil)
-        ButtonHistorySetCallbackFailed(nil)
-    else
-        DebugPrint("************WMW - Exit F_ProcessSuccessfulMove, flagging an update")
-        bNeedInstructionUpdate = true
-    end
-    if bSuccessPause == true then
-        Wait(SUCCESSPAUSETIME)
-        bSuccessPause = false
-    end
-    if bWidescreenFromScript == true then
-        CameraSetWidescreen(false)
-        bWidescreenFromScript = false
-    end
-end
-
-function F_IsConditionMet()
-    local conditionMetStates = {
-        1,
-        3,
-        5,
-        7,
-        20,
-        23,
-        26,
-        29,
-        32
-    }
-    for k, v in conditionMetStates do
-        if v == curState then
-            return true
-        end
-    end
-    return false
-end
-
-function F_PlaySuccessDialogue()
-    if F_IsConditionMet() then
-        local randomNo = math.random(1, 100)
-        if randomNo < 50 then
-            print("FAATTTYYYY SPEECH")
-            SoundStopCurrentSpeechEvent()
-            SoundPlayScriptedSpeechEvent(opponent, "VICTIMIZED", 0, "large", false, true)
-        else
-            print("FAATTTYYYY SPEECH2")
-            SoundStopCurrentSpeechEvent()
-            SoundPlayScriptedSpeechEvent(opponent, "SCARED", 0, "large", false, true)
-        end
-    end
-    if bMoveCompleted == true then
-        local randomNo = math.random(1, 100)
-        if randomNo < 50 then
-            SoundPlayScriptedSpeechEvent(opponent, "VICTIMIZED", 0, "large", false, true)
-        else
-            SoundPlayScriptedSpeechEvent(opponent, "DEFEAT_INDIVIDUAL", 0, "large", false, true)
-        end
-        DebugPrint("************WMW - Some more Fatty speech***************************")
-        SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 12, "jumbo")
-    end
-end
-
-function F_CheckSignificantProgress()
-    DebugPrint("************WMW - F_CheckSignificantProgress. " .. DEBUG_GetMove(curState))
-    local unlockMessage
-    if curState == 4 then
-        unlockMessage = "C3_Unlock02_Wii"
-        DebugPrint("************WMW - Finished Headbutt from Grapple")
-    elseif curState == 8 then
-        unlockMessage = "C3_Unlock04_Wii"
-        DebugPrint("************WMW - Finished strike, strike, charged stike(from grapple)")
-    elseif curState == 21 then
-        DebugPrint("************WMW - Telling fat boy to get up here***************************")
-        bFattyCanReverseEarly = true
-        while not PedIsPlaying(gPlayer, "/Global/Actions/Grapples/Mount/MountIdle", true) do
-            Wait(0)
-        end
-        PedSetActionNode(opponent, "/Global/Actions/Grapples/GrappleReversals/MountReversals/Pushoff/GIVE", "Act/Globals/GlobalActions.act")
-        DebugPrint("************WMW - Finished Takedown")
-    elseif curState == 24 then
-        DebugPrint("************WMW - Finished Dismount")
-    elseif curState == 27 then
-        DebugPrint("************WMW - Finished Pull Up")
-    elseif curState == 30 then
-        unlockMessage = "C3_Unlock10"
-        DebugPrint("************WMW - Finished Knee Drop")
-    elseif curState == 33 then
-        unlockMessage = "C3_Unlock11_Wii"
-        DebugPrint("************WMW - Finished 3 hits from mounted")
-    end
-    ToggleHUDComponentVisibility(21, false)
-    if unlockMessage then
-        CameraSetWidescreen(true)
-        bWidescreenFromScript = true
-        TextPrint(unlockMessage, 3, 1)
-        bSuccessPause = true
-    end
-end
-
-function F_FailedMove(button, bTimedOut)
-    DebugPrint("************WMW - Enter: F_FailedMove***************************")
-    bMonitoringActive = true
-    if GetTimer() - gFailTimer > 8000 then
-        SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 11, "jumbo")
-        gFailTimer = GetTimer()
-    end
-    bNeedInstructionUpdate = true
-end
-]]                             -- Not present in original script
-
-function F_MissionStageFight() -- ! Added this
+function F_MissionStageFight()
     if gSequencePassed then
         if gEnemyReverse then
             local startTime = GetTimer()
@@ -1120,52 +678,7 @@ function T_RestoreHealth()
     --print("[RAUL] End Restoring Health")
 end
 
---[[
-function F_IsMounting()
-    DebugPrint("************WMW - Starting F_IsMounting***************************")
-    local bMounting = true
-    local startTime = GetTimer()
-    while not (PedIsPlaying(gPlayer, "/Global/Actions/Grapples/Front/Grapples/GrappleOpps/Player/TakeDown", true) or PedIsPlaying(gPlayer, "/Global/Actions/Grapples/Mount", true) or PedIsPlaying(gPlayer, "/Global/Actions/Grapples/Front/Grapples/GrappleMoves/TakeDown", true)) do
-        DebugPrint("************WMW - Sitting in F_IsMounting loop***************************")
-        Wait(0)
-        if PedIsPlaying(opponent, "/Global/Grapples/GrappleReversals/MountReversals/Pushoff", true) or PedIsPlaying(gPlayer, "/Global/Grapples/Mount/GrappleMoves/Dismount", true) then
-            DebugPrint("************WMW - Got a false from one of the two anims***************************")
-            bMounting = false
-            break
-        end
-        if IsButtonPressed(29, 0) and curState ~= 24 then
-            DebugPrint("************WMW - Got a false from the Z button reader***************************")
-            bMounting = false
-            break
-        end
-        if GetTimer() - startTime > 500 then
-            DebugPrint("************WMW - Got a false from timing out***************************")
-            bMounting = false
-            break
-        end
-    end
-    DebugPrint("************WMW - Leaving F_IsMounting***************************")
-    return bMounting
-end
-
-function F_IsHeadbutAvailable()
-    if bHeadButLocked == false then
-        return 1
-    elseif bHeadButLocked == true then
-        return 0
-    end
-end
-
-function F_CanFattyReverseEarly()
-    if bFattyCanReverseEarly == true then
-        return 1
-    else
-        return 0
-    end
-end
-]]                        -- Not present in original script
-
-function F_PreFight(parm) -- ! Added this
+function F_PreFight(parm)
     if parm == 1 then
         gHealthTreadCheck = true
         TextPrint("C3_01_30", 4, 1)
@@ -1313,7 +826,7 @@ function F_PreFight(parm) -- ! Added this
     end
 end
 
-function F_PassedCallback(button) -- ! Added this
+function F_PassedCallback(button)
     SoundPlay2D("RightBtn")
     if not gTutorialSequence then
         local randomNo = math.random(1, 100)
@@ -1327,27 +840,20 @@ function F_PassedCallback(button) -- ! Added this
     end
 end
 
-function F_FailedCallback(button, timesUp) -- ! Added this
+function F_FailedCallback(button, timesUp)
     ButtonHistoryIgnoreController(false)
     gSequenceFailed = true
 end
 
-function F_CorrectButtonPressed(button) -- ! Added this
+function F_CorrectButtonPressed(button)
     gButtonCorrect = true
 end
 
-function F_ResetPeds() -- ! Modified
+function F_ResetPeds()
     --DebugPrint("************WMW - F_ResetPeds()***************************")
-    --[[
-    SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 10, "jumbo")
-    ]] -- Removed this
     CameraFade(500, 0)
     PlayerSetControl(0)
     Wait(500)
-    --[[
-    ButtonHistoryClearSequence()
-    ToggleHUDComponentVisibility(21, false)
-    ]] -- Removed this
     CameraAllowChange(true)
     CameraLookAtXYZ(-619.46704, -60.716175, 60.486973, true)
     CameraSetXYZ(-615.8843, -55.617973, 61.187515, -619.46704, -60.716175, 60.486973)
@@ -1370,15 +876,7 @@ function F_ResetPeds() -- ! Modified
     CameraAllowChange(false)
 end
 
-function F_InMat() -- ! Heavily modified
-    --[[
-    if gInsideMat and not PlayerIsInTrigger(TRIGGER._C3_MAT_BOUNDARY) then
-        --DebugPrint("************WMW - F_InMat() inside check***************************")
-        bMonitoringActive = false
-        bExitedMat = true
-        F_ResetPeds()
-    end
-    ]] -- Original
+function F_InMat()
     if gInsideMat and not PlayerIsInTrigger(TRIGGER._C3_MAT_BOUNDARY) then
         F_ResetPeds()
         SoundPlayScriptedSpeechEvent(burton, "WRESTLING", 10, "jumbo")
@@ -1460,56 +958,3 @@ function F_CleanPrefect()
         PedDelete(prefect)
     end
 end
-
---[[
-function DEBUG_GetMove(curState)
-    if curState == 1 then
-        curMoveName = "Grapple"
-    elseif curState == 2 then
-        curMoveName = "Headbutt from Grapple"
-    elseif curState == 3 then
-        curMoveName = "Grapple"
-    elseif curState == 4 then
-        curMoveName = "Headbutt from Grapple"
-    elseif curState == 5 then
-        curMoveName = "Grapple"
-        curBtnSequence = { 29 }
-    elseif curState == 6 then
-        curMoveName = "Wiimote, Wiimote, Wiimote + Attack from Grapp"
-    elseif curState == 7 then
-        curMoveName = "Grapple"
-    elseif curState == 8 then
-        curMoveName = "Wiimote, Wiimote, Wiimote + Attack from Grapple"
-    elseif curState == 20 then
-        curMoveName = "Grapple"
-    elseif curState == 21 then
-        curMoveName = "Takedown"
-    elseif curState == 22 then
-        bMoveAllowed = false
-        curMoveName = "Grapple"
-    elseif curState == 23 then
-        curMoveName = "Takedown"
-    elseif curState == 24 then
-        curMoveName = "Dismount"
-    elseif curState == 25 then
-        curMoveName = "Grapple"
-    elseif curState == 26 then
-        curMoveName = "Takedown"
-    elseif curState == 27 then
-        curMoveName = "Pull Up"
-    elseif curState == 28 then
-        curMoveName = "Grapple"
-    elseif curState == 29 then
-        curMoveName = "Takedown"
-    elseif curState == 30 then
-        curMoveName = "Knee Drop"
-    elseif curState == 31 then
-        curMoveName = "Grapple"
-    elseif curState == 32 then
-        curMoveName = "Takedown"
-    elseif curState == 33 then
-        curMoveName = "3 hits from mounted"
-    end
-    return tostring(curState) .. " --- " .. curMoveName
-end
-]] -- Not present in original script
