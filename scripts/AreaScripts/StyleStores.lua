@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_ShopLoop, may require testing
-]]
-
 local gPlayerBrokeStuff = false
 local eX, eY, eZ, eAreacode, eHeading, cx, cy, cz, gClerk
 local gPlayerInArea = false
@@ -168,7 +164,7 @@ end
 
 local hour, minute
 
-function F_ShopLoop() -- ! Modified
+function F_ShopLoop()
     if F_CheckClock() and PlayerIsInAreaXYZ(cx, cy, cz, 1, gCoronaType) then
         gPlayerInArea = true
         if gSpecialStore then
@@ -199,7 +195,7 @@ function F_ShopLoop() -- ! Modified
             Wait(250)
             local bPlaySpeech = true
             local speechTime = GetTimer() + 1500
-            local startingHeading = 5 -- Added this
+            local startingHeading = 5
             local clothingHeading = gPlayerHeading
             Wait(250)
             HUDSaveVisibility()
@@ -247,26 +243,13 @@ function F_ShopLoop() -- ! Modified
                     gInWidescreen = true
                 end
                 if IsButtonPressed(15, 0) then
-                    --[[
-                    clothingHeading = gPlayerHeading
-                    ]]                                    -- Removed this
-                    startingHeading = startingHeading - 1 -- Added this
-                    if startingHeading == 0 then -- Added this
+                    startingHeading = startingHeading - 1
+                    if startingHeading == 0 then
                         clothingHeading = gPlayerHeading
                         startingHeading = 1
                     end
-                    --[[
-                elseif IsButtonPressed(24, 0) then
-                ]] -- Changed to:
                 elseif GetStickValue(18, 0) then
-                    --[[
-                    clothingHeading = clothingHeading - 5
-                    ]] -- Changed to:
                     startingHeading = 5
-                    --[[
-                elseif IsButtonPressed(25, 0) then
-                    clothingHeading = clothingHeading + 5
-                ]] -- Removed this
                     clothingHeading = clothingHeading + 5 * GetStickValue(18, 0)
                 end
                 if 360 < clothingHeading then

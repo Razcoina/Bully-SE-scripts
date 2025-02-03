@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_ShopLoop, may require testing
-]]
-
 local SchoolSpawnTable = {}
 local ExitDocker, ExitSpawner, SchoolDocker
 local gExitDoors = {}
@@ -277,7 +273,7 @@ function F_InitShop()
     gFloatB = 0.7
 end
 
-function F_ShopLoop() -- ! Modified
+function F_ShopLoop()
     sHour, sMin = ClockGet()
     if not gStoreInitiated then
         F_SetupSchoolStore()
@@ -302,10 +298,6 @@ function F_ShopLoop() -- ! Modified
                 Wait(250)
                 local bPlaySpeech = true
                 local speechTime = GetTimer() + 1500
-                --[[
-                local startingHeading = 220
-                local clothingHeading = startingHeading
-                ]] -- Changed to:
                 local startingHeading = 5
                 local clothingHeading = 220
                 Wait(250)
@@ -401,26 +393,13 @@ function F_ShopLoop() -- ! Modified
                         gInWidescreen = true
                     end
                     if IsButtonPressed(15, 0) then
-                        --[[
-                        clothingHeading = startingHeading
-                        ]]                           -- Changed to:
                         startingHeading = startingHeading - 1
-                        if startingHeading == 0 then -- Added this
+                        if startingHeading == 0 then
                             clothingHeading = 0
                             startingHeading = 1
                         end
-                        --[[
-                    elseif IsButtonPressed(24, 0) then
-                    ]] -- Changed to:
                     elseif GetStickValue(18, 0) then
-                        --[[
-                        clothingHeading = clothingHeading - 5
-                        ]] -- Changed to:
                         startingHeading = 5
-                        --[[
-                    elseif IsButtonPressed(25, 0) then
-                        clothingHeading = clothingHeading + 5
-                    ]] -- Removed this
                         clothingHeading = clothingHeading + 5 * GetStickValue(18, 0)
                     end
                     if 360 < clothingHeading then

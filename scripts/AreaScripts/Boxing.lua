@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_TrophyCaseFullCreate, may require testing
-    * Modified function F_TrophyCaseBustedCreate, may require testing
-]]
-
 local gTrophyProps = {}
 local sweater_guard
 local shirtMI = ObjectNameToHashID("R_Sweater1")
@@ -106,10 +101,7 @@ function main()
     collectgarbage()
 end
 
-function F_TrophyCaseFullCreate() -- ! Modified
-    --[[
-    local index, simpleObject = CreatePersistentEntity("BX_loungeBWG", -736.848, 382.395, 300.476, 0, 27)
-    ]] -- Changes to:
+function F_TrophyCaseFullCreate()
     local index, simpleObject = CreatePersistentEntity("BX_loungeBWG", -736.784, 382.395, 300.476, 0, 27)
     table.insert(gTrophyProps, { id = index, object = simpleObject })
     index, simpleObject = CreatePersistentEntity("DPI_TrophyGlsA", -736.527, 384.586, 299.311, 90, 27)
@@ -158,14 +150,11 @@ function F_TrophyCaseFullCreate() -- ! Modified
     table.insert(gTrophyProps, { id = index, object = simpleObject })
 end
 
-function F_TrophyCaseBustedCreate() -- ! Modified
+function F_TrophyCaseBustedCreate()
     if gTrophyProps and table.getn(gTrophyProps) > 0 then
         F_TrophyCaseRemove()
     end
     gTrophyProps = {}
-    --[[
-    local caseI, caseObject = CreatePersistentEntity("BX_loungeBWB", -736.848, 382.395, 300.476, 0, 27)
-    ]] -- Changed to:
     local caseI, caseObject = CreatePersistentEntity("BX_loungeBWB", -736.801, 382.395, 300.476, 0, 27)
     table.insert(gTrophyProps, { id = caseI, object = caseObject })
 end

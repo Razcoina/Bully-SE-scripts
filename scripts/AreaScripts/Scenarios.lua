@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_CheckConditions, may require testing
-]]
-
 local ZONE_SCHOOL = {}
 local ZONE_BUSINESS = {}
 local ZONE_RICH = {}
@@ -468,7 +464,7 @@ function F_ScenarioManager(POIInfo)
     end
 end
 
-function F_CheckConditions(scenario, POIInfo) -- ! Modified
+function F_CheckConditions(scenario, POIInfo)
     local bRepeatable = scenario.repeatable ~= nil and scenario.repeatable == true
     local bCompleted = false
     local bMissionOnOff = scenario.missionoff ~= nil and scenario.completed == true
@@ -476,9 +472,6 @@ function F_CheckConditions(scenario, POIInfo) -- ! Modified
     local bMissoinOnOffCompleted = scenario.missionoff ~= nil and IsMissionCompleated(scenario.missionoff)
     local bScheduled = scenario.time == nil or scenario.time ~= nil and GetTimer() > scenario.time
     if scenario.enum == -1 then
-        --[[
-        if MiniObjectiveGetIsComplete(15) then
-        ]] -- Changed to:
         if MiniObjectiveGetIsComplete(16) then
             bCompleted = true
         end

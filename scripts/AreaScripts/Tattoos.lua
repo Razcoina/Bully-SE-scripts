@@ -1,10 +1,5 @@
---[[ Changes to this file:
-    * Added unused local variable
-    * Modified function main, may require testing
-]]
-
 local gCurrentCam = -1
-local L1_1 = 0 -- ! Cannot recover original name
+local L1_1 = 0
 
 function SetupTattooStore()
     TattooStoreAdd(0, 0, "black", 1000, 1)
@@ -66,7 +61,7 @@ function FeedbackCallback(storeFeedbackType, relatedData)
     end
 end
 
-function main() -- ! Modified
+function main()
     AreaDisableCameraControlForTransition(true)
     local gArea = 16
     AreaClearAllPeds()
@@ -108,26 +103,13 @@ function main() -- ! Modified
     CameraFade(500, 1)
     while not buttonPressed do
         if IsButtonPressed(15, 0) then
-            --[[
-            clothingHeading = gClothingHeading
-            ]]                                    -- Removed this
-            startingHeading = startingHeading - 1 -- Added this
-            if startingHeading == 0 then -- Added this
+            startingHeading = startingHeading - 1
+            if startingHeading == 0 then
                 clothingHeading = gClothingHeading
                 startingHeading = 1
             end
-            --[[
-        elseif IsButtonPressed(24, 0) then
-        ]] -- Changed to:
         elseif GetStickValue(18, 0) then
-            --[[
-            clothingHeading = clothingHeading - 5
-            ]] -- Changed to:
             startingHeading = 5
-            --[[
-        elseif IsButtonPressed(25, 0) then
-            clothingHeading = clothingHeading + 5
-            ]] -- Removed this
             clothingHeading = clothingHeading + 5 * GetStickValue(18, 0)
         end
         if clothingHeading > 360 then

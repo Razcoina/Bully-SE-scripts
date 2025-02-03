@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Removed function F_CloseNerdPathDoors, may require testing
-]]
-
 ImportScript("Library/LibSchool.lua")
 ImportScript("Library/Mailboxes.lua")
 SchoolGroundsSpawners = {}
@@ -2547,12 +2543,6 @@ function F_OpenDoors()
         PAnimOpenDoor(TRIGGER._NERDPATH_BRDOOR)
     end
 end
-
---[[
-function F_CloseNerdPathDoors()
-    PAnimCloseDoor(TRIGGER._NERDPATH_BRDOOR)
-end
-]] -- Not present in original script
 
 function F_OrderlyCallback(pedId, pathId, nodeId)
     local randValue = math.random(1, 100)
