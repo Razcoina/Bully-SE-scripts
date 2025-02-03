@@ -353,6 +353,8 @@ function F_Stage3_Loop()
     end
 end
 
+local L38_1 = false
+
 function Stage1_Objectives()
     if not bIsPlayerInsideGym and (PlayerIsInTrigger(TRIGGER._4_01_GYMINSIDEDOOR) or PlayerIsInTrigger(TRIGGER._4_01_GYMTUNNEL)) then
         F_StartCheerRoutine()
