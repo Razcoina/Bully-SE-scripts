@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Removed unused variables
-    * Modified function F_BuildAreaTable, may require testing
-]]
-
 MUSIC_DEFAULT_VOLUME = 0.5
 FADE_OUT_TIME = AreaGetTransitionTime(0)
 FADE_IN_TIME = AreaGetTransitionTime(1)
@@ -117,9 +112,6 @@ shared.gWeaponTaken = nil
 shared.gAmmoTypeTaken = nil
 shared.gAmmoTaken = 0
 shared.gWindowsOpen = nil
---[[
-shared.gPunishmentMissionDebug = 0
-]] -- Removed this
 shared.gPrepPwd = 0
 shared.gPrepDoorConv = false
 shared.gBoxingOpponent = 1
@@ -292,25 +284,7 @@ function F_AreaTableAdd(newElement)
     shared.areaTable.size = shared.areaTable.size + 1
 end
 
-function F_BuildAreaTable() -- ! Modified
-    --[[
-    F_AreaTableAdd({
-        zone = 31,
-        name = "Test Area (Bikes, Peds, Pickups)",
-        x = -0.113735,
-        y = -2.00068,
-        z = 15,
-        h = 0
-    })
-    F_AreaTableAdd({
-        zone = 22,
-        name = "Fight Area ",
-        x = -9.988,
-        y = 21.42,
-        z = 30,
-        h = 0
-    })
-    ]] -- Removed this
+function F_BuildAreaTable()
     F_AreaTableAdd({
         zone = 0,
         name = "Business District",

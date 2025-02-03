@@ -1,8 +1,4 @@
---[[ Changes to this file:
-    * Modified function F_SetupMissionRequirements, may require testing
-]]
-
-function F_SetupMissionRequirements(missionId) -- ! Modified
+function F_SetupMissionRequirements(missionId)
     --DebugPrint("Setting Up Mission Requirements For Mission: " .. missionId)
     if missionId == MissionGetIndex("1_01") then
         shared.bCrateStateSetup = false
@@ -136,10 +132,6 @@ function F_SetupMissionRequirements(missionId) -- ! Modified
         MissionSuccessCountInc("C_Wrestling_1")
         MissionForceCompleted("C_English_1")
         MissionSuccessCountInc("C_English_1")
-        --[[
-        MissionForceCompleted("1_06_02")
-        MissionSuccessCountInc("1_06_02")
-        ]] -- Removed this
         shared.updateDefaultKOPoint = true
     elseif missionId == MissionGetIndex("2_B") then
         if ChapterGet() <= 2 then
@@ -159,12 +151,6 @@ function F_SetupMissionRequirements(missionId) -- ! Modified
         MissionSuccessCountInc("C_Wrestling_2")
         MissionForceCompleted("C_English_2")
         MissionSuccessCountInc("C_English_2")
-        --[[
-        MissionForceCompleted("1_06_03")
-        MissionSuccessCountInc("1_06_03")
-        MissionForceCompleted("1_06_04")
-        MissionSuccessCountInc("1_06_04")
-        ]] -- Removed this
         MissionForceCompleted("C_Photography_2")
         MissionSuccessCountInc("C_Photography_2")
         MissionForceCompleted("C_Photography_1")
@@ -185,10 +171,6 @@ function F_SetupMissionRequirements(missionId) -- ! Modified
         MissionSuccessCountInc("C_Wrestling_3")
         MissionForceCompleted("C_English_3")
         MissionSuccessCountInc("C_English_3")
-        --[[
-        MissionForceCompleted("1_06_07")
-        MissionSuccessCountInc("1_06_07")
-        ]] -- Removed this
         MissionForceCompleted("C_Photography_3")
         MissionSuccessCountInc("C_Photography_3")
         HUDPhotographySetColourUpgrade(true)
@@ -218,10 +200,6 @@ function F_SetupMissionRequirements(missionId) -- ! Modified
         MissionSuccessCountInc("C_Wrestling_4")
         MissionForceCompleted("C_English_4")
         MissionSuccessCountInc("C_English_4")
-        --[[
-        MissionForceCompleted("1_06_08")
-        MissionSuccessCountInc("1_06_08")
-        ]] -- Removed this
         MissionForceCompleted("C_Photography_5")
         MissionSuccessCountInc("C_Photography_5")
         if not shared.indusrtialRestartPointsAdded then

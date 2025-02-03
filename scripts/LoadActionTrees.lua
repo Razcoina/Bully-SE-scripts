@@ -1,7 +1,3 @@
---[[ Changes in this file:
-    * Modified function F_LoadAllActionTrees, may require testing
-]]
-
 CharacterActionTreesBranches = {
     "/Global/Actions",
     "/Global/HitTree",
@@ -120,14 +116,11 @@ PropActionTrees = {
     "Act/Props/WPCANNON.act"
 }
 
-function F_LoadAllActionTrees() -- ! Modified
+function F_LoadAllActionTrees()
     for i, keys in CharacterActionTreesBranches do
         UnLoadBranch(CharacterActionTreesBranches[i])
         --print(CharacterActionTreesBranches[i])
     end
-    --[[
-    UnLoadBranch("/Global/PlayerTest")
-    ]] -- Not present in original script
     for i, keys in CharacterActionTrees do
         Load(CharacterActionTrees[i])
         --print(CharacterActionTrees[i])

@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified the gnome outfit
-]]
-
 function scloth()
     local ONE_PIECE = true
     local MULTI_PIECE = false
@@ -20,9 +16,6 @@ function scloth()
     ClothingDefineOutfit("PJ", "CLT_PJ", "Hair", "SP_PJ_T", "none", "none", "SP_PJ_L", "SP_Socks", SHORTSLEEVE, MULTI_PIECE)
     ClothingDefineOutfit("Prison", "CLT_Prison", "Hair", "SP_Prison_T", "none", "none", "SP_Prison_L", "P_Boots2", SHORTSLEEVE, ONE_PIECE)
     ClothingDefineOutfit("Grotto Master", "CLT_DM", "SP_DM_H", "SP_DM_T", "none", "none", "B_Pants2", "P_Boots2", SHORTSLEEVE, MULTI_PIECE)
-    --[[
-    ClothingDefineOutfit("Gnome", "CLT_Gnome", "SP_Opo_H", "SP_Gnome_T", "none", "none", "SP_Gnome_L", "SP_Gnome_ft", LONGSLEEVE, ONE_PIECE)
-    ]] -- Changed to:
     ClothingDefineOutfit("Gnome", "CLT_Gnome", "SP_Gnome_H", "SP_Gnome_T", "none", "none", "SP_Gnome_L", "SP_Gnome_ft", LONGSLEEVE, ONE_PIECE)
     ClothingDefineOutfit("Fast Food", "CLT_Fastfood", "SP_Fries_H", "SP_Fries_T", "none", "none", "SP_Fries_L", "P_Boots2", LONGSLEEVE, MULTI_PIECE)
     ClothingDefineOutfit("Gold Suit", "CLT_Rocker", "SP_Goldsuit_H", "SP_Goldsuit_T", "none", "none", "SP_Goldsuit_L", "SP_Goldsuit_ft", LONGSLEEVE, ONE_PIECE)

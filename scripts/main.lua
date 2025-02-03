@@ -1,22 +1,3 @@
---[[ Changes in this file:
-    * Removed global import of "LoadActionTrees.lua"
-    * Removed 2 values from gAreaScripts: 2 test areas
-    * Removed 1 local variable, not present in original script
-    * Modified function gamemain, may require testing
-    * Modified function F_AlarmThread, may require testing
-    * Removed function F_TestObjectCreate, not present in original script
-    * Removed function F_TestPrint, not present in original script
-    * Removed function F_TestText, not present in original script
-    * Modified function F_CreateHalloweenItems, may require testing
-    * Modified function F_HandleLoadGame, may require testing
-    * Modified function CB_CollectibleCollected, may require testing
-    * Modified function F_CheckAllCollectibles, may require testing
-    * Modified function CB_MiniObjectiveCompleted, may require testing
-]]
-
---[[
-GlobalImportScript("LoadActionTrees.lua")
-]] -- Not present in original script
 GlobalImportScript("POI/Events.lua")
 gHACKClothesCam = false
 local bBusStopsDisabled
@@ -68,10 +49,6 @@ gAreaScripts[53] = "AreaScripts/ImgRaceC.lua"
 gAreaScripts[17] = "AreaScripts/ArtRoom.lua"
 gAreaScripts[55] = "AreaScripts/FreakShow.lua"
 gAreaScripts[62] = "AreaScripts/BMXTrack.lua"
---[[
-gAreaScripts[22] = "Test/Island3.lua"
-gAreaScripts[31] = "Test/TestArea.lua"
-]] -- Not present in original script
 
 function F_RegisterAreaInfo(areaScriptTable)
     for i, element in areaScriptTable do
@@ -98,11 +75,6 @@ local bLaunchPrincipalMission = false
 local bPoliceDropPlayerOffNIS = false
 local bAlarmOn = false
 local gNumMissionsPassed = 0
-
---[[
-local bIsNormalFlow = true
-]] -- Not present in original script
-
 local bDontFadeIn = false
 local bWakingUp = false
 local photoEntity, photoType
@@ -114,7 +86,7 @@ local bIsInTitleScreen = true
 local bHasStoryModeBeenSelected = false
 local bIsNormalFlow = true
 
-function gamemain() -- ! Modified
+function gamemain()
     F_RegisterAreaInfo(gAreaScripts)
     gAreaScripts = nil
     SystemMarkCollisionForExclusion("tGlobal")
@@ -134,11 +106,6 @@ function gamemain() -- ! Modified
     AreaSetSavePointLocation(ObjectNameToHashID("SAVEBOOKJOCKS"), -742.3, 348.3, 3.5, 70.1, 59, -746.004, 347.044, 5.191)
     AreaSetSavePointLocation(ObjectNameToHashID("SAVEBOOKPREPS"), -778, 357.6, 6.4, -160.3, 60, -775.002, 355.134, 8.7)
     AreaSetSavePointLocation(ObjectNameToHashID("SAVEBOOKSCHOOL"), -634.1, -289.3, 5.5, -170.9, 2, -636.276, -292.447, 7.498)
-    --[[
-    LogLoad("ACTION TREES")
-    F_LoadAllActionTrees()
-    LogLoad("ACTION TREES END")
-    ]] -- Not present in original script
     LogLoad("DAT FILES")
     DATLoad("tags.DAT", 5)
     DATLoad("tschool_hangouts.DAT", 1)
@@ -165,25 +132,14 @@ function gamemain() -- ! Modified
     DATLoad("trich_doors.DAT", 5)
     DATLoad("MiniGameTrigger.DAT", 1)
     DATLoad("PAn_Rich.DAT", 5)
-    --[[
-    DATLoad("TestCharacters.DAT", 1)
-    DATLoad("SpawnTest.DAT", 1)
-    ]] -- Not present in original script
     LogLoad("DAT FILES END")
     LogLoad("INIT PLAYER")
-    --[[
-    gPlayerStartX, gPlayerStartY, gPlayerStartZ, gPlayerStartH = -701.08, 213.482, 31.553, 90
-    ]] -- Modified to:
     gPlayerStartX, gPlayerStartY, gPlayerStartZ, gPlayerStartH = 272.68, -73.1309, 6.96913, 90
     F_LoadPlayer()
     collectgarbage()
     LogLoad("INIT PLAYER END")
-    PlayerDoneLoading(true) -- Added this
+    PlayerDoneLoading(true)
     F_LoadTime()
-    --[[
-    CameraFade(0, 0)
-    ]] -- Not present in original script
-    -- Added this loop:
     while bHasStoryModeBeenSelected == false do
         Wait(100)
         bHasStoryModeBeenSelected = HasStoryModeBeenSelected()
@@ -242,17 +198,13 @@ function gamemain() -- ! Modified
     BulletinSetupMessage("6_B", "BB_27")
     BulletinSetupMessage("C_ART_1", "BB_28")
     BulletinSetupMessage("C_ENGLISH_1", "BB_29")
-    --[[
-    LaunchScript("SZone.lua")
-    LaunchScript("RemoteDebug.lua")
-    ]] -- Not present in original script
     collectgarbage()
     LogLoad("IMPORT MORE SCRIPTS END")
-    CollectiblesSetTypeAvailable(1, false) -- Added this
-    CollectibleOnMapEnable(2, false)    -- Added this
-    CollectibleOnMapEnable(3, false)    -- Added this
-    CollectibleOnMapEnable(1, false)    -- Added this
-    CollectibleOnMapEnable(0, false)    -- Added this
+    CollectiblesSetTypeAvailable(1, false)
+    CollectibleOnMapEnable(2, false)
+    CollectibleOnMapEnable(3, false)
+    CollectibleOnMapEnable(1, false)
+    CollectibleOnMapEnable(0, false)
     StatResetAll()
     ImportScript("SStats.lua")
     ObjectTypeSetPickupListOverride("DPI_CardBox", "PickupListCrateHEALTH")
@@ -272,14 +224,8 @@ function gamemain() -- ! Modified
     SetFactionRespect(4, 0)
     SetFactionRespect(2, 0)
     SetFactionRespect(3, 0)
-    --[[
-    while bHasStoryModeBeenSelected == false do
-        Wait(100)
-        bHasStoryModeBeenSelected = HasStoryModeBeenSelected()
-    end
-    ]]            -- Not present in original script
     LogLoad("WAIT FOR SYSTEM TO BE READY")
-    ReadyToLoad() -- Added this
+    ReadyToLoad()
     while not SystemIsReady() do
         --print("...waiting for system to be ready...")
         Wait(0)
@@ -289,9 +235,6 @@ function gamemain() -- ! Modified
     collectgarbage()
     math.randomseed(GetTimer())
     F_SetupKOPoints()
-    --[[
-    F_TestObjectCreate()
-    ]] -- Not present in original script
     ResetGiftRequirements()
     F_BuildAreaTable()
     F_MissionCompleteModelChanges()
@@ -312,17 +255,13 @@ function gamemain() -- ! Modified
     CreateThread("F_DanceCowDance")
     F_BlipSavePoints()
     gNumMissionsPassed = GetTotalMissionSuccessCount()
-    ClockSetEnableMission("1_02B") -- Added this
+    ClockSetEnableMission("1_02B")
     LogLoad("END")
     SystemAllowMissionManagerToForceRunMissions()
-    --[[
-    ClockSetEnableMission("1_02B")
-    ]] -- Removed this
-    -- Added this loop:
     while AreaIsLoading() do
         Wait(0)
     end
-    F_HandleLoadGame() -- Added this
+    F_HandleLoadGame()
     if IsDemoBuildEnabled() == true then
         AreaTransitionXYZ(0, 272.68, -73.1309, 6.96913, true)
         PlayerFaceHeading(90, 0)
@@ -503,13 +442,10 @@ function F_StartAlarm()
     end
 end
 
-function F_AlarmThread() -- ! Modified
+function F_AlarmThread()
     while true do
         if shared.gAlarmOn == true then
             local GameTime = GetTimer()
-            --[[
-            local AlarmTime = GetTimer()
-            ]] -- Modified to:
             local AlarmTime = 0
             while GetCutsceneRunning() == 0 and AlarmTime - GameTime < shared.gSchoolFAlarmTime do
                 Wait(0)
@@ -552,28 +488,6 @@ function F_LoadTime()
     WeatherRelease()
     ClockSetTickRate(60, 30)
 end
-
---[[
-function F_TestObjectCreate()
-    local x, y, z, yaw, pitch, roll
-end
-
-function F_TestPrint()
-    TextPrintString("I'm Alive!!!", 4)
-end
-
-function F_TestText()
-    TextAddParamNum(102)
-    TextAddParamNum(1.5)
-    TextAddParamNum(2.3)
-    TextAddParamNum(2)
-    TextAddParamNum(3)
-    TextAddParamNum(1)
-    TextAddParamString("TEST_04")
-    TextAddParamString("TEST_05")
-    TextPrintF("TEST_03", 60)
-end
-]] -- Not present in original script
 
 function FadeIn()
     while MissionFadeIn() do
@@ -990,7 +904,7 @@ function F_BlipSavePoints()
     end
 end
 
-function F_CreateHalloweenItems() -- ! Modified
+function F_CreateHalloweenItems()
     if IsMissionCompleated("1_11_Dummy") or not IsMissionCompleated("1_05") then
         --print("Halloween is not active, cancelling everything.")
         if shared.gHCriminalsActive == true then
@@ -1015,11 +929,6 @@ function F_CreateHalloweenItems() -- ! Modified
         AreaDisableAllPatrolPaths()
         F_SetupHallowenPeds(true)
     end
-    --[[
-    if IsMissionCompleated("1_11xP") and IsMissionAvailable("1_11x2") == false then
-        AreaEnableAllPatrolPaths()
-    end
-    ]] -- Not present in original script
 end
 
 function F_CreateChristmasItems()
@@ -1029,11 +938,7 @@ function F_CreateChristmasItems()
     AreaLoadSpecialEntities("Christmas", true)
 end
 
-function F_HandleLoadGame() -- ! Modified
-    --[[
-    CollectiblesSetTypeAvailable(1, false)
-    CollectiblesSetTypeAvailable(0, false)
-    ]] -- Removed this
+function F_HandleLoadGame()
     if IsMissionCompleated("4_03") then
         ObjectTypeSetPickupListOverride("DPI_CardBox", "PickupListMailBoxSprayCan")
         ObjectTypeSetPickupListOverride("DPI_CrateBrk", "PickupListCrateSpudGuns")
@@ -1075,12 +980,6 @@ function F_HandleLoadGame() -- ! Modified
         --print("1_06_01 DATA LOADING!!")
         CollectiblesSetTypeAvailable(1, true)
     end
-    --[[
-    if IsMissionCompleated("2_GN") then
-        --print("2_S07 DATA LOADING!!")
-        CollectiblesSetTypeAvailable(0, true)
-    end
-    ]] -- Removed this
     if IsMissionCompleated("5_02") and IsMissionCompleated("6_01_Launch") and not IsMissionCompleated("6_01") then
         --print("Creating Expelled thread!")
         CreateThread("T_ExpelledLogic")
@@ -1277,7 +1176,7 @@ function T_PhotographyStimulus()
     end
 end
 
-function CB_CollectibleCollected(CollectibleType, NumOfCollectedOfType, MaxNumCollectableOfType, UID, PickupID, CollectibleIndex) -- ! Modified
+function CB_CollectibleCollected(CollectibleType, NumOfCollectedOfType, MaxNumCollectableOfType, UID, PickupID, CollectibleIndex)
     if CollectibleType == 4 and not shared.bUnlockPumpkinMask and NumOfCollectedOfType == MaxNumCollectableOfType then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_ALL_PUMPKINS")
         MinigameSetUberCompletion()
@@ -1303,9 +1202,6 @@ function CB_CollectibleCollected(CollectibleType, NumOfCollectedOfType, MaxNumCo
         GiveWeaponToPlayer(325)
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_ALL_RUBBERBANDS")
         MinigameSetUberCompletion()
-        --[[
-        MiniObjectiveSetIsComplete(17)
-        ]] -- Modified to:
         MiniObjectiveSetIsComplete(18)
         shared.bRubberBandsCollected = true
     end
@@ -1319,21 +1215,15 @@ function CB_CollectibleCollected(CollectibleType, NumOfCollectedOfType, MaxNumCo
     F_CheckAllCollectibles()
 end
 
-function F_CheckAllCollectibles() -- ! Modified
-    --[[
-    if not MiniObjectiveGetIsComplete(12) and CollectiblesGetNumCollectable(3) == CollectiblesGetNumCollected(3) and CollectiblesGetNumCollectable(0) == CollectiblesGetNumCollected(0) and CollectiblesGetNumCollectable(2) == CollectiblesGetNumCollected(2) and CollectiblesGetNumCollectable(5) == CollectiblesGetNumCollected(5) and CollectiblesGetNumCollectable(4) == CollectiblesGetNumCollected(4) and CollectiblesGetNumCollectable(1) == CollectiblesGetNumCollected(1) then
-    ]] -- Modified to:
+function F_CheckAllCollectibles()
     if not MiniObjectiveGetIsComplete(13) and CollectiblesGetNumCollectable(3) == CollectiblesGetNumCollected(3) and CollectiblesGetNumCollectable(0) == CollectiblesGetNumCollected(0) and CollectiblesGetNumCollectable(2) == CollectiblesGetNumCollected(2) and CollectiblesGetNumCollectable(5) == CollectiblesGetNumCollected(5) and CollectiblesGetNumCollectable(4) == CollectiblesGetNumCollected(4) and CollectiblesGetNumCollectable(1) == CollectiblesGetNumCollected(1) then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_CONQUEROR")
         MinigameSetUberCompletion()
-        --[[
-        MiniObjectiveSetIsComplete(12)
-        ]] -- Modified to:
         MiniObjectiveSetIsComplete(13)
     end
 end
 
-function CB_MiniObjectiveCompleted(MiniObjectiveType) -- ! Modified
+function CB_MiniObjectiveCompleted(MiniObjectiveType)
     --print("Mini Objective Completed ", tostring(MiniObjectiveType))
     if MiniObjectiveType == 0 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_ARCADE_MASTER")
@@ -1345,58 +1235,34 @@ function CB_MiniObjectiveCompleted(MiniObjectiveType) -- ! Modified
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_POP_FRENZY")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_Pophat", 0)
-        --[[
-    elseif MiniObjectiveType == 7 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 8 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_FIRE_CHIEF")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_Firehat", 0)
-        --[[
-    elseif MiniObjectiveType == 8 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 9 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_BIKE_TREK")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_BikeShorts", 4)
-        --[[
-    elseif MiniObjectiveType == 9 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 10 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_MARATHON_BOY")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_Shorts", 4)
-        --[[
-    elseif MiniObjectiveType == 10 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 11 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_BOY_GENIUS")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_MortarBhat", 0)
-        --[[
-    elseif MiniObjectiveType == 11 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 12 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_JIMMY_SLOW")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_Duncehat", 0)
-        --[[
-    elseif MiniObjectiveType == 12 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 13 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_CONQUEROR")
         MinigameSetUberCompletion()
         ClothingGivePlayer("SP_VHelmet", 0)
-        --[[
-    elseif MiniObjectiveType == 16 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 17 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_FASHION_VIC")
         MinigameSetUberCompletion()
         ClothingGivePlayerOutfit("Gold Suit")
-        --[[
-    elseif MiniObjectiveType == 19 then
-    ]] -- Modified to:
     elseif MiniObjectiveType == 20 then
         MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_PROJ_REWARD")
         MinigameSetUberCompletion()
