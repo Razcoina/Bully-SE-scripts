@@ -1,5 +1,5 @@
+
 # Bully: Scholarship Edition Lua Script Decompilation
-## This is a work in progress, not all scripts are included and most that are have not been tested!
 
 This project aims to fully decompile all Lua scripts from Bully: Scholarship Edition for PC. The goal is to provide clean, readable, and editable Lua scripts for modding, troubleshooting, and understanding the game's inner workings.
 > This was made by analysing and comparing the scripts from this version with a leaked pre-release debug version of the game for the Nintendo Wii.
@@ -11,3 +11,56 @@ This project aims to fully decompile all Lua scripts from Bully: Scholarship Edi
 5) Compile all modified files and strip debug information.
 6) Decompile again and compare the result to the scripts from the PC version. If the files are the same, the bytecode should be compared to find changes that are harder to find; if not, there are things that are different in the 2 files.
 7) Disassemble all modified files and compare with disassemblies from the PC version. If the files are the same, the process is complete; if not, try to figure out what changes should be made to ensure 100% fidelity.
+
+## Folder structure
+
+All game scripts are in the folder `scripts`
+
+#### ShellScripts
+
+This folder does not contain game files. A folder containing scripts used as tools to automate repetitive tasks
+
+#### Ambient
+
+In-game errands
+
+#### AreaScripts
+
+Scripts related to the map, there is one for each game AreaScripts
+
+#### chap1-6
+
+Main mission scripts, divided by chapters. There are only 5 chapters in the game, but that was not the case at some point during development. Some scripts are out of place in these folders
+
+#### classes
+
+Dispite the name, contains only Gym class, part of Photography class, and dodgeball game
+
+#### Library
+
+Library scripts, used for various purposes
+
+#### POI
+
+Random events throughout the map, such as conversation spots and others
+
+#### Punishment
+
+Related to punishment mini-games
+
+#### secnd
+
+Secondary missions, classes and mini-games
+
+#### Test
+
+Testing scripts
+
+#### Test/Missions
+
+Scripts to start every mission
+## Authors
+
+- [@Razcoina](https://github.com/Razcoina)
+- [@nixkiez](https://github.com/nixkiez)
+
