@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_GetAllShots, may require testing
-]]
-
 POIInfo = shared.gCurrentAmbientScenario
 local ScenarioPed = -1
 local ScenarioPedBlip = 0
@@ -176,23 +172,20 @@ end
 
 local validTarget = false
 
-function F_GetAllShots() -- ! Modified
+function F_GetAllShots()
     validTarget = false
     for i, target in gPhotoTargets do
         if not target.taken and PhotoTargetInFrame(target.x, target.y, target.z) then
             gPhotoTargets[i].valid = true
             validTarget = true
         end
-        target.trulyValid = target.valid or target.wasValid -- Added this
-        target.wasValid = target.valid                -- Added this
+        target.trulyValid = target.valid or target.wasValid
+        target.wasValid = target.valid
     end
     PhotoSetValid(validTarget)
     photohasbeentaken, wasValid = PhotoHasBeenTaken()
     if photohasbeentaken and wasValid then
         for i, target in gPhotoTargets do
-            --[[
-            if target.valid == true and not target.taken then
-            ]] -- Changed to:
             if target.trulyValid == true and not target.taken then
                 target.taken = true
                 --print("NEW PICTURE TAKEN")

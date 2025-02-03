@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Added 2 local variables
-    * Modified function F_CheckShot, may require testing
-]]
-
 POIInfo = shared.gCurrentAmbientScenario
 local ScenarioPed = -1
 local ScenarioPedBlip = 0
@@ -253,10 +248,10 @@ function F_FindTaggers()
     end
 end
 
-local L23_1 = false    -- Added this
-local L24_1 = false    -- Added this
+local L23_1 = false
+local L24_1 = false
 
-function F_CheckShot() -- ! Modified
+function F_CheckShot()
     local validTarget = false
     local validTagger = false
     for i, target in tblTaggers do
@@ -271,20 +266,13 @@ function F_CheckShot() -- ! Modified
             end
         end
     end
-    --[[
+    local L2_2 = validTagger or L24_1
+    L24_1 = validTagger
+    local L3_2 = validTarget or L23_1
+    L23_1 = validTarget
     PhotoSetValid(validTarget)
-    local photohasbeentaken, wasValid = PhotoHasBeenTaken()
-    if photohasbeentaken and wasValid and validTagger and validTarget then
-        return true
-    end
-    ]]                                      -- Removed this
-    local L2_2 = validTagger or L24_1       -- Added this
-    L24_1 = validTagger                     -- Added this
-    local L3_2 = validTarget or L23_1       -- Added this
-    L23_1 = validTarget                     -- Added this
-    PhotoSetValid(validTarget)              -- Added this
-    local L4_2, L5_2 = PhotoHasBeenTaken()  -- Added this
-    if L4_2 and L5_2 and L2_2 and L3_2 then -- Added this
+    local L4_2, L5_2 = PhotoHasBeenTaken()
+    if L4_2 and L5_2 and L2_2 and L3_2 then
         return true
     end
     return false

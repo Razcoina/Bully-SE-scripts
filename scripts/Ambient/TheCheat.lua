@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Added one local variable
-    * Modified function F_CheckGotPicture, may require testing
-]]
-
 POIInfo = shared.gCurrentAmbientScenario
 local ScenarioPed = -1
 local ScenarioPedBlip = 0
@@ -191,9 +186,9 @@ function F_CheckNearBribe()
     end
 end
 
-local L25_1 = nil            -- Added this
+local L25_1 = nil
 
-function F_CheckGotPicture() -- ! Modified
+function F_CheckGotPicture()
     if not bFailDueToCheatersHit and not bNotKissing then
         bNotKissing = true
         PedSetActionNode(gCheater01, "/Global/Ambient/MissionSpec/KissMeAdult", "Act/Anim/Ambient.act")
@@ -214,23 +209,17 @@ function F_CheckGotPicture() -- ! Modified
         else
             validTarget = false
         end
-        gPhotoTargets[i].trulyValid = gPhotoTargets[i].valid or gPhotoTargets[i].wasValid -- Added this
-        gPhotoTargets[i].wasValid = gPhotoTargets[i].valid                                -- Added this
+        gPhotoTargets[i].trulyValid = gPhotoTargets[i].valid or gPhotoTargets[i].wasValid
+        gPhotoTargets[i].wasValid = gPhotoTargets[i].valid
     end
     PhotoSetValid(validTarget)
     local photohasbeentaken, wasValid = PhotoHasBeenTaken()
     if photohasbeentaken and wasValid then
         for i, target in gPhotoTargets do
-            --[[
-            if target.valid == true and not target.taken then
-            ]] -- Changed to:
             if target.trulyValid == true and not target.taken then
                 target.taken = true
             end
         end
-        --[[
-        if gPhotoTargets[1].valid and gPhotoTargets[2].valid then
-        ]] -- Changed to:
         if gPhotoTargets[1].trulyValid and gPhotoTargets[2].trulyValid then
             BlipRemove(gCheater01Blip)
             GiveItemToPlayer(526, 1)

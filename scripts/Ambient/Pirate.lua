@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-    * Modified function F_CheckConditions, may require testing
-]]
-
 POIInfo = shared.gCurrentAmbientScenario
 local ScenarioPed = -1
 local ScenarioPedBlip = 0
@@ -17,10 +12,7 @@ local ObjFlag = false
 local bReturn = false
 local MissionScenarioComplete = false
 
-function main() -- ! Modified
-    --[[
-    if MiniObjectiveGetIsComplete(15) ~= true then
-    ]] -- Changed to:
+function main()
     if MiniObjectiveGetIsComplete(16) ~= true then
         --print("LAUNCHING PIRATE")
         PedSetUniqueModelStatus(173, 1)
@@ -75,16 +67,13 @@ function F_PlayerOutOfRange()
     end
 end
 
-function F_CheckConditions() -- ! Modified
+function F_CheckConditions()
     if PedIsValid(ScenarioPed) then
         if PedIsDead(ScenarioPed) and PedGetWhoHitMeLast(ScenarioPed) == gPlayer then
             MinigameSetErrandCompletion(-1, "AS_OBJCOMPLETE", true, 0, "AS_PIRATE")
             MinigameSetUberCompletion()
             ClothingGivePlayer("SP_PirateHat", 0)
             shared.gCurrentAmbientScenarioObject.completed = true
-            --[[
-            MiniObjectiveSetIsComplete(15)
-            ]] -- Changed to:
             MiniObjectiveSetIsComplete(16)
             return false
         end

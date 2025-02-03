@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_CheckGotPicture, may require testing
-]]
-
 POIInfo = shared.gCurrentAmbientScenario
 local ScenarioPed = -1
 local ScenarioPedBlip = 0
@@ -187,7 +183,7 @@ function F_CheckNearBribe()
     end
 end
 
-function F_CheckGotPicture() -- ! Modified
+function F_CheckGotPicture()
     if PlayerIsInAreaObject(DirtyCop, 2, 7.5, 0) then
         PedLockTarget(MotelOwner, -1)
         PedLockTarget(DirtyCop, -1)
@@ -202,23 +198,17 @@ function F_CheckGotPicture() -- ! Modified
         else
             validTarget = false
         end
-        target.trulyValid = target.valid or target.wasValid -- Added this
-        target.wasValid = target.valid                -- Added this
+        target.trulyValid = target.valid or target.wasValid
+        target.wasValid = target.valid
     end
     PhotoSetValid(validTarget)
     local photohasbeentaken, wasValid = PhotoHasBeenTaken()
     if photohasbeentaken and wasValid then
         for i, target in gPhotoTargets do
-            --[[
-            if target.valid == true and not target.taken then
-            ]] -- Changed to:
             if target.trulyValid == true and not target.taken then
                 target.taken = true
             end
         end
-        --[[
-        if gPhotoTargets[1].valid and gPhotoTargets[2].valid then
-        ]] -- Changed to:
         if gPhotoTargets[1].trulyValid and gPhotoTargets[2].trulyValid then
             BlipRemove(DirtyCopBlip)
             GiveItemToPlayer(526, 1)
