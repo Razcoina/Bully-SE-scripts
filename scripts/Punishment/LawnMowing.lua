@@ -1163,7 +1163,7 @@ function T_MissionTutorial()
         --print(">>>[RUI]", "++T_MissionTutorial")
         TutorialShowMessage(gTutorialMessage, 8000)
         Wait(8000)
-        if gTutorialMessage2 then -- Added this
+        if gTutorialMessage2 then
             TutorialShowMessage(gTutorialMessage2, 8000)
             Wait(8000)
         end
