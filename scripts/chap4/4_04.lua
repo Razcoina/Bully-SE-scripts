@@ -1214,92 +1214,92 @@ function F_SetupReaper() -- ! Modified
             PedFollowPath(gTablePeds[gCurrentJock].id, gCurrentPath, 0, 1, CB_JockReaper)
             SoundPlayScriptedSpeechEvent(gTablePeds[gCurrentJock].id, "FIGHT_INITIATE", 0, "supersize", true)
         end
-        while true do
-            Wait(0)
-            --print("gCurrentReaper: ", gCurrentReaper)
-            if not bUsedScythe and IsButtonPressed(7, 0) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) then
+    end
+    while true do
+        Wait(0)
+        --print("gCurrentReaper: ", gCurrentReaper)
+        if not bUsedScythe and IsButtonPressed(7, 0) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) then
+            bUsedScythe = true
+            MonitorSetGreyed(0, true)
+            PAnimSetActionNode(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", "Act/Props/FunReapr.act")
+        end
+        if gCurrentReaper == 1 and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) and PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper].trigger) then
+            bUsedScythe = false
+        end
+        if gCurrentReaper < table.getn(gReapers) then
+            if PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper + 1].trigger) then
+                gCurrentReaper = gCurrentReaper + 1
+            elseif bUsedScythe or not PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper].trigger) then
+                MonitorSetGreyed(0, false)
                 bUsedScythe = true
-                MonitorSetGreyed(0, true)
-                PAnimSetActionNode(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", "Act/Props/FunReapr.act")
             end
-            if gCurrentReaper == 1 and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) and PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper].trigger) then
+            if not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) then
+                MonitorSetGreyed(0, false)
                 bUsedScythe = false
             end
-            if gCurrentReaper < table.getn(gReapers) then
-                if PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper + 1].trigger) then
-                    gCurrentReaper = gCurrentReaper + 1
-                elseif bUsedScythe or not PedIsInTrigger(gTablePeds[gCurrentJock].id, gReapers[gCurrentReaper].trigger) then
-                    MonitorSetGreyed(0, false)
-                    bUsedScythe = true
-                end
-                if not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot/Stay", false) and not PAnimIsPlaying(gReapers[gCurrentReaper].reaper, "/Global/FunReapr/Oneshot", false) then
-                    MonitorSetGreyed(0, false)
-                    bUsedScythe = false
+        end
+        if nJocksCurrentNode == PathGetLastNode(gCurrentPath) - 1 then
+            SoundFadeWithCamera(false)
+            MusicFadeWithCamera(false)
+            CameraFade(500, 0)
+            Wait(501)
+            PedStop(gTablePeds[gCurrentJock].id)
+            PedClearObjectives(gTablePeds[gCurrentJock].id)
+            PedSetPosPoint(gTablePeds[gCurrentJock].id, POINTLIST._4_04_JOCKRESTARTPOINTS, gCurrentJock)
+            gCurrentJock = gCurrentJock + 1
+            gCurrentReaper = 1
+            F_SendNextJock(gCurrentPath, gCurrentPoint)
+            --print("bDoneSendingJocks: ", tostring(bDoneSendingJocks))
+            if bDoneSendingJocks then
+                break
+            end
+        elseif PedIsValid(gTablePeds[gCurrentJock].id) and not PedIsDead(gTablePeds[gCurrentJock].id) and 0 < PedGetHealth(gTablePeds[gCurrentJock].id) then
+            local x, y, z = PedGetOffsetInWorldCoords(gTablePeds[gCurrentJock].id, 0, 2, 1.4)
+            local x2, y2, z2 = PedGetOffsetInWorldCoords(gTablePeds[gCurrentJock].id, 5, 2, 1.4)
+            CameraSetXYZ(-746.4159, y2, 26.178759, x, y, 26.178759)
+        end
+        if not PedIsValid(gTablePeds[gCurrentJock].id) or PedIsDead(gTablePeds[gCurrentJock].id) then
+            --print("WTF IS THE PED DEAD???", PedGetHealth(gTablePeds[gCurrentJock].id))
+            SoundPlayScriptedSpeechEvent(gTablePeds[gCurrentJock].id, "FIGHT_BEATEN", 0, "supersize", true)
+            bKilledJock = true
+            if gTablePeds[gCurrentJock].model == 20 then
+                bJuriDead = true
+            elseif gTablePeds[gCurrentJock].model == 15 then
+                bDanDead = true
+            elseif gTablePeds[gCurrentJock].model == 17 then
+                bCaseyDead = true
+            end
+            SoundFadeWithCamera(false)
+            MusicFadeWithCamera(false)
+            CameraFade(500, 0)
+            Wait(501)
+            for i, jock in gTablePeds do
+                --print("Ped Killed, i is equal to: ", i, " gCurrentJock is equal to: ", gCurrentJock)
+                if i == gCurrentJock and bKilledJock then
+                    SoundRemoveAllQueuedSpeech(jock.id, true)
+                    PedDelete(jock.id)
                 end
             end
-            if nJocksCurrentNode == PathGetLastNode(gCurrentPath) - 1 then
-                SoundFadeWithCamera(false)
-                MusicFadeWithCamera(false)
-                CameraFade(500, 0)
-                Wait(501)
-                PedStop(gTablePeds[gCurrentJock].id)
-                PedClearObjectives(gTablePeds[gCurrentJock].id)
-                PedSetPosPoint(gTablePeds[gCurrentJock].id, POINTLIST._4_04_JOCKRESTARTPOINTS, gCurrentJock)
+            if gCurrentJock + 1 <= table.getn(gTablePeds) then
+                if gTablePeds[gCurrentJock].id and PedIsValid(gTablePeds[gCurrentJock].id) then
+                    PedStop(gTablePeds[gCurrentJock].id)
+                    PedClearObjectives(gTablePeds[gCurrentJock].id)
+                    PedSetPosPoint(gTablePeds[gCurrentJock].id, POINTLIST._4_04_JOCKRESTARTPOINTS, gCurrentJock)
+                end
                 gCurrentJock = gCurrentJock + 1
                 gCurrentReaper = 1
                 F_SendNextJock(gCurrentPath, gCurrentPoint)
-                --print("bDoneSendingJocks: ", tostring(bDoneSendingJocks))
-                if bDoneSendingJocks then
-                    break
-                end
-            elseif PedIsValid(gTablePeds[gCurrentJock].id) and not PedIsDead(gTablePeds[gCurrentJock].id) and 0 < PedGetHealth(gTablePeds[gCurrentJock].id) then
-                local x, y, z = PedGetOffsetInWorldCoords(gTablePeds[gCurrentJock].id, 0, 2, 1.4)
-                local x2, y2, z2 = PedGetOffsetInWorldCoords(gTablePeds[gCurrentJock].id, 5, 2, 1.4)
-                CameraSetXYZ(-746.4159, y2, 26.178759, x, y, 26.178759)
-            end
-            if not PedIsValid(gTablePeds[gCurrentJock].id) or PedIsDead(gTablePeds[gCurrentJock].id) then
-                --print("WTF IS THE PED DEAD???", PedGetHealth(gTablePeds[gCurrentJock].id))
-                SoundPlayScriptedSpeechEvent(gTablePeds[gCurrentJock].id, "FIGHT_BEATEN", 0, "supersize", true)
-                bKilledJock = true
-                if gTablePeds[gCurrentJock].model == 20 then
-                    bJuriDead = true
-                elseif gTablePeds[gCurrentJock].model == 15 then
-                    bDanDead = true
-                elseif gTablePeds[gCurrentJock].model == 17 then
-                    bCaseyDead = true
-                end
-                SoundFadeWithCamera(false)
-                MusicFadeWithCamera(false)
-                CameraFade(500, 0)
-                Wait(501)
-                for i, jock in gTablePeds do
-                    --print("Ped Killed, i is equal to: ", i, " gCurrentJock is equal to: ", gCurrentJock)
-                    if i == gCurrentJock and bKilledJock then
-                        SoundRemoveAllQueuedSpeech(jock.id, true)
-                        PedDelete(jock.id)
-                    end
-                end
-                if gCurrentJock + 1 <= table.getn(gTablePeds) then
-                    if gTablePeds[gCurrentJock].id and PedIsValid(gTablePeds[gCurrentJock].id) then
-                        PedStop(gTablePeds[gCurrentJock].id)
-                        PedClearObjectives(gTablePeds[gCurrentJock].id)
-                        PedSetPosPoint(gTablePeds[gCurrentJock].id, POINTLIST._4_04_JOCKRESTARTPOINTS, gCurrentJock)
-                    end
-                    gCurrentJock = gCurrentJock + 1
-                    gCurrentReaper = 1
-                    F_SendNextJock(gCurrentPath, gCurrentPoint)
-                else
-                    bDoneSendingJocks = true
-                    break
-                end
-            end
-            if PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER00, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER00B, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER01, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER01B, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER02, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER02B, "/Global/FunReapr/Oneshot/Stay", false) then
-                SoundFadeWithCamera(false)
-                MusicFadeWithCamera(false)
-                CameraFade(500, 0)
-                Wait(501)
+            else
+                bDoneSendingJocks = true
                 break
             end
+        end
+        if PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER00, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER00B, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER01, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER01B, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER02, "/Global/FunReapr/Oneshot/Stay", false) and PAnimIsPlaying(TRIGGER._IFUNHOUS_REEPER02B, "/Global/FunReapr/Oneshot/Stay", false) then
+            SoundFadeWithCamera(false)
+            MusicFadeWithCamera(false)
+            CameraFade(500, 0)
+            Wait(501)
+            break
         end
     end
     if table.getn(gTablePeds) == 0 then
