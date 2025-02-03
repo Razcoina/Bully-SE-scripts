@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Removed function ReportBreakables, not present in original script
-    * Modified function MissionInit, may require testing
-]]
-
 local MAX_HATTRICK_DISTANCE = 70
 local DESTRUCTO_METER_MAX = 80
 local HATTRICK_GATE
@@ -792,19 +787,6 @@ function F3_BreakablesAllCreate()
     bBreakablesSet = true
     --print(">>>[RUI]", "++F3_BreakablesAllCreate " .. tostring(table.getn(gBreakables)))
 end
-
---[[
-function ReportBreakables()
-    local cost = 0
-    local count = 0
-    for _, breakable in gBreakables do
-        print(">>>[RUI]", "id: " .. tostring(entry.id) .. " name: " .. tostring(breakable.name) .. " cost: " .. tostring(breakable.cost))
-        cost = cost + breakable.cost
-        count = count + 1
-    end
-    print(">>>[RUI]", "SUBTotal.  Costs: " .. tostring(cost) .. " qty: " .. tostring(count))
-end
-]] -- Not present in original script
 
 function GetBreakable(hashId)
     local Breakable
@@ -1639,15 +1621,9 @@ function MissionSetup()
     SoundLoadBank("Engine.bnk")
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     --print(">>>[RUI]", "!!MissionInit")
     CS_GallowayMeeting()
-    --[[
-    if IsMissionFromDebug() then
-        GiveWeaponToPlayer(303)
-        GiveAmmoToPlayer(303, 40)
-    end
-    ]]-- Not present in original script
 end
 
 function MissionCleanup()

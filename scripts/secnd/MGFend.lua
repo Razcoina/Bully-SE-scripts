@@ -1,14 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionSetup, may require testing
-    * Modified function F_LoadingScreen, may require testing
-    * Modified function F_InstructScreen, may require testing
-    * Modified function F_HighScoreScreen, may require testing
-    * Modified function F_InitGame, may require testing
-    * Modified function cbSquirrleUpdate, may require testing
-    * Modified function F_MakeLives, may require testing
-    * Modified function cbEchoUpdate, may require testing
-]]
-
 local gScreenX, gScreenY = 640, 480
 local instTimer = 0
 local nextFireTime = 0
@@ -135,7 +124,7 @@ local highScoreTimer = 0
 local bFoundHornet = false
 local bFoundStinger = false
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     SoundEnableInteractiveMusic(false)
     SoundStopAmbiences()
     SoundDisableSpeech_ActionTree()
@@ -147,12 +136,9 @@ function MissionSetup() -- ! Modified
     MinigameCreate("ARCADE", false)
     MinigameStart()
     MinigameEnableHUD(true)
-    MGArcade_LoadTextures("MG_Fend")                            -- Adde this
-    sSideBarLeft = MGArcade_GetTextureID("Fend_SideScreen_left") -- Adde this
-    sSideBarRight = MGArcade_GetTextureID("Fend_SideScreen_right") -- Adde this
-    --[[
-    MGArcade_InitScreen(0, 0, 0)
-    ]] -- Changed to:
+    MGArcade_LoadTextures("MG_Fend")
+    sSideBarLeft = MGArcade_GetTextureID("Fend_SideScreen_left")
+    sSideBarRight = MGArcade_GetTextureID("Fend_SideScreen_right")
     MGArcade_InitScreen(128, 128, 128, sSideBarLeft, sSideBarRight)
     Px, Py, Pz = PlayerGetPosXYZ()
     PLAYER_AREA = AreaGetVisible()
@@ -315,7 +301,7 @@ function main()
     end
 end
 
-function F_LoadingScreen() -- ! Modified
+function F_LoadingScreen()
     local loadingScreen = MGArcade_GetTextureID("Start_screen")
     gStartScreen = MGArcade_CreateLayer(gScreenX, gScreenY, 300, C_LayerUpdate)
     MGArcade_Layer_SetPos(gStartScreen, 0, 0)
@@ -331,9 +317,6 @@ function F_LoadingScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gStartScreen, gStartText, 50, 50, 50, 255)
     MGArcade_Sprite_SetPos(gStartScreen, gStartText, -100, 140)
     MGArcade_Sprite_SetSize(gStartScreen, gStartText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gStartScreen, gStartText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gStartScreen, gStartText, 0.8, 0.8)
     else
@@ -347,9 +330,6 @@ function F_LoadingScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gStartScreen, gExitText, 50, 50, 50, 255)
     MGArcade_Sprite_SetPos(gStartScreen, gExitText, -78, 170)
     MGArcade_Sprite_SetSize(gStartScreen, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gStartScreen, gExitText, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gStartScreen, gExitText, 0.7, 0.7)
     else
@@ -377,7 +357,7 @@ function F_LoadingScreen() -- ! Modified
     MGArcade_Sprite_SetVisible(gStartScreen, gLoadScreen, false)
 end
 
-function F_InstructScreen() -- ! Modified
+function F_InstructScreen()
     gInstructScreen = MGArcade_CreateLayer(gScreenX, gScreenY, 300, C_LayerUpdate)
     MGArcade_Layer_SetPos(gInstructScreen, 0, 0)
     MGArcade_Layer_SetCol(gInstructScreen, 0, 0, 0, 195)
@@ -387,7 +367,7 @@ function F_InstructScreen() -- ! Modified
     local textXLoc = -124
     local textYLoc = -208
     local textSize = 0.9
-    if GetLanguage() == 7 then -- Added this
+    if GetLanguage() == 7 then
         textSize = 0.6
     end
     local tCol = {
@@ -411,9 +391,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gTutText01, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gTutText01, foodXLoc + 40, yLoc)
     MGArcade_Sprite_SetSize(gInstructScreen, gTutText01, 0.1, 0.1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gTutText01, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gTutText01, textSize, textSize)
     else
@@ -511,9 +488,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gStartText1, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gStartText1, -100, yLoc + 330)
     MGArcade_Sprite_SetSize(gInstructScreen, gStartText1, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gStartText1, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gStartText1, textSize, textSize)
     else
@@ -527,9 +501,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gExitText, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gExitText, -100, yLoc + 350)
     MGArcade_Sprite_SetSize(gInstructScreen, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gExitText, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gExitText, textSize, textSize)
     else
@@ -590,7 +561,7 @@ function F_GameOverScreen()
     SoundPlayStream("Arc_FlyingSquirrelMenu.rsm", 1, 9500, 2500)
 end
 
-function F_HighScoreScreen() -- ! Modified
+function F_HighScoreScreen()
     local hsY = -100
     tblHS = {
         {
@@ -639,9 +610,6 @@ function F_HighScoreScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gGameOverLayer, gHighScoreText, scR, scG, scB, 255)
     MGArcade_Sprite_SetPos(gGameOverLayer, gHighScoreText, -75, -100)
     MGArcade_Sprite_SetSize(gGameOverLayer, gHighScoreText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gGameOverLayer, gHighScoreText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gGameOverLayer, gHighScoreText, 0.8, 0.8)
     else
@@ -657,9 +625,6 @@ function F_HighScoreScreen() -- ! Modified
         MGArcade_Sprite_SetCol(gGameOverLayer, score.id, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(gGameOverLayer, score.id, -100, score.y)
         MGArcade_Sprite_SetSize(gGameOverLayer, score.id, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(gGameOverLayer, score.id, 1.4, 1.4)
-        ]] -- Changed to:
         if GetLanguage() == 7 then
             MGArcade_Sprite_SetScale(gGameOverLayer, score.id, 0.8, 0.8)
         else
@@ -674,9 +639,6 @@ function F_HighScoreScreen() -- ! Modified
         MGArcade_Sprite_SetCol(gGameOverLayer, score.id2, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(gGameOverLayer, score.id2, 40, score.y)
         MGArcade_Sprite_SetSize(gGameOverLayer, score.id2, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(gGameOverLayer, score.id2, 1.4, 1.4)
-        ]] -- Changed to:
         if GetLanguage() == 7 then
             MGArcade_Sprite_SetScale(gGameOverLayer, score.id2, 0.8, 0.8)
         else
@@ -718,13 +680,10 @@ function F_HighScoreScreen() -- ! Modified
     end
 end
 
-function F_InitGame() -- ! Modified
-    --[[
-    MGArcade_LoadTextures("MG_Fend")
-    ]]                                                              -- Removed this
-    sSideBarLeft = MGArcade_GetTextureID("Fend_SideScreen_left") -- Added this
-    sSideBarRight = MGArcade_GetTextureID("Fend_SideScreen_right") -- Added this
-    MGArcade_InitScreen(128, 128, 128, sSideBarLeft, sSideBarRight) -- Added this
+function F_InitGame()
+    sSideBarLeft = MGArcade_GetTextureID("Fend_SideScreen_left")
+    sSideBarRight = MGArcade_GetTextureID("Fend_SideScreen_right")
+    MGArcade_InitScreen(128, 128, 128, sSideBarLeft, sSideBarRight)
     F_LoadingScreen()
     if not MinigameIsActive() then
         return
@@ -796,17 +755,11 @@ function F_InitGame() -- ! Modified
     MGArcade_Sprite_SetTexture(gLayer, gBat, gBatSpriteU)
     MGArcade_Sprite_SetVisible(gLayer, gBat, true)
     gHUD = MGArcade_CreateLayer(640, 32, 48, C_LayerUpdate)
-    --[[
-    MGArcade_Layer_SetPos(gHUD, 0, -216)
-    ]] -- Changed to:
     MGArcade_Layer_SetPos(gHUD, 0, -200)
     MGArcade_Layer_SetCol(gHUD, 51, 102, 204, 28)
     MGArcade_Layer_SetScale(gHUD, 1, 1)
     gScoreText = MGArcade_Layer_AddSprite(gHUD)
     MGArcade_Sprite_SetCol(gHUD, gScoreText, 200, 200, 200, 255)
-    --[[
-    MGArcade_Sprite_SetPos(gHUD, gScoreText, 16, 0)
-    ]] -- Changed to:
     MGArcade_Sprite_SetPos(gHUD, gScoreText, 16, -15)
     MGArcade_Sprite_SetSize(gHUD, gScoreText, 0.1, 0.1)
     MGArcade_Sprite_SetScale(gHUD, gScoreText, 0.6, 0.6)
@@ -1942,15 +1895,12 @@ function F_CheckStickY(stick1Y)
     return vel
 end
 
-function cbSquirrleUpdate(dt, lid, sid) -- ! Modified
+function cbSquirrleUpdate(dt, lid, sid)
     if not bGameOver and bGameOn then
         if sid == gSquirrel and not bDead then
             local MaxX = 280
             local MinX = -280
             local MaxY = 204
-            --[[
-            local MinY = -184
-            ]] -- Changed to:
             local MinY = -168
             stick1X, stick1Y = 0, 0
             stick2X, stick2Y = 0, 0
@@ -2593,14 +2543,11 @@ function F_GetRemainingAliveHornets()
     --print("===== gHornetsLeft ======", gHornetsLeft)
 end
 
-function F_MakeLives() -- ! Modified
+function F_MakeLives()
     local tex_sprite1 = MGArcade_GetTextureID("Life", "Life_x")
     for i, life in tblLives do
         gLife = MGArcade_Layer_AddSprite(gHUD, cbLifeUpdate)
         MGArcade_Sprite_SetCol(gHUD, gLife, 255, 255, 255, 255)
-        --[[
-        MGArcade_Sprite_SetPos(gHUD, gLife, life.x, 15)
-        ]] -- Changed to:
         MGArcade_Sprite_SetPos(gHUD, gLife, life.x, 0)
         MGArcade_Sprite_SetSize(gHUD, gLife, 32, 32)
         MGArcade_Sprite_SetVel(gHUD, gLife, 0, 0)
@@ -2622,7 +2569,7 @@ function F_RemoveEcho(echo)
     echo.sizeY = 32
 end
 
-function cbEchoUpdate(dt, lid, sid) -- ! Modified
+function cbEchoUpdate(dt, lid, sid)
     for i, echo in tblEchos do
         if echo.id == sid and echo.state == ECHO_THROWN then
             local x, y = MGArcade_Sprite_GetPos(lid, echo.id)
@@ -2631,10 +2578,6 @@ function cbEchoUpdate(dt, lid, sid) -- ! Modified
                 echo.state = ECHO_PARKED
                 break
             end
-            --[[
-            echo.sizeX = echo.sizeX * 1.025
-            echo.sizeY = echo.sizeY * 1.025
-            ]] -- Changed to:
             echo.sizeX = echo.sizeX + 0.6
             echo.sizeY = echo.sizeY + 1.2
             MGArcade_Sprite_SetSize(gLayer, echo.id, echo.sizeX, echo.sizeY)

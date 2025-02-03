@@ -1,11 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionSetup, may require testing
-    * Modified function F_LoadingScreen, may require testing
-    * Modified function F_InitGame, may require testing
-    * Modified function F_HighScoreScreen, may require testing
-    * Modified function F_InstructScreen, may require testing
-]]
-
 local playerWins = false
 local bInstPhase = false
 local gHUD = 0
@@ -82,7 +74,7 @@ local gameOverTimeOut = 0
 local blink = false
 local InvulnerablTime = GetTimer() + 9999999
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     SoundEnableInteractiveMusic(false)
     SoundStopAmbiences()
     SoundDisableSpeech_ActionTree()
@@ -94,12 +86,9 @@ function MissionSetup() -- ! Modified
     MinigameCreate("ARCADE", false)
     MinigameStart()
     MinigameEnableHUD(true)
-    MGArcade_LoadTextures("MG_Fling")                             -- Added this
-    sSideBarLeft = MGArcade_GetTextureID("Monkey_SideScreen_left") -- Added this
-    sSideBarRight = MGArcade_GetTextureID("Monkey_SideScreen_right") -- Added this
-    --[[
-    MGArcade_InitScreen(0, 0, 0)
-    ]] -- Changed to:
+    MGArcade_LoadTextures("MG_Fling")
+    sSideBarLeft = MGArcade_GetTextureID("Monkey_SideScreen_left")
+    sSideBarRight = MGArcade_GetTextureID("Monkey_SideScreen_right")
     MGArcade_InitScreen(0, 0, 0, sSideBarLeft, sSideBarRight)
 end
 
@@ -301,7 +290,7 @@ function F_Difficulty()
     end
 end
 
-function F_LoadingScreen() -- ! Modfied
+function F_LoadingScreen()
     local loadingScreen = MGArcade_GetTextureID("Monkey_StartScreen")
     gStartScreen = MGArcade_CreateLayer(512, 400, 300, C_LayerUpdate)
     MGArcade_Layer_SetPos(gStartScreen, 0, 0)
@@ -317,9 +306,6 @@ function F_LoadingScreen() -- ! Modfied
     MGArcade_Sprite_SetCol(gStartScreen, gStartText, 50, 50, 50, 255)
     MGArcade_Sprite_SetPos(gStartScreen, gStartText, -80, 100)
     MGArcade_Sprite_SetSize(gStartScreen, gStartText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gStartScreen, gStartText, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gStartScreen, gStartText, 0.8, 0.8)
     else
@@ -331,14 +317,8 @@ function F_LoadingScreen() -- ! Modfied
     MGArcade_Sprite_SetText(gStartScreen, gStartText, "ARCADE_BTNSTRT")
     gExitText = MGArcade_Layer_AddSprite(gStartScreen)
     MGArcade_Sprite_SetCol(gStartScreen, gExitText, 50, 50, 50, 255)
-    --[[
-    MGArcade_Sprite_SetPos(gStartScreen, gExitText, -80, 120)
-    ]] -- Changed to:
     MGArcade_Sprite_SetPos(gStartScreen, gExitText, -80, 125)
     MGArcade_Sprite_SetSize(gStartScreen, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gStartScreen, gExitText, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gStartScreen, gExitText, 0.8, 0.8)
     else
@@ -366,22 +346,16 @@ function F_LoadingScreen() -- ! Modfied
     MGArcade_Sprite_SetVisible(gStartScreen, gLoadScreen, false)
 end
 
-function F_InitGame() -- ! Modified
-    --[[
-    MGArcade_LoadTextures("MG_Fling")
-    ]]                                                               -- Removed this
-    sSideBarLeft = MGArcade_GetTextureID("Monkey_SideScreen_left") -- Added this
-    sSideBarRight = MGArcade_GetTextureID("Monkey_SideScreen_right") -- Added this
-    MGArcade_InitScreen(0, 0, 0, sSideBarLeft, sSideBarRight)     -- Added this
+function F_InitGame()
+    sSideBarLeft = MGArcade_GetTextureID("Monkey_SideScreen_left")
+    sSideBarRight = MGArcade_GetTextureID("Monkey_SideScreen_right")
+    MGArcade_InitScreen(0, 0, 0, sSideBarLeft, sSideBarRight)
     F_LoadingScreen()
     if not MinigameIsActive() then
         return
     end
     local tex_sprite0 = MGArcade_GetTextureID("Sunset")
     gHUD = MGArcade_CreateLayer(512, 32, 48, C_LayerUpdate)
-    --[[
-    MGArcade_Layer_SetPos(gHUD, 0, -216)
-    ]] -- Changed to:
     MGArcade_Layer_SetPos(gHUD, 0, -200)
     MGArcade_Layer_SetCol(gHUD, 204, 153, 0, 128)
     MGArcade_Layer_SetScale(gHUD, 1, 1)
@@ -395,9 +369,6 @@ function F_InitGame() -- ! Modified
     gScoreParam = MGArcade_Sprite_AddTextParam(gHUD, gScoreText, 0)
     MGArcade_Sprite_SetText(gHUD, gScoreText, "ARCADE_SCORE")
     gLayer = MGArcade_CreateLayer(512, 400, 100, C_LayerUpdate)
-    --[[
-    MGArcade_Layer_SetPos(gLayer, 0, 0)
-    ]] -- Changed to:
     MGArcade_Layer_SetPos(gLayer, 0, 16)
     MGArcade_Layer_SetCol(gLayer, 0, 0, 0, 255)
     MGArcade_Layer_SetScale(gLayer, 1, 1)
@@ -1337,7 +1308,7 @@ function F_GameOverScreen()
     SoundPlayStream("Arc_MonkeyFlingMenu01.rsm", 1)
 end
 
-function F_HighScoreScreen() -- ! Modified
+function F_HighScoreScreen()
     local hsY = -100
     tblHS = {
         {
@@ -1382,17 +1353,14 @@ function F_HighScoreScreen() -- ! Modified
         }
     }
     local scR, scG, scB = 255, 255, 102
-    local textSize = 1.4    -- Added this
-    if GetLanguage() == 7 then -- Added this
+    local textSize = 1.4
+    if GetLanguage() == 7 then
         textSize = 0.7
     end
     gHighScoreText = MGArcade_Layer_AddSprite(gGameOverLayer)
     MGArcade_Sprite_SetCol(gGameOverLayer, gHighScoreText, scR, scG, scB, 255)
     MGArcade_Sprite_SetPos(gGameOverLayer, gHighScoreText, -80, -120)
     MGArcade_Sprite_SetSize(gGameOverLayer, gHighScoreText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gGameOverLayer, gHighScoreText, 1.4, 1.4)
-    ]] -- Changed to:
     MGArcade_Sprite_SetScale(gGameOverLayer, gHighScoreText, textSize, textSize)
     MGArcade_Sprite_SetVisible(gGameOverLayer, gHighScoreText, true)
     MGArcade_Sprite_SetFont(gGameOverLayer, gHighScoreText, 1)
@@ -1404,9 +1372,6 @@ function F_HighScoreScreen() -- ! Modified
         MGArcade_Sprite_SetCol(gGameOverLayer, score.id, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(gGameOverLayer, score.id, -100, score.y)
         MGArcade_Sprite_SetSize(gGameOverLayer, score.id, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(gGameOverLayer, score.id, 1.4, 1.4)
-        ]] -- Changed to:
         MGArcade_Sprite_SetScale(gGameOverLayer, score.id, textSize, textSize)
         MGArcade_Sprite_SetVisible(gGameOverLayer, score.id, true)
         MGArcade_Sprite_SetFont(gGameOverLayer, score.id, 1)
@@ -1417,9 +1382,6 @@ function F_HighScoreScreen() -- ! Modified
         MGArcade_Sprite_SetCol(gGameOverLayer, score.id2, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(gGameOverLayer, score.id2, 40, score.y)
         MGArcade_Sprite_SetSize(gGameOverLayer, score.id2, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(gGameOverLayer, score.id2, 1.4, 1.4)
-        ]] -- Changed to:
         MGArcade_Sprite_SetScale(gGameOverLayer, score.id2, textSize, textSize)
         MGArcade_Sprite_SetVisible(gGameOverLayer, score.id2, true)
         MGArcade_Sprite_SetFont(gGameOverLayer, score.id2, 1)
@@ -1459,7 +1421,7 @@ function F_HighScoreScreen() -- ! Modified
     end
 end
 
-function F_InstructScreen() -- ! Modified
+function F_InstructScreen()
     bGameOn = false
     gInstructScreen = MGArcade_CreateLayer(495, 400, 150, C_LayerUpdate)
     MGArcade_Layer_SetPos(gInstructScreen, 0, 0)
@@ -1470,7 +1432,7 @@ function F_InstructScreen() -- ! Modified
     local textXLoc = -124
     local textYLoc = -208
     local textSize = 0.9
-    if GetLanguage() == 7 then -- Added this
+    if GetLanguage() == 7 then
         textSize = 0.6
     end
     local tCol = {
@@ -1494,9 +1456,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gTutText01, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gTutText01, foodXLoc + 60, yLoc)
     MGArcade_Sprite_SetSize(gInstructScreen, gTutText01, 0.1, 0.1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gTutText01, 1.1, 1.1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gTutText01, textSize, textSize)
     else
@@ -1570,9 +1529,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gStartText1, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gStartText1, -100, yLoc + 330)
     MGArcade_Sprite_SetSize(gInstructScreen, gStartText1, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gStartText1, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gStartText1, textSize, textSize)
     else
@@ -1586,9 +1542,6 @@ function F_InstructScreen() -- ! Modified
     MGArcade_Sprite_SetCol(gInstructScreen, gExitText, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(gInstructScreen, gExitText, -78, yLoc + 360)
     MGArcade_Sprite_SetSize(gInstructScreen, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(gInstructScreen, gExitText, 1, 1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(gInstructScreen, gExitText, textSize, textSize)
     else

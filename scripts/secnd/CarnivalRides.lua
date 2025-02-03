@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-]]
-
 local RIDE_COASTER = 0
 local RIDE_SQUID = 1
 local RIDE_FERRIS = 2
@@ -168,7 +164,7 @@ function MissionInit()
     --print(">>>[RUI]", "++MissionInit")
 end
 
-function main() -- ! Modified
+function main()
     MissionInit()
     CameraFade(FADE_OUT_TIME, 0)
     Wait(FADE_OUT_TIME + 1)
@@ -189,11 +185,6 @@ function main() -- ! Modified
         end
         Wait(10)
     end
-    --[[
-    if not bGotOnRide then
-        --print(">>>[RUI]", "MAIN PLAYER FAILED GETTING ON RIDE BAIL")
-    end
-    ]] -- Removed this
     NIS_ExitRide(gCurrentRide, bEmergencyExit)
     PedSetFlag(gPlayer, 5, false)
     MissionSucceed(false, true, false)

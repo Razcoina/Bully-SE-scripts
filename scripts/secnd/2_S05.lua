@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function T_DinnerFail, may require testing
-]]
-
 local bAngryEdna = false
 local tblMissionPeds = {
     {
@@ -960,16 +956,10 @@ function F_EdnaWattsDinner()
     end
 end
 
-function T_DinnerFail() -- ! Modified
+function T_DinnerFail()
     while bDinnerStatus ~= DINNER_FAIL do
         Wait(0)
     end
-    --[[
-    PlayerSetControl(0)
-    CameraFollowPed(gPlayer)
-    CameraReset()
-    CameraReturnToPlayer(true)
-    ]] -- Not present in original script
     SoundPlayMissionEndMusic(false, 10)
     if szFailReason then
         MissionFail(false, true, szFailReason)

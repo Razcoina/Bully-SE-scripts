@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-    * Modified function F_CheckThread, may require testing
-]]
-
 local gClassNo = 1
 local gTotalPics = 1
 local gGoodPicsTaken = 0
@@ -81,7 +76,7 @@ function MissionSetup()
     SoundStopCurrentSpeechEvent()
 end
 
-function main() -- ! Modified
+function main()
     while not gDoneSettingUp do
         Wait(0)
     end
@@ -90,9 +85,6 @@ function main() -- ! Modified
     F_InitialCutscene()
     AreaSetDoorLocked("DT_ischool_Art", true)
     AreaTransitionPoint(gExitArea, gExitPoint, 2, true)
-    --[[
-    SoundPlayStream("MS_PhotographyClass.rsm", 1, 2, 1)
-    ]] -- Changed to:
     SoundPlayStream("MS_PhotographyClass.rsm", 0.25, 2, 1)
     if gClassNo == 3 then
         --print("GIVING THE PLAYER THE DIG CAM")
@@ -693,7 +685,7 @@ function F_InitialCutscene()
     PlayerSetControl(1)
 end
 
-function F_CheckThread() -- ! Modified
+function F_CheckThread()
     local checkValid = false
     --print("<<<<<<<<<<<<<< INITIALIZING THREAD")
     local totalTargets = 0
@@ -713,17 +705,6 @@ function F_CheckThread() -- ! Modified
             photohasbeentaken, wasValid = PhotoHasBeenTaken()
             if photohasbeentaken and wasValid then
                 for i, target in gPhotoTargets do
-                    --[[
-                    if target.valid == true and not target.taken then
-                        target.taken = true
-                        if target.blipId then
-                            BlipRemove(target.blipId)
-                        end
-                        target.blipId = nil
-                        CounterIncrementCurrent(1)
-                        gGoodPicsTaken = gGoodPicsTaken + 1
-                    end
-                    ]] -- Changed to:
                     if not target.taken then
                         if target.valid == true or i == L3_2 then
                             target.taken = true

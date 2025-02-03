@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function RaceEvaluateResults, may require testing
-]]
-
 function NIS_CarnivalEnterTrack()
     --print(">>>[RUI]", "++NIS_CarnivalEnterTrack")
     SoundFadeWithCamera(false)
@@ -1889,7 +1885,7 @@ function F_CompletionMessageDisplay(heading, money, message)
     end
 end
 
-function RaceEvaluateResults() -- ! Modified
+function RaceEvaluateResults()
     local sucess = false
     if GoKartTrackType == TRACK_CARNIVAL_RACE then
         StatAddToInt(54)
@@ -1943,9 +1939,6 @@ function RaceEvaluateResults() -- ! Modified
                 end
                 if bUberComplete then
                     MinigameSetUberCompletion()
-                    --[[
-                    MiniObjectiveSetIsComplete(14)
-                    ]] -- Changed to:
                     MiniObjectiveSetIsComplete(15)
                 end
             else

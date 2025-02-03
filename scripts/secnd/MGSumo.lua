@@ -1,11 +1,3 @@
---[[ Changes to this file:
-    * Modified local variable values
-    * Modified function main, may require testing
-    * Modified function C_LayerUpdate, may require testing
-    * Modified function F_TutorialScreen, may require testing
-    * Modified function F_HighScoreScreen, may require testing
-]]
-
 local gSpeedReduction = 6
 local gCurrentSizes = {
     20,
@@ -52,10 +44,6 @@ local gPlayerStamina = 0
 local gPlayerLevelUp = 10
 local gPlayerLives = 3
 local gLifeSprites = {}
---[[
-local gMainLayerW = 320
-local gMainLayerH = 230
-]] -- Changed to:
 local gMainLayerW = 300
 local gMainLayerH = 215
 local gSP = {}
@@ -70,9 +58,6 @@ local gPlayerAllowMove = true
 local gEnemySumoWhoHit = -1
 local gAnimStage = 1
 local gEnemySumoTime = 0
---[[
-local gAnimationRateTime = 20
-]] -- Changed to:
 local gAnimationRateTime = 60
 local gEnemyRateTime = 100
 local gPlayerEnd = false
@@ -331,7 +316,7 @@ function F_PlayerLoseLife(lid)
     end
 end
 
-function main() -- ! Modified
+function main()
     MinigameCreate("ARCADE", false)
     SoundPlayStream("Arc_SUMO_Menu.rsm", 1, 0, 0)
     while MinigameIsReady() == false do
@@ -356,11 +341,8 @@ function main() -- ! Modified
     MGArcade_LoadTextures("MG_Sumo")
     CameraFade(1000, 1)
     Wait(1100)
-    sSideBarLeft = MGArcade_GetTextureID("Sumo_Sidescreen_left") -- Added this
-    sSideBarRight = MGArcade_GetTextureID("Sumo_Sidescreen_right") -- Added this
-    --[[
-    MGArcade_InitScreen(128, 128, 128)
-    ]] -- Changed to:
+    sSideBarLeft = MGArcade_GetTextureID("Sumo_Sidescreen_left")
+    sSideBarRight = MGArcade_GetTextureID("Sumo_Sidescreen_right")
     MGArcade_InitScreen(128, 128, 128, sSideBarLeft, sSideBarRight)
     introLayer = MGArcade_CreateLayer(640, 480, 2)
     gSpriteFunctions = {
@@ -381,14 +363,8 @@ function main() -- ! Modified
     MGArcade_Sprite_SetTexture(introLayer, gStartScreen, sStartScreen)
     gStartText = MGArcade_Layer_AddSprite(introLayer)
     MGArcade_Sprite_SetCol(introLayer, gStartText, 150, 150, 150, 255)
-    --[[
-    MGArcade_Sprite_SetPos(introLayer, gStartText, 0, 140)
-    ]] -- Changed to:
     MGArcade_Sprite_SetPos(introLayer, gStartText, -100, 170)
     MGArcade_Sprite_SetSize(introLayer, gStartText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(introLayer, gStartText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(introLayer, gStartText, 0.8, 0.8)
     else
@@ -400,14 +376,8 @@ function main() -- ! Modified
     MGArcade_Sprite_SetText(introLayer, gStartText, "ARCADE_BTNSTRT")
     gExitText = MGArcade_Layer_AddSprite(introLayer)
     MGArcade_Sprite_SetCol(introLayer, gExitText, 150, 150, 150, 255)
-    --[[
-    MGArcade_Sprite_SetPos(introLayer, gExitText, 0, 170)
-    ]] -- Changed to:
     MGArcade_Sprite_SetPos(introLayer, gExitText, -100, 200)
     MGArcade_Sprite_SetSize(introLayer, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(introLayer, gExitText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(introLayer, gExitText, 0.8, 0.8)
     else
@@ -458,7 +428,7 @@ function main() -- ! Modified
         CameraFade(500, 1)
         bgid = MGArcade_CreateLayer(gMainLayerW * 2, gMainLayerH * 2, 1)
         gDojo = MGArcade_Layer_AddSprite(bgid)
-        MGArcade_Sprite_SetCol(bgid, gStartScreen, 128, 128, 128, 200) -- Added this
+        MGArcade_Sprite_SetCol(bgid, gStartScreen, 128, 128, 128, 200)
         MGArcade_Sprite_SetPos(bgid, gDojo, 0, 0)
         MGArcade_Sprite_SetSize(bgid, gDojo, gMainLayerW * 2, gMainLayerH * 2)
         MGArcade_Sprite_SetCollSize(bgid, gDojo, 0, 0)
@@ -472,9 +442,6 @@ function main() -- ! Modified
         MGArcade_Layer_SetCol(lid, 0, 0, 0, 0)
         MGArcade_Layer_SetScale(lid, 1, 1)
         gInfoLayer = MGArcade_CreateLayer(640, 20, 8)
-        --[[
-        MGArcade_Layer_SetPos(gInfoLayer, 0, -220)
-        ]] -- Changed to:
         MGArcade_Layer_SetPos(gInfoLayer, 0, -200)
         MGArcade_Layer_SetCol(gInfoLayer, 32, 32, 32, 255)
         MGArcade_Layer_SetScale(gInfoLayer, 1, 1)
@@ -805,8 +772,8 @@ end
 local canMove = false
 local stickX, stickY, sposx, sposy
 
-function C_LayerUpdate(dt, lid) -- ! Modified
-    local L2_2 = false          -- Added this
+function C_LayerUpdate(dt, lid)
+    local L2_2 = false
     if gbShowingInfo then
         return
     end
@@ -841,7 +808,7 @@ function C_LayerUpdate(dt, lid) -- ! Modified
                 gFacing = "L"
             else
                 MainSumoAnim(lid, gPlayerShip, sSumoL2, sSumoL)
-                L2_2 = true -- Added this
+                L2_2 = true
             end
             if sposx <= -gMainLayerW + gPlayerSize + 5 then
                 svelx = 0
@@ -856,7 +823,7 @@ function C_LayerUpdate(dt, lid) -- ! Modified
                 gFacing = "R"
             else
                 MainSumoAnim(lid, gPlayerShip, sSumoR2, sSumoR)
-                L2_2 = true -- Added this
+                L2_2 = true
             end
             if sposx >= gMainLayerW - gPlayerSize - 5 then
                 svelx = 0
@@ -867,16 +834,6 @@ function C_LayerUpdate(dt, lid) -- ! Modified
             svelx = 0
         end
         if stickY < -0.3 then
-            --[[
-            if gFacing ~= "B" then
-                MGArcade_Sprite_SetTexture(lid, gPlayerShip, sSumoB)
-                gSumoTimer = GetTimer()
-                gSumoFirst = true
-                gFacing = "B"
-            else
-                MainSumoAnim(lid, gPlayerShip, sSumoB2, sSumoB)
-            end
-            ]] -- Changed to:
             if gFacing ~= "B" and -0.3 <= stickX and stickX <= 0.3 then
                 MGArcade_Sprite_SetTexture(lid, gPlayerShip, sSumoB)
                 gSumoTimer = GetTimer()
@@ -891,16 +848,6 @@ function C_LayerUpdate(dt, lid) -- ! Modified
                 svely = stickY * gSpeed
             end
         elseif 0.3 < stickY then
-            --[[
-            if gFacing ~= "F" then
-                MGArcade_Sprite_SetTexture(lid, gPlayerShip, sSumoF)
-                gSumoTimer = GetTimer()
-                gSumoFirst = true
-                gFacing = "F"
-            else
-                MainSumoAnim(lid, gPlayerShip, sSumoF2, sSumoF)
-            end
-            ]] -- Changed to:
             if gFacing ~= "F" and -0.3 <= stickX and stickX <= 0.3 then
                 MGArcade_Sprite_SetTexture(lid, gPlayerShip, sSumoF)
                 gSumoTimer = GetTimer()
@@ -1066,14 +1013,14 @@ end
 function C_UpdateAngel(dt, lid, sid)
 end
 
-function F_TutorialScreen(lid) -- ! Modified
+function F_TutorialScreen(lid)
     gbShowingInfo = true
     local yLoc = -200
     local foodXLoc = -224
     local textXLoc = -48
     local textYLoc = -208
     local textSize = 0.9
-    if GetLanguage() == 7 then -- Added this
+    if GetLanguage() == 7 then
         textSize = 0.6
     end
     local tCol = {
@@ -1091,9 +1038,6 @@ function F_TutorialScreen(lid) -- ! Modified
     MGArcade_Sprite_SetCol(lid, gTutText01, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(lid, gTutText01, foodXLoc, yLoc)
     MGArcade_Sprite_SetSize(lid, gTutText01, 0.1, 0.1)
-    --[[
-    MGArcade_Sprite_SetScale(lid, gTutText01, 1.1, 1.1)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(lid, gTutText01, textSize, textSize)
     else
@@ -1183,9 +1127,6 @@ function F_TutorialScreen(lid) -- ! Modified
     MGArcade_Sprite_SetCol(lid, gStartText1, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(lid, gStartText1, -100, yLoc + 330)
     MGArcade_Sprite_SetSize(lid, gStartText1, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(lid, gStartText1, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(lid, gStartText1, 0.8, 0.8)
     else
@@ -1199,9 +1140,6 @@ function F_TutorialScreen(lid) -- ! Modified
     MGArcade_Sprite_SetCol(lid, gExitText, tCol[1], tCol[2], tCol[3], tCol[4])
     MGArcade_Sprite_SetPos(lid, gExitText, -100, yLoc + 355)
     MGArcade_Sprite_SetSize(lid, gExitText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(lid, gExitText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(lid, gExitText, 0.8, 0.8)
     else
@@ -1239,7 +1177,7 @@ function F_TutorialScreen(lid) -- ! Modified
     gbShowingInfo = false
 end
 
-function F_HighScoreScreen(lid) -- ! Modified
+function F_HighScoreScreen(lid)
     local hsY = -100
     tblHS = {
         {
@@ -1295,9 +1233,6 @@ function F_HighScoreScreen(lid) -- ! Modified
     MGArcade_Sprite_SetCol(lid, gHighScoreText, scR, scG, scB, 255)
     MGArcade_Sprite_SetPos(lid, gHighScoreText, -72, -130)
     MGArcade_Sprite_SetSize(lid, gHighScoreText, 1, 1)
-    --[[
-    MGArcade_Sprite_SetScale(lid, gHighScoreText, 1.4, 1.4)
-    ]] -- Changed to:
     if GetLanguage() == 7 then
         MGArcade_Sprite_SetScale(lid, gHighScoreText, 0.8, 0.8)
     else
@@ -1323,9 +1258,6 @@ function F_HighScoreScreen(lid) -- ! Modified
         MGArcade_Sprite_SetCol(lid, score.id, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(lid, score.id, -100, score.y)
         MGArcade_Sprite_SetSize(lid, score.id, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(lid, score.id, 1.4, 1.4)
-        ]] -- Changed to:
         if GetLanguage() == 7 then
             MGArcade_Sprite_SetScale(lid, score.id, 0.8, 0.8)
         else
@@ -1340,9 +1272,6 @@ function F_HighScoreScreen(lid) -- ! Modified
         MGArcade_Sprite_SetCol(lid, score.id2, scR, scG, scB, 255)
         MGArcade_Sprite_SetPos(lid, score.id2, -15, score.y)
         MGArcade_Sprite_SetSize(lid, score.id2, 1, 1)
-        --[[
-        MGArcade_Sprite_SetScale(lid, score.id2, 1.4, 1.4)
-        ]] -- Changed to:
         if GetLanguage() == 7 then
             MGArcade_Sprite_SetScale(lid, score.id2, 0.8, 0.8)
         else
