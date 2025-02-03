@@ -495,7 +495,7 @@ function F_HeldAgainstWall(POIInfo, POIPointType, POIPointFaction, POIPointNum, 
             if POIPointFaction ~= 1 then
             end
             do return end
-            do break end -- pseudo-goto
+            do break end
             ped1 = GetStudent(POIPointFaction, 1, -1)
             ped2 = F_GetOpposingFaction(POIPointFaction)
             if ped2 ~= 6 then

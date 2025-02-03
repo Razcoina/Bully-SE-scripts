@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Removed some local variables, not present in original script
-    * Removed function F_POIDriver, not present in original script
-    * Removed function Validate, not present in original script
-]]
-
 GlobalImportScript("POI/EventFunc.lua")
 ImportScript("AreaScripts/Scenarios.lua")
 local gFunctionTable = {
@@ -84,33 +78,6 @@ local gFunctionTable = {
         F_DunkMidget
     }
 }
---[[
-local gButtonPressed = false
-local gDriverFunctionTable = {
-    F_HeldAgainstWall,
-    F_DrunkenBeggar,
-    F_Catch,
-    F_Cheerleading,
-    F_Workout,
-    F_Crying,
-    F_OutsideClass,
-    F_DrunkenBeggar,
-    F_WallSmoking,
-    F_BullyDogs,
-    F_BikeCheckout,
-    F_Sweep,
-    F_CoupleKissing,
-    F_Brawl,
-    F_GangBeat,
-    F_ReachItHumiliation,
-    F_TeacherHarassingKids,
-    F_HeldAgainstWall,
-    F_Arrest,
-    F_CoupleCuddling
-}
-local gCallIndividual = true
-local gCurrentFunction = 20
-]] -- Not present in original script
 
 function F_CheckPOI()
     gStores = {
@@ -322,29 +289,6 @@ function F_GetEventFunction(pTable)
     return nil
 end
 
---[[
-function F_POIDriver(POIInfo)
-    local POIPointType = AreaPOIGetInterestType(POIInfo)
-    local POIPointFaction = AreaPOIGetFaction(POIInfo)
-    local POIPointNum = AreaPOIGetMaxNumber(POIInfo)
-    local POIGender = AreaPOIGetGender(POIInfo)
-    local functionPicked
-    AreaPOISetActivation(POIInfo, true)
-    if not gCallIndividual then
-        for i, event in gDriverFunctionTable do
-            if i == gCurrentFunction then
-                functionPicked = event
-                break
-            end
-        end
-        functionPicked(POIInfo, POIPointType, POIPointFaction, POIPointNum, POIGender, ped1, ped2, ped3, ped4)
-    elseif gCallIndividual then
-        local ped1, ped2, ped3, ped4
-        F_Sweep(POIInfo, POIPointType, POIPointFaction, POIPointNum, POIGender)
-    end
-end
-]] -- Not present in original script
-
 function ShouldEventInitiate(info)
     local POIPointType = AreaPOIGetInterestType(info)
     local gShouldCreate = false
@@ -523,16 +467,3 @@ function ShouldEventInitiate(info)
     end
     return false
 end
-
---[[
-function Validate(itemsTable)
-    local failedValidation = false
-    for i, item in itemsTable do
-        if item == -1 or item == nil then
-            item = nil
-            failedValidation = true
-        end
-    end
-    return failedValidation
-end
-]] -- Not present in original script
