@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function main, may require testing
-]]
-
 local bMissionOver = false
 local bFailedDueToViolence = false
 local bFailedDueToEunice = false
@@ -209,7 +205,7 @@ function MissionSetup()
     end
 end
 
-function main() -- ! Modified
+function main()
     PlayerSetPosPoint(POINTLIST._2_06_PLAYER_START)
     F_MissionInit()
     PedSetPosPoint(idPinky.id, POINTLIST._2_06_PINKYWAITS)
@@ -282,17 +278,6 @@ function main() -- ! Modified
         Wait(1000)
         SoundPlayMissionEndMusic(false, 7)
         shared.b2_06Failed = true
-        --[[
-        if bFailedDueToPinky then
-            MissionFail(true, true, "2_06_PINKYHURT")
-        elseif bFailedDueToGord then
-            MissionFail(true, true, "2_06_GORDKO")
-        elseif bFailedDueToMoney then
-            MissionFail(true, true, "CMN_STR_06")
-        else
-            MissionFail(true, true, "2_06_VIOLENCE")
-        end
-        ]] -- Changed to:
         if bFailedDueToPinky then
             MissionFail(false, true, "2_06_PINKYHURT")
         elseif bFailedDueToGord then

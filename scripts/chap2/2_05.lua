@@ -1,9 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_RussellCleanup, may require testing
-    * Modified function MissionInit, may require testing
-    * Modified function TadsGateOpened, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPlayer.lua")
 ImportScript("Library/LibPed.lua")
@@ -500,16 +494,13 @@ function F_RussellCreate()
     --print("RUSSEL NEW HEALTH", PedGetHealth(gRussell.id))
 end
 
-function F_RussellCleanup() -- ! Modified
+function F_RussellCleanup()
     if F_PedExists(gRussell.id) then
         PedStop(gRussell.id)
         if VehicleIsValid(gRussellBike) then
             VehicleMakeAmbient(gRussellBike)
         end
         PedMakeAmbient(gRussell.id)
-        --[[
-        PedDismissAlly(gPlayer, gRussell.id)
-        ]] -- Removed this
         F_CleanBlip(gRussell.blip)
     end
     --print(">>>[RUI]", "--F_RussellCleanup")
@@ -835,11 +826,10 @@ function F_PlayerAtGates()
     return bEnteredTadsGates
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     PlayerSetControl(0)
     PlayCutsceneWithLoad("2-05", true, true)
     WeaponRequestModel(312)
-    --PlayerSetWeapon(312, 12)
     PlayerSetPosPoint(POINTLIST._2_05_PLAYERSTART, 1)
     F_TableInit()
     F_RussellCreate()
@@ -1098,10 +1088,7 @@ function Stage_02GetInYardLoop()
     Wait(1)
 end
 
-function TadsGateOpened() -- ! Modified
-    --[[
-    return not (PlayerIsInTrigger(TRIGGER._2_05_FRONTGATE) or PlayerIsInTrigger(TRIGGER._2_05_BACKGATE)) or PAnimIsOpen(TRIGGER._TRICH_TADGATES) or PAnimIsOpen(TRIGGER._TRICH_TADGATES01)
-    ]] -- Changed to:
+function TadsGateOpened()
     return (PlayerIsInTrigger(TRIGGER._2_05_FRONTGATE) or PlayerIsInTrigger(TRIGGER._2_05_BACKGATE)) and (PAnimIsOpen(TRIGGER._TRICH_TADGATES) or PAnimIsOpen(TRIGGER._TRICH_TADGATES01))
 end
 

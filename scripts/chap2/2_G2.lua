@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_Stage3_Objectives, may require testing
-]]
-
 function F_PlayerHasFlowers()
     if IsMissionFromDebug() then
         ItemSetCurrentNum(475, 1)
@@ -375,7 +371,7 @@ function F_Stage2_Objectives()
     F_CheckClockForFail()
 end
 
-function F_Stage3_Objectives() -- ! Modified
+function F_Stage3_Objectives()
     if not bPinkyWarn then
         if PlayerIsInTrigger(TRIGGER._2_G2_PINKYARRIVED) then
             SoundPlayScriptedSpeechEvent(pedPinky.id, "M_2_G2", 14)
@@ -433,14 +429,13 @@ function F_Stage3_Objectives() -- ! Modified
         bGiveBearObjective = true
     end
     if AreaGetVisible() ~= 50 and bPlayerHasBear then
-        --CameraFade(-1, 0)
         SoundRemoveAllQueuedSpeech(pedPinky.id, true)
         PedSetFlag(pedPinky.id, 113, true)
         PedSetInvulnerable(pedPinky.id, true)
         PlayerSetInvulnerable(true)
         PedSetMissionCritical(pedPinky.id, false)
         bMonitorPinky = false
-        CameraFade(0, 0)	-- Added this
+        CameraFade(0, 0)
         AreaDisableCameraControlForTransition(true)
         CameraSetXYZ(179.95161, 434.85175, 7.635641, 180.7026, 435.50375, 7.532141)
         PlayerSetControl(0)

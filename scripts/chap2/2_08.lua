@@ -1,8 +1,3 @@
---[[ Changes to this file:
-    * Modified function F_StageFive_FightBif, may require testing
-    * Modified function F_RunPlantNIS, may require testing
-]]
-
 local sMissionState = "running"
 local fMissionStage
 local tObjectiveTable = {}
@@ -460,7 +455,7 @@ end
 
 local bBifAttackedPlayer = false
 
-function F_StageFive_FightBif() -- ! Modified
+function F_StageFive_FightBif()
     if not bBifAttackedPlayer and PlayerIsInTrigger(TRIGGER._2_08_BIFATTACKTRIG) then
         bBifAttackedPlayer = true
         if shared.gBif and not shared.bBifDefeated and PedIsValid(shared.gBif) then
@@ -479,16 +474,11 @@ function F_StageFive_FightBif() -- ! Modified
         end
     end
     if shared.bWeedPlantIsDestroyed and PedIsPlaying(gPlayer, "/Global/Door/PedPropsActions", true) then
-        AreaDisableCameraControlForTransition(true) -- Added this
-        CameraFade(500, 0)                    -- Added this
-        Wait(501)                             -- Added this
-        SoundStopInteractiveStream(0)         -- Added this
+        AreaDisableCameraControlForTransition(true)
+        CameraFade(500, 0)
+        Wait(501)
+        SoundStopInteractiveStream(0)
         PlayerSetControl(0)
-        --[[
-        while AreaGetVisible() ~= 0 do
-            Wait(0)
-        end
-        ]] -- Replaced this loop for the next one
         while not shared.gAreaDATFileLoaded[0] do
             Wait(0)
         end
@@ -503,13 +493,13 @@ function F_StageFive_FightBif() -- ! Modified
         PlayerSetPosPoint(POINTLIST._2_08_OUTHAR, 1)
         CameraSetXYZ(103.56771, -125.023994, 7.458748, 103.49873, -126.01162, 7.599507)
         SoundEnableInteractiveMusic(false)
-        CameraFade(500, 1) -- Added this
-        Wait(501)    -- Added this
+        CameraFade(500, 1)
+        Wait(501)
         AreaDisableCameraControlForTransition(false)
         sMissionState = "Success"
     end
     F_MonitorObjectives()
-    Wait(500) -- Added this
+    Wait(500)
 end
 
 local gObjectiveBlip
@@ -1020,7 +1010,7 @@ function F_MoveToSchool()
     AreaTransitionPoint(2, POINTLIST._2_08_BIOLOGYROOM, 1, true)
 end
 
-function F_RunPlantNIS() -- ! Modified
+function F_RunPlantNIS()
     local NISPed
     local playerX, playerY, playerZ = 0, 0, 0
     local playerHeading = 0
@@ -1091,9 +1081,6 @@ function F_RunPlantNIS() -- ! Modified
                 if NISPed ~= tThirdFloorTable.bryce.id then
                     PedSetActionNode(tThirdFloorTable.bryce.id, "/Global/2_08Conv/Lock_Picking/Lock_Picking_Loop", "Act/Conv/2_08.act")
                 end
-                --[[
-                PedFollowPath(NISPed, PATH._2_08_NIS, 0, 2)
-                ]] -- Changed to:
                 PedFollowPath(NISPed, PATH._, 0, 2)
                 SoundPlayScriptedSpeechEvent(NISPed, "FIGHTING", 0, "jumbo")
                 Wait(1000)

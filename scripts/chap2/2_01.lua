@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionSetup, may require testing
-]]
-
 local bDebugNIS = false
 local Edna, EdnaBlip, idGenStoreBlip, Cop1, Cop2, idCopCar1, idCopCar2
 local iMissionTime = 300
@@ -97,7 +93,7 @@ function F_Debug()
     end
 end
 
-function MissionSetup() -- ! Modified
+function MissionSetup()
     PlayCutsceneWithLoad("2-01", true, true, true)
     shared.gEdnaOverride = true
     DATLoad("2_01.DAT", 2)
@@ -112,8 +108,6 @@ function MissionSetup() -- ! Modified
     LoadAnimationGroup("2_01LastMinuteShop")
     LoadAnimationGroup("NIS_2_01")
     shared.gOverrideSchoolGates = false
-    --LoadAnimationGroup("POI_Telloff")
-    --LoadAnimationGroup("LE_Officer")
     CreateThread("T_BikeMountTut")
 end
 

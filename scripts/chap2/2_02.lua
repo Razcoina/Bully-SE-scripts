@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function T_MonitorKlepto, may require testing
-]]
-
 local bLoop = true
 local bMissionFailed = false
 local bMissionPassed = false
@@ -405,7 +401,7 @@ function F_DeleteAllBikes()
     end
 end
 
-function T_MonitorKlepto() -- ! Modified
+function T_MonitorKlepto()
     --print("()xxxxx[:::::::::::::::> [start] T_MonitorKlepto()")
     while MissionActive() do
         if not bKleptoIsDead then

@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-]]
-
 local bDebugFlag = false
 local gDebugLevel = 3
 local bLoop = true
@@ -75,7 +71,7 @@ function MissionSetup()
     --print("()xxxxx[:::::::::::::::> [finish] MissionSetup()")
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     CameraSetWidescreen(false)
     SoundEnableSpeech_ActionTree()
     F_MakePlayerSafeForNIS(false)
@@ -97,8 +93,7 @@ function MissionCleanup() -- ! Modified
     UnLoadAnimationGroup("Px_RedButton")
     UnLoadAnimationGroup("IDLE_SEXY_C")
     UnLoadAnimationGroup("NPC_Shopping")
-    --UnLoadAnimationGroup("F_Pref")
-    F_CleanupSprinklers()	-- Added this
+    F_CleanupSprinklers()
     SoundStopFireAlarm()
     SoundStopInteractiveStream()
     CounterMakeHUDVisible(false)
