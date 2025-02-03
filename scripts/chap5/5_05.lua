@@ -1,7 +1,3 @@
---[[ Changes to this file
-    * Modified function cbMissionCritFailure, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibTrigger.lua")
 local tblPedModels = {
@@ -937,11 +933,8 @@ function cbReachedEnd(pedid, pathid, nodeid)
     end
 end
 
-function cbMissionCritFailure() -- ! Modified
+function cbMissionCritFailure()
     if idZoe and PedIsValid(idZoe) then
-        --[[
-        PedSetMissionCritical(idZoe, false)
-        ]] -- Not present in original script
         PedSetInvulnerable(idZoe, false)
         PedSetFlag(idZoe, 113, false)
         PedSetStationary(idZoe, false)

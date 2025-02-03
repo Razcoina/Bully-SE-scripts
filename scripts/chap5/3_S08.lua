@@ -1,11 +1,3 @@
---[[ Changes to this file:
-    * Removed unused local variables
-    * Modified function F_DogHazardsCreate, may require testing
-]]
-
---[[
-local bTestBlip = false
-]] -- Not present in original script
 local MISSION_RUNNING = 0
 local MISSION_PASS = 1
 local MISSION_FAIL = 2
@@ -793,7 +785,7 @@ function main()
     PlayerWeaponHudLock(false)
 end
 
-function F_DogHazardsCreate() -- ! Modified
+function F_DogHazardsCreate()
     if not gDogHazards then
         return -1
     end
@@ -802,11 +794,6 @@ function F_DogHazardsCreate() -- ! Modified
         if dog.bActive then
             dog.id = PedCreatePoint(RandomTableElement(gDogModels), dog.point, 1)
             PedSetTetherToPoint(dog.id, dog.point, 1, 5)
-            --[[
-            if bTestBlip then
-                AddBlipForChar(dog.id, 0, 2, 1)
-            end
-            ]] -- Not present in original script
         end
     end
     bDogHazardsCreated = true

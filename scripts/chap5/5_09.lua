@@ -1,8 +1,3 @@
---[[ Changes to this file
-    * Added local variable L75_1
-    * Modified function T_Photography, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibObjective.lua")
 ImportScript("Library/LibHud.lua")
@@ -76,7 +71,7 @@ local bTagsDone = false
 local bMissionComplete = false
 local objGetSpray = false
 local gCurrentBlip, gCurrentObjective, gCurrentBlipPoint, gCurrentObjectiveText
-local L75_1 = false -- Added this
+local L75_1 = false
 local idPeter
 
 function F_TableInit()
@@ -323,7 +318,7 @@ function F_PhotoCityHall()
     MissionObjectiveComplete(objTakePhoto)
 end
 
-function T_Photography() -- ! Modified
+function T_Photography()
     local gPhotoTargets = {}
     x1, y1, z1 = GetPointFromPointList(POINTLIST._5_09_CITYHALL_TAG, 1)
     x2, y2, z2 = GetPointFromPointList(POINTLIST._5_09_CITYHALL_TAG, 2)
@@ -365,13 +360,10 @@ function T_Photography() -- ! Modified
         if validCount == 4 then
             validTarget = true
         end
-        joshLazyHack = validTarget or L75_1 -- Added this
-        L75_1 = validTarget           -- Added this
+        joshLazyHack = validTarget or L75_1
+        L75_1 = validTarget
         PhotoSetValid(validTarget)
         photohasbeentaken, wasValid = PhotoHasBeenTaken()
-        --[[
-        if photohasbeentaken and wasValid and validTarget and not PlayerIsInTrigger(TRIGGER._5_09_CITYHALL_BUILDING) then
-        ]] -- Changed this to:
         if photohasbeentaken and wasValid and joshLazyHack and not PlayerIsInTrigger(TRIGGER._5_09_CITYHALL_BUILDING) then
             CityHallPhoto = true
         end

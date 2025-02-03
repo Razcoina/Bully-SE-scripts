@@ -1,19 +1,9 @@
---[[ Changed to this file:
-    * Changed local variables
-    * Removed local variables
-    * Modified function RollCredits, may require testing
-    * Modified function main, may require testing
-]]
-
 local gPeds = {}
 local gZoe
 local bRollTheCredits = false
 local bEndCreditsNow = false
 local NAME_X_OFFSET = 320
 local NAME_Y_OFFSET = 19
---[[
-local TITLE_Y_GAP = 30
-]] -- Changed to:
 local TITLE_Y_GAP = 60
 local TITLE_SCALE = 0.75
 local NAME_SCALE = 0.6
@@ -37,14 +27,7 @@ local Y_DEC = 2
 local ACTOR_X_OFFSET = 600
 local CreditTbl = {}
 local bFirstTitle = true
---[[
-local ACTOR_INDEX = 41
-]] -- Changed to:
 local ACTOR_INDEX = 64
---[[
-local LONDON_INDEX = 54
-local MUSIC_INDEX = 47
-]] -- Not present in original script
 
 function RollTitleName(Credit)
     local title, nameString
@@ -72,7 +55,7 @@ function RollTitleName(Credit)
     return true
 end
 
-function RollCredits() -- ! Modified
+function RollCredits()
     local xpos, ypos, title, name
     local titleIndex = 0
     local numNames
@@ -134,11 +117,6 @@ function RollCredits() -- ! Modified
                 ypos = ypos + NAME_Y_OFFSET
             end
         end
-        --[[
-        if titleIndex ~= LONDON_INDEX and titleIndex ~= MUSIC_INDEX then
-            ypos = ypos + TITLE_Y_GAP
-        end
-        ]] -- Not present in original script
         ypos = ypos + TITLE_Y_GAP
         titleIndex = titleIndex + 1
     end
@@ -208,7 +186,7 @@ function MissionSetup()
     SoundStopCurrentSpeechEvent()
 end
 
-function main() -- ! Modified
+function main()
     SetClipRange(0, 448)
     TITLE_OFFSCREEN = -30
     TITLE_ONSCREEN = 448
@@ -329,11 +307,6 @@ function main() -- ! Modified
     end
     while bRollTheCredits do
         Wait(0)
-        --[[
-        if IsButtonPressed(7, 0) then
-            bEndCreditsNow = true
-        end
-        ]] -- Not present in original script
     end
     PlayerSetControl(1)
     SoundStopInteractiveStream(1000)

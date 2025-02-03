@@ -1,12 +1,3 @@
---[[ Changes to this file:
-    * Assigned nil to local variable gObserver twice. Why? Because that's the way R* did!!!
-    * Added local variables L35_1 and L36_1
-    * Removed function GiveCamera, not present in original script
-    * Modified function MissionInit, may require testing
-    * Modified function PhotoCheckTargetsInFrame, may require testing
-    * Modified function PhotoVerifyGoodShot, may require testing
-]]
-
 local MAX_PROP_DAMAGED_ALLOWED = 2
 local MISSION_RUNNING = 0
 local MISSION_PASS = 1
@@ -18,7 +9,7 @@ local gObjective, gObjectiveBlip
 local gDropoutModels = {}
 local gGreaserModels = {}
 local gLeon, gDuncan, gOtto, gJerry, gDarby, gGuy1, gGas, gTorch
-local gObserver = nil, nil -- Added this, moved variable from previous line
+local gObserver = nil, nil
 local gBonfireDropouts = {}
 local bPhotoGood = false
 local bBonFireStarted = false
@@ -2423,12 +2414,6 @@ function CS_Outro()
     SoundFadeWithCamera(true)
 end
 
---[[
-function GiveCamera()
-    GiveWeaponToPlayer(328, false)
-end
-]] -- Not present in original script
-
 function MissionSetup()
     MissionDontFadeIn()
     DATLoad("5_02.DAT", 2)
@@ -2441,12 +2426,9 @@ function MissionSetup()
     SoundSetHighIntensityStream("MS_FightingDropouts.rsm", 0.7)
 end
 
-function MissionInit() -- ! Modified
+function MissionInit()
     --print(">>>[RUI]", "!!MissionInit")
     PlayerSetPosPoint(POINTLIST._5_02_PLAYER_START)
-    --[[
-    PedSetTypeToTypeAttitude(3, 13, 0)
-    ]] -- Not present in original script
     prepTude = PedGetTypeToTypeAttitude(5, 13)
     PedSetTypeToTypeAttitude(5, 13, 2)
     gGreaserModels = {
@@ -2590,10 +2572,10 @@ function PhotoIsGood(propLoc, dudeTbl)
 end
 
 local bPropInFrame, bDudeInFrame
-local L35_1 = false                                 -- ! Cannot recover original name
-local L36_1                                         -- ! Cannot recover original name
+local L35_1 = false
+local L36_1
 
-function PhotoCheckTargetsInFrame(propLoc, dudeTbl) -- ! Modified
+function PhotoCheckTargetsInFrame(propLoc, dudeTbl)
     bPropInFrame, bDudeInFrame = false, false
     if propLoc then
         if type(propLoc) == "table" then
@@ -2606,35 +2588,29 @@ function PhotoCheckTargetsInFrame(propLoc, dudeTbl) -- ! Modified
     end
     for _, dude in dudeTbl do
         if dude and not F_PedIsDead(dude.id) then
-            dude.bWasInFrame = false -- Added this
-            if dude.bInFrame then -- Added this
-                dude.bWasInFrame = true -- Added this
+            dude.bWasInFrame = false
+            if dude.bInFrame then
+                dude.bWasInFrame = true
             end
             dude.bInFrame = PhotoTargetInFrame(dude.id, 2)
             if not bDudeInFrame then
                 bDudeInFrame = dude.bInFrame or dude.bWasInFrame
-                --[[
-                bDudeInFrame = dude.bInFrame
-                ]] -- Not present in original script
             end
         else
             --print(">>>[RUI]", "**PhotoCheckTargetsInFrame BAD DUDE")
         end
     end
-    L36_1 = L35_1                     -- Added this
-    L35_1 = bPropInFrame              -- Added this
-    bPropInFrame = bPropInFrame or L36_1 -- Added this
+    L36_1 = L35_1
+    L35_1 = bPropInFrame
+    bPropInFrame = bPropInFrame or L36_1
     return bPropInFrame and bDudeInFrame
 end
 
 local bDudeShotGood
 
-function PhotoVerifyGoodShot(propLoc, dudeTbl) -- ! Modified
+function PhotoVerifyGoodShot(propLoc, dudeTbl)
     bDudeShotGood = false
     for _, dude in dudeTbl do
-        --[[
-        if dude and not F_PedIsDead(dude.id) and dude.bInFrame then
-        ]] -- Changed this to:
         if dude and not F_PedIsDead(dude.id) and (dude.bInFrame or dude.bWasInFrame) then
             bDudeShotGood = true
             break

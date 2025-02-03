@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function MissionCleanup, may require testing
-]]
-
 ImportScript("Library/LibTable.lua")
 ImportScript("Library/LibPlayer.lua")
 local bStopNIS = false
@@ -1585,7 +1581,7 @@ function F_DeletePeds()
     end
 end
 
-function MissionCleanup() -- ! Modified
+function MissionCleanup()
     CameraSetWidescreen(false)
     PlayerSetControl(1)
     CameraReturnToPlayer()
@@ -1594,9 +1590,6 @@ function MissionCleanup() -- ! Modified
     DisablePunishmentSystem(false)
     SoundStopInteractiveStream()
     if bPlayerHasOutfit and not bReadyForExit then
-        --[[
-        ItemSetCurrentNum(476, 0)
-        ]] -- Changed this to:
         ItemSetCurrentNum(510, 0)
         L_PlayerClothingRestore()
     end
