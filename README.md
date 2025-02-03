@@ -4,6 +4,14 @@
 This project aims to fully decompile all Lua scripts from Bully: Scholarship Edition for PC. The goal is to provide clean, readable, and editable Lua scripts for modding, troubleshooting, and understanding the game's inner workings.
 > This was made by analysing and comparing the scripts from this version with a leaked pre-release debug version of the game for the Nintendo Wii.
 
+## Installation
+
+1) Download the source code, compile and strip the debug data from the script. If you are on Linux, you can use the script in `ShellScripts/CompileAll.sh`
+2) Backup your game files (in case anything something goes wrong)
+3) Open the game files and search for the folder `Scripts` and use a tool like [IMG Factory](https://www.gtagarage.com/mods/show.php?id=27155) to open `Scripts.img`
+4) Replace all files inside withthe scripts you compiled
+5) Rebuild the archive
+6) Play the game!
 ## Decompilation process
 1) Decompiled every script using [unluac](https://sourceforge.net/projects/unluac/).
 2) Compared all files by name to identify files with the exact same contents.
@@ -63,4 +71,3 @@ Scripts to start every mission
 
 - [@Razcoina](https://github.com/Razcoina)
 - [@nixkiez](https://github.com/nixkiez)
-
