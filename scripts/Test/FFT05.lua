@@ -1,7 +1,3 @@
---[[ Changes to this file:
-    * Modified function EnemyCreate, may require testing
-]]
-
 ImportScript("\\Library\\LibTable.lua")
 ImportScript("\\Library\\LibPed.lua")
 local mission_completed = false
@@ -14,33 +10,21 @@ function MissionSetup()
     EnemyCreate()
 end
 
-function EnemyCreate() -- ! Modified
+function EnemyCreate()
     L_PedLoadPoint(nil, {
         {
-            --[[
-            model = 30,
-            ]] -- Changed to:
             model = 41,
             point = POINTLIST._TFIGHT01_NE_01
         },
         {
-            --[[
-            model = 31,
-            ]] -- Changed to:
             model = 43,
             point = POINTLIST._TFIGHT01_E_01
         },
         {
-            --[[
-            model = 32,
-            ]] -- Changed to:
             model = 44,
             point = POINTLIST._TFIGHT01_SE_01
         },
         {
-            --[[
-            model = 34,
-            ]] -- Changed to:
             model = 45,
             point = POINTLIST._TFIGHT01_W_01
         }
