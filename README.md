@@ -12,6 +12,7 @@ This project aims to fully decompile all Lua scripts from Bully: Scholarship Edi
 4) Replace all files inside withthe scripts you compiled
 5) Rebuild the archive
 6) Play the game!
+7) 
 ## Decompilation process
 1) Decompiled every script using [unluac](https://sourceforge.net/projects/unluac/).
 2) Compared all files by name to identify files with the exact same contents.
@@ -19,6 +20,8 @@ This project aims to fully decompile all Lua scripts from Bully: Scholarship Edi
 5) Compile all modified files and strip debug information.
 6) Decompile again and compare the result to the scripts from the PC version. If the files are the same, the bytecode should be compared to find changes that are harder to find; if not, there are things that are different in the 2 files.
 7) Disassemble all modified files and compare with disassemblies from the PC version. If the files are the same, the process is complete; if not, try to figure out what changes should be made to ensure 100% fidelity.
+
+All scripts compile to exactly the same as the originals, except for `.linedefined` fields, which are basically fields in the decompiled file that tell in which line a function starts in the original source code. This means nothing to the logic and function of the game.
 
 ## Folder structure
 
