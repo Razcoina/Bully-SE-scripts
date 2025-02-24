@@ -96,8 +96,8 @@ function F_AsylumLockDoors()
     AreaSetDoorLockedToPeds(TRIGGER._ASYDOORS15, false)
 end
 
-local L6_1 = false
-local L7_1 = false
+local bSwitchSet = false
+local bSwitchActive = false
 
 function F_AsylumSwitch()
 end
